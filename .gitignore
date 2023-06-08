@@ -1,0 +1,5 @@
+*.out
+*.npy
+DiffRec/__pycache__/*
+datasets/.DS_Store
+
