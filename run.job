@@ -25,6 +25,7 @@ source activate rs
 # python ./DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 # DONE
 # python ./T-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 # DONE # Cant be run on yelp noisy!
 # python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 # DONE # Cant be run on yelp noisy!
+python ./LT-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 # TODO not yet working sampling steps issue
 
-python ./LT-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 # DONE # Cant be run on yelp noisy!
+
 conda deactivate
