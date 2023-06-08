@@ -3,3 +3,4 @@
 DiffRec/__pycache__/*
 datasets/.DS_Store
 
+*.pyc
