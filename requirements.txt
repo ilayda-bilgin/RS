@@ -20,6 +20,7 @@ gnutls=3.6.13=h85f3911_1
 idna=3.4=pyhd8ed1ab_0
 intel-openmp=2021.4.0=h06a4308_3561
 jpeg=9e=h166bdaf_1
+kmeans-pytorch=0.3=pypi_0
 lame=3.100=h7f98852_1001
 lcms2=2.12=hddcbb42_0
 ld_impl_linux-64=2.38=h1181459_1
@@ -67,6 +68,7 @@ sqlite=3.41.2=h5eee18b_0
 tk=8.6.12=h1ccaba5_0
 torchaudio=0.12.0=py38_cpu
 torchvision=0.13.0=py38_cpu
+tqdm=4.65.0=py38hb070fc8_0
 typing_extensions=4.6.3=pyha770c72_0
 urllib3=2.0.3=pyhd8ed1ab_0
 wheel=0.38.4=py38h06a4308_0
