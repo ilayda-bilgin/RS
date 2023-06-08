@@ -16,6 +16,7 @@ module load Anaconda3/2021.05
 
 source activate rs
 
+
 # Training
 # python3 ./DiffRec/main.py --data_path ./datasets/yelp_clean/ # DONE
 # python3 ./L-DiffRec/main.py --data_path ./datasets/yelp_clean/ # TODO not yet working sampling steps issue
