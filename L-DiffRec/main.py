@@ -86,7 +86,7 @@ parser.add_argument('--noise_scale', type=float, default=0.1, help='noise scale 
 parser.add_argument('--noise_min', type=float, default=0.0001)
 parser.add_argument('--noise_max', type=float, default=0.02)
 parser.add_argument('--sampling_noise', type=bool, default=False, help='sampling with noise or not')
-parser.add_argument('--sampling_steps', type=int, default=10, help='steps for sampling/denoising')
+parser.add_argument('--sampling_steps', type=int, default=10, help='steps for sampling/denoising') # TODO must be smaller or equal 5
 parser.add_argument('--reweight', type=bool, default=True, help='assign different weight to different timestep or not')
 
 args = parser.parse_args()

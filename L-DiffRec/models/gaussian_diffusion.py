@@ -91,7 +91,7 @@ class GaussianDiffusion(nn.Module):
         )
     
     def p_sample(self, model, x_start, steps, sampling_noise=False):
-        assert steps <= self.steps, "Too much steps in inference."
+        assert steps <= self.steps, f"Too much steps in inference. steps is {steps}, but GaussianDiffusion.steps is {self.steps}"
         if steps == 0:
             x_t = x_start
         else:
