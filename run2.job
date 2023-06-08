@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_titanrtx_shared_course
+#SBATCH --gres=gpu:1
+#SBATCH --job-name=diff_rs
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=3
+#SBATCH --time=04:00:00
+#SBATCH --mem=32000M
+#SBATCH --output=DRS_%A.out
+
+module load 2021
+module load Anaconda3/2021.05
+
+
+source activate rs
+
+
+DATASET='amazon-book_clean'
+LR=5e-5
+LR2=5e-5
+WEIGHT_DECAY=0
+BATCH_SIZE=400
+DIMS='[1000]'
+EMB_SIZE=10
+MEAN_TYPE='x0'
+STEPS=5
+NOISE_SCALE=0.0001
+NOISE_MIN=0.0005
+NOISE_MAX=0.005
+SAMPLING_STEPS=0
+REWEIGHTROUND=1
+LOG_NAME=log
+ROUND=1
+GPU_ID=0
+
+# python3 ./DiffRec/main.py --data_path ./datasets/yelp_clean/
+# python3 ./L-DiffRec/main.py --data_path ./datasets/yelp_clean/
+python3 ./T-DiffRec/main.py --data_path ./RS/datasets/yelp_clean/
+
+FileNotFoundError: [Errno 2] No such file or directory: '../datasets/yelp_clean/item_emb.npy'
+/home/lcur2470/RS/datasets/yelp_clean/item_emb.npy
+conda deactivate

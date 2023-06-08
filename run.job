@@ -1,40 +1,30 @@
 #!/bin/bash
 
 #SBATCH --partition=gpu_titanrtx_shared_course
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:2
 #SBATCH --job-name=diff_rs
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
 #SBATCH --time=04:00:00
-#SBATCH --mem=32000M
-#SBATCH --output=DRS_%A.out
+#SBATCH --mem=64000M
+#SBATCH --output=DRS_LT-DiffRec_yelp_clean_Inference_%A.out
 
+module purge
 module load 2021
 module load Anaconda3/2021.05
 
 
 source activate rs
 
+# Training
+# python3 ./DiffRec/main.py --data_path ./datasets/yelp_clean/ # DONE
+# python3 ./L-DiffRec/main.py --data_path ./datasets/yelp_clean/ # TODO not yet working sampling steps issue
+# python3 ./LT-DiffRec/main.py --data_path ./datasets/yelp_clean/ # TODO not yet working sampling steps issue
 
-DATASET='amazon-book_clean'
-LR=5e-5
-LR2=5e-5
-WEIGHT_DECAY=0
-BATCH_SIZE=400
-DIMS='[1000]'
-EMB_SIZE=10
-MEAN_TYPE='x0'
-STEPS=5
-NOISE_SCALE=0.0001
-NOISE_MIN=0.0005
-NOISE_MAX=0.005
-SAMPLING_STEPS=0
-REWEIGHTROUND=1
-LOG_NAME=log
-ROUND=1
-GPU_ID=0
+# Inference only
+# python ./DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 # DONE
+# python ./T-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 # DONE # Cant be run on yelp noisy!
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 # DONE # Cant be run on yelp noisy!
 
-python3 ./DiffRec/main.py --data_path ./datasets/yelp_clean/
-
-
+python ./LT-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 # DONE # Cant be run on yelp noisy!
 conda deactivate
