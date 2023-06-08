@@ -11,6 +11,12 @@ This is the pytorch implementation of our paper at SIGIR 2023:
 - numpy 1.22.3
 
 ## Usage
+### Environment
+```bash
+conda create --name rs --file requirements.txt
+```
+
+
 ### Data
 The experimental data are in './datasets' folder, including Amazon-Book, Yelp and MovieLens-1M. Note that the item embedding files of Amazon-book for clean setting and noisy setting are not here due to filesize limits, which are available at [Google drive](https://drive.google.com/file/d/1PuUZsQrkHjqKh100qq0a2jZVgQDUxU2x/view?usp=share_link).
 
