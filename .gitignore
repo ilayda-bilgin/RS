@@ -6,3 +6,5 @@ datasets/.DS_Store
 *.pyc
 *.pth
 *.json
+*.pyc
+DiffRec/models/__pycache__/*

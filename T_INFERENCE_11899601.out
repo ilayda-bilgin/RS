@@ -1,2 +1,0 @@
-/var/spool/slurm/slurmd/job11899601/slurm_script: line 20: 29344 Killed                  python ./T-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1
-slurmstepd: error: Detected 1 oom-kill event(s) in StepId=11899601.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.
