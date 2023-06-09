@@ -123,11 +123,12 @@ class GaussianDiffusion(nn.Module):
         )
 
     def p_sample(self, model, x_start, steps, sampling_noise=False):
-        # the steps is args.sampling_steps --> sampling/denoising
-        # self.steps is args.steps --> diffusion steps (adding the noise)
-        # assert (
-        #     steps <= self.steps
-        # ), f"Too much steps in inference. steps is {steps}, but GaussianDiffusion.steps is {self.steps}"
+        # self.steps (100 in diffrec, 5 for l-diffrec, 100 for t-diffrec, 5 for lt-diffrec) is args.steps --> diffusion steps (adding the noise)
+        # the steps is args.sampling_steps(0 for diffrec, 10 for l-diffrec, 0 for t-diffrec, 10 for lt-diffrec) --> sampling/denoising
+
+        assert (
+            steps <= self.steps
+        ), f"Too much steps in inference. steps is {steps}, but GaussianDiffusion.steps is {self.steps}"
         if steps == 0:
             x_t = x_start
         else:
