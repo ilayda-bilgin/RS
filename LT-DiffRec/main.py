@@ -137,7 +137,7 @@ parser.add_argument(
 parser.add_argument(
     "--mean_type", type=str, default="x0", help="MeanType for diffusion: x0, eps"
 )
-parser.add_argument("--steps", type=int, default=5, help="diffusion steps")
+parser.add_argument("--steps", type=int, default=5, help="diffusion steps")  # HERE
 parser.add_argument(
     "--noise_schedule",
     type=str,
@@ -153,7 +153,7 @@ parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
 parser.add_argument(
-    "--sampling_steps", type=int, default=10, help="steps for sampling/denoising"
+    "--sampling_steps", type=int, default=10, help="steps for sampling/denoising, smaller, or equal to steps" 
 )
 parser.add_argument(
     "--reweight",
@@ -231,7 +231,7 @@ diffusion = gd.GaussianDiffusion(
     args.noise_scale,
     args.noise_min,
     args.noise_max,
-    args.steps,
+    args.steps,  # HERE
     device,
 ).to(device)
 
