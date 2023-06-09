@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
 #SBATCH --time=04:00:00
-#SBATCH --mem=64000M
+#SBATCH --mem=100000M
 #SBATCH --output=DiffRec_INFERENCE_%A.out
 
 module purge
@@ -25,9 +25,3 @@ python ./DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_noisy --cu
 
 
 conda deactivate
-
-yelp_clean
-ml-1m_clean
-amazon-book_noisy
-yelp_noisy
-ml-1m_noisy

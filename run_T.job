@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
 #SBATCH --time=04:00:00
-#SBATCH --mem=64000M
+#SBATCH --mem=100000M
 #SBATCH --output=T_INFERENCE_%A.out
 
 module purge

@@ -1,0 +1,10 @@
+/home/lcur2470/.conda/envs/rs/lib/python3.8/site-packages/torch/utils/data/dataloader.py:554: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+args: Namespace(batch_size=400, cuda=True, data_path='./datasets/amazon-book_clean/', dataset='amazon-book_clean', gpu='1', log_name='log', mean_type='x0', noise_max=0.005, noise_min=0.001, noise_scale=0.0005, noise_schedule='linear-var', sampling_noise=False, sampling_steps=0, steps=10, topN='[10, 20, 50, 100]', tst_w_val=False, w_max=1.0, w_min=0.1)
+Starting time:  2023-06-09 22:00:39
+user num: 108822
+item num: 94949
+data ready.
+models ready.
+[Valid]: Precision: 0.0141-0.011-0.0075-0.0054 Recall: 0.0423-0.063-0.0999-0.1374 NDCG: 0.0306-0.0374-0.0479-0.0569 MRR: 0.0443-0.0479-0.0506-0.0517
+[Test]: Precision: 0.0182-0.0133-0.0084-0.0058 Recall: 0.0819-0.1139-0.1694-0.2217 NDCG: 0.0565-0.0661-0.08-0.0911 MRR: 0.0665-0.0703-0.0732-0.0742

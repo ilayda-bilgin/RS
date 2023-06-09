@@ -2,12 +2,12 @@
 
 #SBATCH --partition=gpu_titanrtx_shared_course
 #SBATCH --gres=gpu:2
-#SBATCH --job-name=diff_rs
+#SBATCH --job-name=TEST
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
 #SBATCH --time=04:00:00
 #SBATCH --mem=64000M
-#SBATCH --output=DRS_T-DiffRec_yelp_clen_INFERENCE_TEST_%A.out
+#SBATCH --output=TEST_%A.out
 
 module purge
 module load 2021
