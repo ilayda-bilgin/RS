@@ -153,7 +153,10 @@ parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
 parser.add_argument(
-    "--sampling_steps", type=int, default=10, help="steps for sampling/denoising, smaller, or equal to steps" 
+    "--sampling_steps",
+    type=int,
+    default=10,
+    help="steps for sampling/denoising, smaller, or equal to steps",
 )
 parser.add_argument(
     "--reweight",
@@ -173,9 +176,9 @@ print(
 )
 
 ### DATA LOAD ###
-train_path = args.data_path + "train_list.npy"
-valid_path = args.data_path + "valid_list.npy"
-test_path = args.data_path + "test_list.npy"
+train_path = f"{args.data_path}{args.dataset}/train_list.npy"
+valid_path = f"{args.data_path}{args.dataset}/valid_list.npy"
+test_path = f"{args.data_path}{args.dataset}/test_list.npy"
 
 (
     train_data,
@@ -206,8 +209,9 @@ mask_tv = train_data_ori + valid_y_data
 print("data ready.")
 
 ### Build Autoencoder ###
-emb_path = args.emb_path + args.dataset + "/item_emb.npy"  # TODO: old line
-emb_path = args.data_path + "/item_emb.npy"  # NEW: fix
+# emb_path = args.emb_path + args.dataset + "/item_emb.npy"  # TODO: old line
+emb_path = f"{args.data_path}{args.dataset}/item_emb.npy"  # NEW: fix
+
 print(f"emb_path: {emb_path}")
 item_emb = torch.from_numpy(np.load(emb_path, allow_pickle=True))
 assert len(item_emb) == n_item
