@@ -8,3 +8,5 @@ datasets/.DS_Store
 *.json
 *.pyc
 DiffRec/models/__pycache__/*
+
+.DS_Store
