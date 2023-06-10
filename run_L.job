@@ -17,12 +17,13 @@ module load Anaconda3/2021.05
 source activate rs
 
 # Inference only
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 # DONE
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 # FAILS
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 
+
 
 
 conda deactivate
