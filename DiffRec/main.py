@@ -113,6 +113,8 @@ parser.add_argument(
     help="assign different weight to different timestep or not",
 )
 
+parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
+
 args = parser.parse_args()
 print("args:", args)
 
@@ -137,7 +139,7 @@ train_loader = DataLoader(
     batch_size=args.batch_size,
     pin_memory=True,
     shuffle=True,
-    num_workers=4,
+    num_workers=args.num_workers,
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
