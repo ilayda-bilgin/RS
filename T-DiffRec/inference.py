@@ -117,13 +117,6 @@ elif args.dataset == "yelp_clean":
     args.noise_max = 0.01
     args.w_min = 0.5
     args.w_max = 1.0
-elif args.dataset == "amazon-book_noisy":
-    args.steps = 10
-    args.noise_scale = 0.0005
-    args.noise_min = 0.001
-    args.noise_max = 0.005
-    args.w_min = 0.1
-    args.w_max = 1.0
 else:
     raise ValueError
 
