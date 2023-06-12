@@ -68,6 +68,11 @@ sh run.sh dataset lr1 lr2 wd1 wd2 batch_size n_cate in_dims out_dims lamda mlp_d
 ### Inference
 
 1. Download the checkpoints released by us from [Google drive](https://drive.google.com/file/d/1bPnjO-EzIygjuvloLCGpqfBVnkrdG4IH/view?usp=share_link).
+    ```bash
+    gdown --id 1bPnjO-EzIygjuvloLCGpqfBVnkrdG4IH
+    unzip checkpoints.zip
+    rm checkpoints.zip
+    ```
 2. Put the 'checkpoints' folder into the current folder.
 3. Run inference.py
 ```

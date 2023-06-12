@@ -1,0 +1,8 @@
+args: Namespace(batch_size=400, cuda=True, data_path='./datasets/', dataset='amazon-book_noisy', dims='[1000]', emb_size=10, epochs=1000, gpu='1', log_name='log', lr=0.0001, mean_type='x0', noise_max=0.02, noise_min=0.0001, noise_scale=0.1, noise_schedule='linear-var', norm=False, num_workers=0, reweight=True, round=1, sampling_noise=False, sampling_steps=0, save_path='./saved_models/', steps=100, time_type='cat', topN='[10, 20, 50, 100]', tst_w_val=False, w_max=1.0, w_min=0.1, weight_decay=0.0)
+Starting time:  2023-06-12 13:48:58
+user num: 108822
+item num: 178181
+Traceback (most recent call last):
+  File "./T-DiffRec/main.py", line 148, in <module>
+    train_dataset = data_utils.DataDiffusion(torch.FloatTensor(train_data.A))
+RuntimeError: [enforce fail at alloc_cpu.cpp:75] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 77560051128 bytes. Error code 12 (Cannot allocate memory)
