@@ -98,6 +98,7 @@ parser.add_argument(
     default=0,
     help="steps of the forward process during inference",
 )
+parser.add_argument("--num_workers", type=int, default=4)
 
 args = parser.parse_args()
 
@@ -115,6 +116,13 @@ elif args.dataset == "yelp_clean":
     args.noise_min = 0.001
     args.noise_max = 0.01
     args.w_min = 0.5
+    args.w_max = 1.0
+elif args.dataset == "amazon-book_noisy":
+    args.steps = 10
+    args.noise_scale = 0.0005
+    args.noise_min = 0.001
+    args.noise_max = 0.005
+    args.w_min = 0.1
     args.w_max = 1.0
 else:
     raise ValueError
@@ -147,7 +155,7 @@ train_loader = DataLoader(
     batch_size=args.batch_size,
     pin_memory=True,
     shuffle=True,
-    num_workers=4,
+    num_workers=args.num_workers,
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
