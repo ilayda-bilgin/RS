@@ -6,6 +6,9 @@ import math
 from torch.nn.init import xavier_normal_, constant_, xavier_uniform_
 from kmeans_pytorch import kmeans
 
+#to try a different clustering GMM
+from sklearn.mixture import GaussianMixture
+
 
 class AutoEncoder(nn.Module):
     """
@@ -15,7 +18,7 @@ class AutoEncoder(nn.Module):
         super(AutoEncoder, self).__init__()
 
         self.item_emb = item_emb
-        self.n_cate = n_cate
+        self.n_cate = n_cate #number of clusters (categories)
         self.in_dims = in_dims
         self.out_dims = out_dims
         self.act_func = act_func
@@ -57,6 +60,11 @@ class AutoEncoder(nn.Module):
             self.decoder = nn.Sequential(*decoder_modules)
         
         else:
+            #try GMM instead of kmeans 
+            #gmm = GaussianMixture(n_components=n_cate, covariance_type='full')
+            #gmm.fit(item_emb)
+            #self.cluster_ids = gmm.predict(item_emb)
+
             self.cluster_ids, _ = kmeans(X=item_emb, num_clusters=n_cate, distance='euclidean', device=device)
             # cluster_ids(labels): [0, 1, 2, 2, 1, 0, 0, ...]
             category_idx = []
@@ -68,6 +76,7 @@ class AutoEncoder(nn.Module):
             self.category_len = [len(self.category_idx[i]) for i in range(n_cate)]  # item num in each category
             print("category length: ", self.category_len)
             assert sum(self.category_len) == self.n_item
+
 
             ##### Build the Encoder and Decoder #####
             encoder_modules = [[] for _ in range(n_cate)]
