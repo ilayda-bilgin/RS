@@ -5,7 +5,7 @@
 #SBATCH --job-name=T
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=04:00:00
+#SBATCH --time=12:00:00
 #SBATCH --mem=125000M
 #SBATCH --output=T_train_AMAZON_NOISY_%A.out
 
