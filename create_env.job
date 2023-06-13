@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_titanrtx_shared_course
+#SBATCH --gres=gpu:2
+#SBATCH --job-name=DiffRec
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=3
+#SBATCH --time=01:00:00
+#SBATCH --mem=125000M
+#SBATCH --output=create_env_%A.out
+
+module purge
+module load 2021
+module load Anaconda3/2021.05
+
+conda env create --file requirements.txt
