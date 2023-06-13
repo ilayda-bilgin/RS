@@ -103,4 +103,4 @@ dependencies:
     - gdown==4.7.1
     - kmeans-pytorch==0.3
     - soupsieve==2.4.1
-prefix: /home/lcur2470/.conda/envs/rs
+
