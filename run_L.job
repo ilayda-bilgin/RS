@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=3
 #SBATCH --time=04:00:00
 #SBATCH --mem=64000M
-#SBATCH --output=L_TRAIN_AMAZON_CLEAN_%A.out
+#SBATCH --output=L_TRAIN_YELP_CLEAN_CAT_2_%A.out
 
 
 #module purge
@@ -15,21 +15,18 @@ module load 2021
 module load Anaconda3/2021.05
 
 
-source activate new_rs
-
-#pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
-
+source activate rs
 
 # Inference only
 # python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 
-python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 --n_cate 5
+# python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 --n_cate 5
 # python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
 # python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 
 # python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 --num_workers 0
 # python ./L-DiffRec/inference.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100 
 
 
-#python ./L-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 --n_cate 1
+python ./L-DiffRec/main.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 --sampling_steps 0 --steps 100 --n_cate 2
 
 
 
