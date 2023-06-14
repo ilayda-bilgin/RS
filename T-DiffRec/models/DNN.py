@@ -27,6 +27,10 @@ class DNN(nn.Module):
 
         if self.time_type == "cat":
             in_dims_temp = [self.in_dims[0] + self.time_emb_dim] + self.in_dims[1:]
+            for d_in, d_out in zip(in_dims_temp[:-1], in_dims_temp[1:]):
+                print(f"d_in: {d_in}, d_out: {d_out}")
+                exit()
+
         else:
             raise ValueError(
                 "Unimplemented timestep embedding type %s" % self.time_type
