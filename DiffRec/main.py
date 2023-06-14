@@ -114,7 +114,7 @@ parser.add_argument(
 )
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
-parser.add_argument("--model_type", type=string, default="DiffRec" , help="type DRS Model")
+parser.add_argument("--model_type", type=str, default="DiffRec", help="type DRS Model")
 
 args = parser.parse_args()
 print("args:", args)

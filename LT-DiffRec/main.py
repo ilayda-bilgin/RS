@@ -74,7 +74,9 @@ parser.add_argument("--log_name", type=str, default="log", help="the log name")
 parser.add_argument("--round", type=int, default=1, help="record the experiment")
 
 # params for the Autoencoder
-parser.add_argument("--n_cate", type=int, default=2, help="category num of items") #default was 3, now it's 2 acccording to checkpoints
+parser.add_argument(
+    "--n_cate", type=int, default=2, help="category num of items"
+)  # default was 3, now it's 2 acccording to checkpoints
 parser.add_argument(
     "--in_dims", type=str, default="[300]", help="the dims for the encoder"
 )
@@ -166,7 +168,9 @@ parser.add_argument(
 )
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
-parser.add_argument("--model_type", type=string, default="LT-DiffRec" , help="type DRS Model")
+parser.add_argument(
+    "--model_type", type=str, default="LT-DiffRec", help="type DRS Model"
+)
 
 
 args = parser.parse_args()
