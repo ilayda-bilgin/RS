@@ -130,7 +130,7 @@ parser.add_argument(
 parser.add_argument(
     "--mean_type", type=str, default="x0", help="MeanType for diffusion: x0, eps"
 )
-parser.add_argument("--steps", type=int, default=5, help="diffusion steps")
+#parser.add_argument("--steps", type=int, default=5, help="diffusion steps")
 parser.add_argument(
     "--noise_schedule",
     type=str,
@@ -145,9 +145,9 @@ parser.add_argument("--noise_max", type=float, default=0.02)
 parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
-parser.add_argument(
-    "--sampling_steps", type=int, default=10, help="steps for sampling/denoising"
-)  # TODO must be smaller or equal 5
+#parser.add_argument(
+  #  "--sampling_steps", type=int, default=10, help="steps for sampling/denoising"
+#)  # TODO must be smaller or equal 5
 parser.add_argument(
     "--reweight",
     type=bool,
@@ -157,8 +157,36 @@ parser.add_argument(
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
 
+parser.add_argument("--clustering_method", type=str, default="kmeans" , help="type of clustering")
+parser.add_argument("--model_type", type=str, default="L-DiffRec" , help="type DRS Model")
 args = parser.parse_args()
 print("args:", args)
+
+
+if args.dataset == "amazon-book_clean":
+    args.steps = 5
+    args.sampling_steps = 0
+elif args.dataset == "amazon-book_noisy":
+    args.steps = 5
+    args.sampling_steps = 0
+elif args.dataset == "ml-1m_clean":
+    args.steps = 40
+    args.sampling_steps = 0
+elif args.dataset == "ml-1m_noisy":
+    args.steps = 100
+    arg.sampling_steps = 0
+elif args.dataset == "yelp_clean":
+    args.steps = 5
+    args.sampling_steps = 0
+elif args.dataset == "yelp_noisy":
+    args.steps = 5
+    args.sampling_steps = 0
+else:
+    args.steps = 5
+    args.sampling_steps = 10
+
+print("args:", args)
+
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 device = torch.device("cuda:0" if args.cuda else "cpu")
@@ -204,7 +232,7 @@ assert len(item_emb) == n_item
 out_dims = eval(args.out_dims)
 in_dims = eval(args.in_dims)[::-1]
 Autoencoder = AE(
-    item_emb, args.n_cate, in_dims, out_dims, device, args.act_func, args.reparam
+    item_emb, args.n_cate, in_dims, out_dims, device, args.act_func, args.reparam, args.clustering_method
 ).to(device)
 
 ### Build Gaussian Diffusion ###

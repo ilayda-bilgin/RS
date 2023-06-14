@@ -7,14 +7,18 @@ from torch.nn.init import xavier_normal_, constant_, xavier_uniform_
 from kmeans_pytorch import kmeans
 
 #to try a different clustering GMM
-from sklearn.mixture import GaussianMixture
+#from sklearn.mixture import GaussianMixture
+
+
+# to try hierarchical clustering 
+from sklearn.cluster import AgglomerativeClustering
 
 
 class AutoEncoder(nn.Module):
     """
     Guassian Diffusion for large-scale recommendation.
     """
-    def __init__(self, item_emb, n_cate, in_dims, out_dims, device, act_func, reparam=True, dropout=0.1):
+    def __init__(self, item_emb, n_cate, in_dims, out_dims, device, act_func, reparam=True, clustering_method="kmeans", dropout=0.1):
         super(AutoEncoder, self).__init__()
 
         self.item_emb = item_emb
@@ -25,6 +29,7 @@ class AutoEncoder(nn.Module):
         self.n_item = len(item_emb)
         self.reparam = reparam
         self.dropout = nn.Dropout(dropout)
+        self.clustering_method = clustering_method
 
         if n_cate == 1:  # no clustering
             in_dims_temp = [self.n_item] + self.in_dims[:-1] + [self.in_dims[-1] * 2]
@@ -60,12 +65,21 @@ class AutoEncoder(nn.Module):
             self.decoder = nn.Sequential(*decoder_modules)
         
         else:
-            #try GMM instead of kmeans 
-            #gmm = GaussianMixture(n_components=n_cate, covariance_type='full')
-            #gmm.fit(item_emb)
-            #self.cluster_ids = gmm.predict(item_emb)
+            # default clustering type : kmeans
+            if clustering_method == "kmeans": 
+                self.cluster_ids, _ = kmeans(X=item_emb, num_clusters=n_cate, distance='euclidean', device=device)
+            
+            # perform hierarchical clustering 
+            elif clustering_method == "hierarchical":
+                hierarchical = AgglomerativeClustering(n_clusters=n_cate, affinity='euclidean', linkage='ward')
+                self.cluster_ids = hierarchical.fit_predict(item_emb)
 
-            self.cluster_ids, _ = kmeans(X=item_emb, num_clusters=n_cate, distance='euclidean', device=device)
+            # perform clustering with gaussian mixture model 
+            #elif clustering_method == "gmm":
+               # gmm = GaussianMixture(n_components=n_cate, covariance_type='full')
+               # gmm.fit(item_emb)
+               # self.cluster_ids = gmm.predict(item_emb)
+     
             # cluster_ids(labels): [0, 1, 2, 2, 1, 0, 0, ...]
             category_idx = []
             for i in range(n_cate):

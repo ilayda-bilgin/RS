@@ -137,7 +137,7 @@ parser.add_argument(
 parser.add_argument(
     "--mean_type", type=str, default="x0", help="MeanType for diffusion: x0, eps"
 )
-parser.add_argument("--steps", type=int, default=5, help="diffusion steps")  # HERE
+# parser.add_argument("--steps", type=int, default=5, help="diffusion steps")  # HERE
 parser.add_argument(
     "--noise_schedule",
     type=str,
@@ -152,12 +152,12 @@ parser.add_argument("--noise_max", type=float, default=0.02)
 parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
-parser.add_argument(
-    "--sampling_steps",
-    type=int,
-    default=10,
-    help="steps for sampling/denoising, smaller, or equal to steps",
-)
+# parser.add_argument(
+#     "--sampling_steps",
+#     type=int,
+#     default=10,
+#     help="steps for sampling/denoising, smaller, or equal to steps",
+# )
 parser.add_argument(
     "--reweight",
     type=bool,
@@ -166,10 +166,25 @@ parser.add_argument(
 )
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
+parser.add_argument("--model_type", type=string, default="LT-DiffRec" , help="type DRS Model")
 
 
 args = parser.parse_args()
 print("args:", args)
+
+if args.dataset == "amazon-book_clean":
+    args.steps = 5
+    args.sampling_steps = 0
+elif args.dataset == "yelp_clean":
+    args.steps = 5
+    args.sampling_steps = 0
+else:
+    args.steps = 5
+    args.sampling_steps = 10
+
+
+print("args:", args)
+
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 device = torch.device("cuda:0" if args.cuda else "cpu")
