@@ -155,12 +155,17 @@ class GaussianDiffusion(nn.Module):
         return x_t
 
     def training_losses(self, model, x_start, reweight=False):
-        print(f"x_start shape {x_start.shape}")
+        """
+        Model: MLP for the reverse diffusion preocess.
+        Shapes (Batch size is 400):
+        x_start: [400, 34395] is the data
+        ts: 400
+        pt: 400
+        """
+
         batch_size, device = x_start.size(0), x_start.device
-        print("batch_size", batch_size)
         ts, pt = self.sample_timesteps(batch_size, device, "importance")
-        print(f"TS shape {ts.shape}, pt shape {pt.shape} from sample_timesteps")
-        exit()
+
         noise = th.randn_like(x_start)
         if self.noise_scale != 0.0:
             x_t = self.q_sample(x_start, ts, noise)
@@ -168,7 +173,7 @@ class GaussianDiffusion(nn.Module):
             x_t = x_start
 
         terms = {}
-        model_output = model(x_t, ts)
+        model_output = model(x_t, ts)  # HERE model output
         target = {
             ModelMeanType.START_X: x_start,
             ModelMeanType.EPSILON: noise,
@@ -178,15 +183,13 @@ class GaussianDiffusion(nn.Module):
 
         mse = mean_flat((target - model_output) ** 2)  # HERE is used in loss
 
-        if reweight == True:  # HERE reweighting
-            if (
-                self.mean_type == ModelMeanType.START_X
-            ):  # HERE x0 uses this, so need to change weight = ...
+        if reweight == True:  # HERE where reweighting is done
+            if self.mean_type == ModelMeanType.START_X:  # HERE x0 uses this
                 weight = self.SNR(ts - 1) - self.SNR(
                     ts
                 )  # signal-to-noise ratio comparision between t-1 and t
-                weight = th.where((ts == 0), 1.0, weight)
-                print(f"weight shape: {weight.shape}")
+                weight = th.where((ts == 0), 1.0, weight)  # shape: 400, float64
+
                 loss = mse
             elif self.mean_type == ModelMeanType.EPSILON:
                 weight = (1 - self.alphas_cumprod[ts]) / (
