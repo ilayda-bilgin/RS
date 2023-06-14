@@ -253,7 +253,9 @@ for epoch in range(1, args.epochs + 1):
         batch = batch.to(device)
         batch_count += 1
         optimizer.zero_grad()
-        losses = diffusion.training_losses(model, batch, args.reweight)
+        losses = diffusion.training_losses(
+            model, batch, args.reweight
+        )  # HERE reweighting
         loss = losses["loss"].mean()
         total_loss += loss
         loss.backward()
