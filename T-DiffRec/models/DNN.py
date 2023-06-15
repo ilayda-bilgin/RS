@@ -1,8 +1,91 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
+from torch import Tensor
 import numpy as np
 import math
+
+
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model: int, dropout: float = 0.1, max_len: int = 5000):
+        """generate positional encodings for a transformer model
+
+        Args:
+            d_model (int): _description_
+            dropout (float, optional): _description_. Defaults to 0.1.
+            max_len (int, optional): _description_. Defaults to 5000.
+        """
+        super().__init__()
+        self.dropout = nn.Dropout(p=dropout)
+
+        position = torch.arange(max_len).unsqueeze(1)
+        div_term = torch.exp(
+            torch.arange(0, d_model, 2) * (-math.log(10000.0) / d_model)
+        )
+        pe = torch.zeros(max_len, 1, d_model)
+        pe[:, 0, 0::2] = torch.sin(position * div_term)
+        pe[:, 0, 1::2] = torch.cos(position * div_term)
+        self.register_buffer("pe", pe)
+
+    def forward(self, x: Tensor) -> Tensor:
+        """
+        Arguments:
+            x: Tensor, shape ``[seq_len, batch_size, embedding_dim]``
+        """
+        x = x + self.pe[: x.size(0)]
+        return self.dropout(x)
+
+
+class TransformerModel(nn.Module):
+    def __init__(
+        self,
+        ntoken: int,
+        d_model: int,
+        nhead: int,
+        d_hid: int,
+        nlayers: int,
+        dropout: float = 0.5,
+    ):
+        """Transformer model to learn a weighting of the input features.
+
+        Args:
+            ntoken (int): Number of tokens (vocab size noramlly).
+            d_model (int): Number of expected features in the input (required).
+            nhead (int): Number of heads in ``nn.MultiheadAttention``.
+            d_hid (int): FF size in nn.TransformerEncoder.
+            nlayers (int): Number of ``nn.TransformerEncoderLayer`` in ``nn.TransformerEncoder``.
+            dropout (float, optional): Probability of dropout. Defaults to 0.5.
+        """
+        super().__init__()
+        self.model_type = "Transformer"
+        self.pos_encoder = PositionalEncoding(d_model, dropout)
+        encoder_layers = nn.TransformerEncoderLayer(d_model, nhead, d_hid, dropout)
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayers)
+        self.d_model = d_model
+        self.linear = nn.Linear(d_model, ntoken)
+
+        self.init_weights()
+
+    def init_weights(self) -> None:
+        initrange = 0.1
+        self.linear.bias.data.zero_()
+        self.linear.weight.data.uniform_(-initrange, initrange)
+
+    def forward(self, src: Tensor, src_mask: Tensor = None) -> Tensor:
+        """
+        Arguments:
+            src: Tensor, shape ``[seq_len, batch_size, ntoken]``
+            src_mask: Tensor, shape ``[seq_len, seq_len]`` Defaults to None.
+
+        Returns:
+            output Tensor of shape ``[seq_len, batch_size, ntoken]``
+        """
+        print(f"Input shape: {src.shape}")
+        src = self.pos_encoder(src)  # expands last dim to d_model
+        output = self.transformer_encoder(src, src_mask)
+        print(f"After transformer encoder: {output.shape}")
+        output = self.linear(output)  # reduces the last dim again to ntoken=1.
+        return output
 
 
 class DNN(nn.Module):
@@ -11,7 +94,14 @@ class DNN(nn.Module):
     """
 
     def __init__(
-        self, in_dims, out_dims, emb_size, time_type="cat", norm=False, dropout=0.5
+        self,
+        in_dims,
+        out_dims,
+        emb_size,
+        time_type="cat",
+        norm=False,
+        dropout=0.5,
+        transformer_weighting=False,
     ):
         super(DNN, self).__init__()
         self.in_dims = in_dims
@@ -22,6 +112,7 @@ class DNN(nn.Module):
         self.time_type = time_type
         self.time_emb_dim = emb_size
         self.norm = norm
+        self.transformer_weighting = transformer_weighting
 
         self.emb_layer = nn.Linear(self.time_emb_dim, self.time_emb_dim)
 
@@ -52,6 +143,12 @@ class DNN(nn.Module):
 
         self.drop = nn.Dropout(dropout)
         self.init_weights()
+
+        # NEW: Transformer encoder
+        if self.transformer_weighting:
+            self.transformer_encoder = TransformerModel(
+                ntoken=1, d_model=12, nhead=3, d_hid=12, nlayers=6, dropout=0.5
+            )
 
     def init_weights(self):
         for layer in self.in_layers:
@@ -84,11 +181,22 @@ class DNN(nn.Module):
         self.emb_layer.bias.data.normal_(0.0, 0.001)
 
     def forward(self, x, timesteps):  # HERE
+        # TODO: decide what to do with the existing time embedding:
+        # Is it compatible with the transformer? or do we use only the transformer's positional encoding?
+
         time_emb = timestep_embedding(timesteps, self.time_emb_dim).to(x.device)
         emb = self.emb_layer(time_emb)
         if self.norm:
             x = F.normalize(x)
         x = self.drop(x)  # dropout
+
+        # NEW: Transformer encoder
+        if self.transformer_weighting:
+            weigths = self.transformer_encoder(x)
+
+            # reweight the input (using elementwise multiplication)
+            x = x * weigths
+
         h = torch.cat([x, emb], dim=-1)
         for i, layer in enumerate(self.in_layers):
             h = layer(h)
