@@ -1,0 +1,51 @@
+args: Namespace(act_func='tanh', anneal_cap=0.005, anneal_steps=500, batch_size=400, cuda=True, data_path='./datasets/', dataset='amazon-book_clean', emb_path='../datasets/', emb_size=10, epochs=1000, gpu='1', in_dims='[300]', lamda=0.03, log_name='log', lr1=0.0001, lr2=0.0001, mean_type='x0', mlp_act_func='tanh', mlp_dims='[300]', n_cate=3, noise_max=0.02, noise_min=0.0001, noise_scale=0.1, noise_schedule='linear-var', norm=False, num_workers=0, optimizer1='AdamW', optimizer2='AdamW', out_dims='[]', reparam=True, reweight=True, round=1, sampling_noise=False, sampling_steps=10, save_path='./saved_models/', steps=5, time_type='cat', topN='[10, 20, 50, 100]', tst_w_val=False, vae_anneal_cap=0.3, vae_anneal_steps=200, w_max=1.0, w_min=0.1, wd1=0.0, wd2=0.0)
+Starting time:  2023-06-15 14:57:23
+user num: 108822
+item num: 94949
+data ready.
+emb_path: ./datasets/amazon-book_clean/item_emb.npy
+running k-means on cuda:0..
+
+[running kmeans]: 0it [00:00, ?it/s]
+[running kmeans]: 0it [00:00, ?it/s, center_shift=0.118409, iteration=1, tol=0.000100]
+[running kmeans]: 1it [00:00,  7.04it/s, center_shift=0.006633, iteration=2, tol=0.000100]
+[running kmeans]: 2it [00:00, 14.06it/s, center_shift=0.006633, iteration=2, tol=0.000100]
+[running kmeans]: 2it [00:00, 14.06it/s, center_shift=0.001201, iteration=3, tol=0.000100]
+[running kmeans]: 3it [00:00, 14.06it/s, center_shift=0.000401, iteration=4, tol=0.000100]
+[running kmeans]: 4it [00:00, 15.74it/s, center_shift=0.000401, iteration=4, tol=0.000100]
+[running kmeans]: 4it [00:00, 15.74it/s, center_shift=0.000331, iteration=5, tol=0.000100]
+[running kmeans]: 5it [00:00, 15.74it/s, center_shift=0.000381, iteration=6, tol=0.000100]
+[running kmeans]: 6it [00:00, 16.36it/s, center_shift=0.000381, iteration=6, tol=0.000100]
+[running kmeans]: 6it [00:00, 16.36it/s, center_shift=0.000423, iteration=7, tol=0.000100]
+[running kmeans]: 7it [00:00, 16.36it/s, center_shift=0.000383, iteration=8, tol=0.000100]
+[running kmeans]: 8it [00:00, 17.49it/s, center_shift=0.000383, iteration=8, tol=0.000100]
+[running kmeans]: 8it [00:00, 17.49it/s, center_shift=0.000337, iteration=9, tol=0.000100]
+[running kmeans]: 9it [00:00, 17.49it/s, center_shift=0.000281, iteration=10, tol=0.000100]
+[running kmeans]: 10it [00:00, 18.21it/s, center_shift=0.000281, iteration=10, tol=0.000100]
+[running kmeans]: 10it [00:00, 18.21it/s, center_shift=0.000154, iteration=11, tol=0.000100]
+[running kmeans]: 11it [00:00, 18.21it/s, center_shift=0.000101, iteration=12, tol=0.000100]
+[running kmeans]: 12it [00:00, 18.67it/s, center_shift=0.000101, iteration=12, tol=0.000100]
+[running kmeans]: 12it [00:00, 18.67it/s, center_shift=0.000071, iteration=13, tol=0.000100]
+[running kmeans]: 13it [00:00, 17.73it/s, center_shift=0.000071, iteration=13, tol=0.000100]
+category length:  [1094, 38516, 55339]
+Latent dims of each category:  [[3], [121], [176]]
+Number of parameters: 57570723
+models ready.
+Preparing mask for validation & test costs 00: 00: 01
+Start training...
+Runing Epoch 001 train loss 232954.7351 costs 00: 00: 34
+------------------------------------------------------
+Runing Epoch 002 train loss 173696.2193 costs 00: 00: 34
+------------------------------------------------------
+Runing Epoch 003 train loss 148289.8788 costs 00: 00: 34
+------------------------------------------------------
+Runing Epoch 004 train loss 135135.4334 costs 00: 00: 34
+------------------------------------------------------
+Traceback (most recent call last):
+  File "./LT-DiffRec/main.py", line 464, in <module>
+    valid_results = evaluate(test_loader, valid_y_data, mask_train, eval(args.topN))
+  File "./LT-DiffRec/main.py", line 334, in evaluate
+    batch_latent_recon = diffusion.p_sample(
+  File "/home/lcur2470/RS/LT-DiffRec/models/gaussian_diffusion.py", line 126, in p_sample
+    assert (
+AssertionError: Too much steps in inference. steps is 10, but GaussianDiffusion.steps is 5
