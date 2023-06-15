@@ -5,7 +5,28 @@ item num: 94949
 data ready.
 emb_path: ./datasets/amazon-book_clean/item_emb.npy
 running k-means on cuda:0..
-[running kmeans]: 0it [00:00, ?it/s][running kmeans]: 0it [00:00, ?it/s, center_shift=0.118409, iteration=1, tol=0.000100][running kmeans]: 1it [00:00,  7.04it/s, center_shift=0.006633, iteration=2, tol=0.000100][running kmeans]: 2it [00:00, 14.06it/s, center_shift=0.006633, iteration=2, tol=0.000100][running kmeans]: 2it [00:00, 14.06it/s, center_shift=0.001201, iteration=3, tol=0.000100][running kmeans]: 3it [00:00, 14.06it/s, center_shift=0.000401, iteration=4, tol=0.000100][running kmeans]: 4it [00:00, 15.74it/s, center_shift=0.000401, iteration=4, tol=0.000100][running kmeans]: 4it [00:00, 15.74it/s, center_shift=0.000331, iteration=5, tol=0.000100][running kmeans]: 5it [00:00, 15.74it/s, center_shift=0.000381, iteration=6, tol=0.000100][running kmeans]: 6it [00:00, 16.36it/s, center_shift=0.000381, iteration=6, tol=0.000100][running kmeans]: 6it [00:00, 16.36it/s, center_shift=0.000423, iteration=7, tol=0.000100][running kmeans]: 7it [00:00, 16.36it/s, center_shift=0.000383, iteration=8, tol=0.000100][running kmeans]: 8it [00:00, 17.49it/s, center_shift=0.000383, iteration=8, tol=0.000100][running kmeans]: 8it [00:00, 17.49it/s, center_shift=0.000337, iteration=9, tol=0.000100][running kmeans]: 9it [00:00, 17.49it/s, center_shift=0.000281, iteration=10, tol=0.000100][running kmeans]: 10it [00:00, 18.21it/s, center_shift=0.000281, iteration=10, tol=0.000100][running kmeans]: 10it [00:00, 18.21it/s, center_shift=0.000154, iteration=11, tol=0.000100][running kmeans]: 11it [00:00, 18.21it/s, center_shift=0.000101, iteration=12, tol=0.000100][running kmeans]: 12it [00:00, 18.67it/s, center_shift=0.000101, iteration=12, tol=0.000100][running kmeans]: 12it [00:00, 18.67it/s, center_shift=0.000071, iteration=13, tol=0.000100][running kmeans]: 13it [00:00, 17.73it/s, center_shift=0.000071, iteration=13, tol=0.000100]
+
+[running kmeans]: 0it [00:00, ?it/s]
+[running kmeans]: 0it [00:00, ?it/s, center_shift=0.118409, iteration=1, tol=0.000100]
+[running kmeans]: 1it [00:00,  7.04it/s, center_shift=0.006633, iteration=2, tol=0.000100]
+[running kmeans]: 2it [00:00, 14.06it/s, center_shift=0.006633, iteration=2, tol=0.000100]
+[running kmeans]: 2it [00:00, 14.06it/s, center_shift=0.001201, iteration=3, tol=0.000100]
+[running kmeans]: 3it [00:00, 14.06it/s, center_shift=0.000401, iteration=4, tol=0.000100]
+[running kmeans]: 4it [00:00, 15.74it/s, center_shift=0.000401, iteration=4, tol=0.000100]
+[running kmeans]: 4it [00:00, 15.74it/s, center_shift=0.000331, iteration=5, tol=0.000100]
+[running kmeans]: 5it [00:00, 15.74it/s, center_shift=0.000381, iteration=6, tol=0.000100]
+[running kmeans]: 6it [00:00, 16.36it/s, center_shift=0.000381, iteration=6, tol=0.000100]
+[running kmeans]: 6it [00:00, 16.36it/s, center_shift=0.000423, iteration=7, tol=0.000100]
+[running kmeans]: 7it [00:00, 16.36it/s, center_shift=0.000383, iteration=8, tol=0.000100]
+[running kmeans]: 8it [00:00, 17.49it/s, center_shift=0.000383, iteration=8, tol=0.000100]
+[running kmeans]: 8it [00:00, 17.49it/s, center_shift=0.000337, iteration=9, tol=0.000100]
+[running kmeans]: 9it [00:00, 17.49it/s, center_shift=0.000281, iteration=10, tol=0.000100]
+[running kmeans]: 10it [00:00, 18.21it/s, center_shift=0.000281, iteration=10, tol=0.000100]
+[running kmeans]: 10it [00:00, 18.21it/s, center_shift=0.000154, iteration=11, tol=0.000100]
+[running kmeans]: 11it [00:00, 18.21it/s, center_shift=0.000101, iteration=12, tol=0.000100]
+[running kmeans]: 12it [00:00, 18.67it/s, center_shift=0.000101, iteration=12, tol=0.000100]
+[running kmeans]: 12it [00:00, 18.67it/s, center_shift=0.000071, iteration=13, tol=0.000100]
+[running kmeans]: 13it [00:00, 17.73it/s, center_shift=0.000071, iteration=13, tol=0.000100]
 category length:  [1094, 38516, 55339]
 Latent dims of each category:  [[3], [121], [176]]
 Number of parameters: 57570723
@@ -28,3 +49,4 @@ Traceback (most recent call last):
   File "/home/lcur2470/RS/LT-DiffRec/models/gaussian_diffusion.py", line 126, in p_sample
     assert (
 AssertionError: Too much steps in inference. steps is 10, but GaussianDiffusion.steps is 5
+LT_Train_AMAZON_CLEAN_LUKE_11929254.out
