@@ -67,10 +67,10 @@ def print_results(loss, valid_result, test_result):
             len(valid_result[3]),
         )
         print(
-            f"[Valid]: Precisions ({l_p}), Recalls ({l_r}), NDCGs ({l_n}), MRRs ({l_m}):"
+            f"[Valid]: Precisions ({l_p}), Recalls ({l_r}), NDCGs ({l_n}), MRRs ({l_m}):\n"
         )
         print(
-            "{} {} {} {}".format(
+            "{}\n {}\n {}\n {}\n".format(
                 "\n".join([str(x) for x in valid_result[0]]),
                 "\n".join([str(x) for x in valid_result[1]]),
                 "\n".join([str(x) for x in valid_result[2]]),
@@ -85,7 +85,10 @@ def print_results(loss, valid_result, test_result):
             len(test_result[3]),
         )
         print(
-            "[Test]: {} {} {} {}".format(
+            f"[Test]: Precisions ({l_p}), Recalls ({l_r}), NDCGs ({l_n}), MRRs ({l_m}):\n"
+        )
+        print(
+            "{}\n {}\n {}\n {}\n".format(
                 "\n".join([str(x) for x in test_result[0]]),
                 "\n".join([str(x) for x in test_result[1]]),
                 "\n".join([str(x) for x in test_result[2]]),
