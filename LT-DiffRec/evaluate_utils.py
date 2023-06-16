@@ -60,8 +60,17 @@ def print_results(loss, valid_result, test_result):
     if loss is not None:
         print("[Train]: loss: {:.4f}".format(loss))
     if valid_result is not None:
+        l_p, l_r, l_n, l_m = (
+            len(valid_result[0]),
+            len(valid_result[1]),
+            len(valid_result[2]),
+            len(valid_result[3]),
+        )
         print(
-            "[Valid]: \nPrecision:\n {} \nRecall:\n {} \nNDCG:\n {} \nMRR:\n {}".format(
+            f"[Valid]: Precisions ({l_p}), Recalls ({l_r}), NDCGs ({l_n}), MRRs ({l_m}):"
+        )
+        print(
+            "{} {} {} {}".format(
                 "\n".join([str(x) for x in valid_result[0]]),
                 "\n".join([str(x) for x in valid_result[1]]),
                 "\n".join([str(x) for x in valid_result[2]]),
@@ -69,8 +78,14 @@ def print_results(loss, valid_result, test_result):
             )
         )
     if test_result is not None:
+        l_p, l_r, l_n, l_m = (
+            len(test_result[0]),
+            len(test_result[1]),
+            len(test_result[2]),
+            len(test_result[3]),
+        )
         print(
-            "[Test]:  \nPrecision:\n {} \nRecall:\n {} \nNDCG:\n {} \nMRR:\n{}".format(
+            "[Test]: {} {} {} {}".format(
                 "\n".join([str(x) for x in test_result[0]]),
                 "\n".join([str(x) for x in test_result[1]]),
                 "\n".join([str(x) for x in test_result[2]]),
