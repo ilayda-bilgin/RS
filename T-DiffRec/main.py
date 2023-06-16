@@ -122,7 +122,13 @@ parser.add_argument(
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
 
+parser.add_argument("--transformer_weighting", action="store_true", help="random seed")
+
 args = parser.parse_args()
+
+if args.transformer_weighting:
+    args.reweight = False  # no reweigting if transformer weighting is used
+
 print("args:", args)
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
@@ -187,9 +193,14 @@ diffusion = gd.GaussianDiffusion(
 ### Build MLP ###
 out_dims = eval(args.dims) + [n_item]
 in_dims = out_dims[::-1]
-model = DNN(in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm).to(
-    device
-)
+model = DNN(
+    in_dims,
+    out_dims,
+    args.emb_size,
+    time_type="cat",
+    norm=args.norm,
+    transformer_weighting=args.transformer_weighting,
+).to(device)
 
 optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 print("models ready.")
