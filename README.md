@@ -18,7 +18,7 @@ conda create --name rs --file requirements.yml
 
 ### ``WandB`` Logging
 
-We use [WandB](https://wandb.ai/site) to log the training process. To use it, you need to create a new project in WandB and get your API key. Then run the following command to login:
+We use [WandB](https://wandb.ai) to log the training process. To use it, you need to create a new project in WandB and get your API key. Then run the following command to login:
 ```bash
 wandb login
 ```
