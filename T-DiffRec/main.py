@@ -134,6 +134,17 @@ if args.dataset == "amazon-book_clean":
 elif args.dataset == "yelp_clean":
     args.steps = 5
     args.sampling_steps = 0
+elif args.dataset == "yelp_noisy":
+    args.steps = 5
+    args.sampling_steps = 0
+
+elif args.dataset == "ml-1m_clean":
+    args.steps = 5
+    args.sampling_steps = 0
+
+elif args.dataset == "ml-1m_noisy":
+    args.steps = 5
+    args.sampling_steps = 0
 else:
     args.steps = 100
     args.sampling_steps = 0
@@ -206,7 +217,7 @@ diffusion = gd.GaussianDiffusion(
 ### Build MLP ###
 out_dims = eval(args.dims) + [n_item]
 in_dims = out_dims[::-1]
-model = DNN(in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm).to(
+model = DNN(in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm,steps=args.steps).to(
     device
 )
 

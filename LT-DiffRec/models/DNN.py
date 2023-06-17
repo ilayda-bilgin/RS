@@ -9,7 +9,7 @@ class DNN(nn.Module):
     """
     A deep neural network for the reverse process of latent diffusion.
     """
-    def __init__(self, in_dims, out_dims, emb_size, time_type="cat", norm=False, act_func='tanh', dropout=0.5):
+    def __init__(self, in_dims, out_dims, emb_size, time_type="cat", norm=False, act_func='tanh',steps=5,shape=10,  dropout=0.5):
         super(DNN, self).__init__()
         self.in_dims = in_dims
         self.out_dims = out_dims
@@ -17,6 +17,8 @@ class DNN(nn.Module):
         self.time_emb_dim = emb_size
         self.time_type = time_type
         self.norm = norm
+        self.param = torch.nn.Parameter(torch.rand(steps,shape))
+
         
         self.emb_layer = nn.Linear(self.time_emb_dim, self.time_emb_dim)
 
