@@ -26,4 +26,5 @@ source activate rs
 # python ./LT-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=1 --sampling_steps 0 --steps 100
 # python ./LT-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 
 python ./LT-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --num_workers 0
+python ./LT-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --num_workers 0
 conda deactivate

@@ -28,12 +28,7 @@ from copy import deepcopy
 
 import random
 
-random_seed = 1
-torch.manual_seed(random_seed)  # cpu
-torch.cuda.manual_seed(random_seed)  # gpu
-np.random.seed(random_seed)  # numpy
-random.seed(random_seed)  # random and transforms
-torch.backends.cudnn.deterministic = True  # cudnn
+import wandb
 
 
 def worker_init_fn(worker_id):
@@ -74,7 +69,9 @@ parser.add_argument("--log_name", type=str, default="log", help="the log name")
 parser.add_argument("--round", type=int, default=1, help="record the experiment")
 
 # params for the Autoencoder
-parser.add_argument("--n_cate", type=int, default=2, help="category num of items") #default was 3, now it's 2 acccording to checkpoints
+parser.add_argument(
+    "--n_cate", type=int, default=2, help="category num of items"
+)  # default was 3, now it's 2 acccording to checkpoints
 parser.add_argument(
     "--in_dims", type=str, default="[300]", help="the dims for the encoder"
 )
@@ -130,7 +127,7 @@ parser.add_argument(
 parser.add_argument(
     "--mean_type", type=str, default="x0", help="MeanType for diffusion: x0, eps"
 )
-#parser.add_argument("--steps", type=int, default=5, help="diffusion steps")
+# parser.add_argument("--steps", type=int, default=5, help="diffusion steps")
 parser.add_argument(
     "--noise_schedule",
     type=str,
@@ -145,9 +142,9 @@ parser.add_argument("--noise_max", type=float, default=0.02)
 parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
-#parser.add_argument(
-  #  "--sampling_steps", type=int, default=10, help="steps for sampling/denoising"
-#)  # TODO must be smaller or equal 5
+# parser.add_argument(
+#  "--sampling_steps", type=int, default=10, help="steps for sampling/denoising"
+# )  # TODO must be smaller or equal 5
 parser.add_argument(
     "--reweight",
     type=bool,
@@ -157,10 +154,21 @@ parser.add_argument(
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
 
-parser.add_argument("--clustering_method", type=str, default="kmeans" , help="type of clustering")
-parser.add_argument("--model_type", type=str, default="L-DiffRec" , help="type DRS Model")
+parser.add_argument(
+    "--clustering_method", type=str, default="kmeans", help="type of clustering"
+)
+parser.add_argument(
+    "--model_type", type=str, default="L-DiffRec", help="type DRS Model"
+)
+
+parser.add_argument(
+    "--run_name", type=str, default="", help="run name extension for wandb"
+)
+
+parser.add_argument("--seed", type=int, default=1, help="random seed")
+
+
 args = parser.parse_args()
-print("args:", args)
 
 
 if args.dataset == "amazon-book_clean":
@@ -186,6 +194,23 @@ else:
     args.sampling_steps = 10
 
 print("args:", args)
+
+random_seed = args.seed
+torch.manual_seed(random_seed)  # cpu
+torch.cuda.manual_seed(random_seed)  # gpu
+np.random.seed(random_seed)  # numpy
+random.seed(random_seed)  # random and transforms
+torch.backends.cudnn.deterministic = True  # cudnn
+
+# init wandb
+wandb.init(
+    name=f"{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}",
+    project="drs",
+    notes="This is a test run",
+    tags=[f"{args.model_type}", f"{args.dataset}"],
+    entity="drs",
+    config=args,
+)
 
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
@@ -232,8 +257,17 @@ assert len(item_emb) == n_item
 out_dims = eval(args.out_dims)
 in_dims = eval(args.in_dims)[::-1]
 Autoencoder = AE(
-    item_emb, args.n_cate, in_dims, out_dims, device, args.act_func, args.reparam, args.clustering_method
+    item_emb,
+    args.n_cate,
+    in_dims,
+    out_dims,
+    device,
+    args.act_func,
+    args.reparam,
+    args.clustering_method,
 ).to(device)
+
+wandb.watch(Autoencoder)
 
 ### Build Gaussian Diffusion ###
 if args.mean_type == "x0":
@@ -312,7 +346,31 @@ elif args.optimizer2 == "Momentum":
     optimizer2 = optim.SGD(
         model.parameters(), lr=args.lr2, momentum=0.95, weight_decay=args.wd2
     )
+
+wandb.watch(model)
+
 print("models ready.")
+
+
+def log_results(results, epoch, topN, mode="valid"):
+    """Log results to wandb."""
+    precisions, recalls, NDCGs, MRRs = results
+
+    assert (
+        len(precisions) == len(recalls) == len(NDCGs) == len(MRRs) == len(topN)
+    ), f"Lengths not equal: {len(precisions)}, {len(recalls)}, {len(NDCGs)}, {len(MRRs)}, {len(topN)}"
+
+    # log all metrics @ topN individually
+    for i, k in enumerate(topN):
+        wandb.log(
+            {
+                "Epoch": epoch,
+                f"{mode} Precision@{k}": precisions[i],
+                f"{mode} Recall@{k}": recalls[i],
+                f"{mode} NDCG@{k}": NDCGs[i],
+                f"{mode} MRR@{k}": MRRs[i],
+            }
+        )
 
 
 def evaluate(data_loader, data_te, mask_his, topN):
@@ -465,20 +523,30 @@ for epoch in range(1, args.epochs + 1):
         update_count_vae += 1
 
         total_loss += loss
+
+        wandb.log({"batch_loss_train": loss})
+
         loss.backward()
         optimizer1.step()
         optimizer2.step()
 
     update_count += 1
 
+    wandb.log({"epoch_loss_norm_train": total_loss / batch_count, "Epoch": epoch})
+
     if epoch % 5 == 0:
         valid_results = evaluate(test_loader, valid_y_data, mask_train, eval(args.topN))
+
+        log_results(valid_results, epoch, eval(args.topN), mode="valid")
+
         if args.tst_w_val:
             test_results = evaluate(
                 test_twv_loader, test_y_data, mask_tv, eval(args.topN)
             )
         else:
             test_results = evaluate(test_loader, test_y_data, mask_tv, eval(args.topN))
+
+        log_results(test_results, epoch, eval(args.topN), mode="test")
         evaluate_utils.print_results(None, valid_results, test_results)
 
         if valid_results[1][1] > best_recall:  # recall@20 as selection
@@ -553,3 +621,8 @@ print("===" * 18)
 print("End. Best Epoch {:03d} ".format(best_epoch))
 evaluate_utils.print_results(None, best_results, best_test_results)
 print("End time: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
+
+log_results(best_results, best_epoch, eval(args.topN), mode="best_valid")
+log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
+
+wandb.finish()

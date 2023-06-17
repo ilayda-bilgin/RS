@@ -9,3 +9,4 @@ datasets/.DS_Store
 DiffRec/models/__pycache__/*
 
 .DS_Store
+wandb/*
