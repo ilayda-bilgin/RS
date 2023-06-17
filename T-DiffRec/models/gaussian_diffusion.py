@@ -8,6 +8,7 @@ import torch.nn as nn
 class ModelMeanType(enum.Enum):
     START_X = enum.auto()  # the model predicts x_0
     EPSILON = enum.auto()  # the model predicts epsilon
+    LEARNABLE_PARAM = enum.auto()# the model predicts epsilon
 
 class GaussianDiffusion(nn.Module):
     def __init__(self, mean_type, noise_schedule, noise_scale, noise_min, noise_max,\
@@ -133,6 +134,8 @@ class GaussianDiffusion(nn.Module):
         target = {
             ModelMeanType.START_X: x_start,
             ModelMeanType.EPSILON: noise,
+            ModelMeanType.LEARNABLE_PARAM: x_start,
+
         }[self.mean_type]
 
         assert model_output.shape == target.shape == x_start.shape
@@ -149,6 +152,12 @@ class GaussianDiffusion(nn.Module):
                 weight = th.where((ts == 0), 1.0, weight)
                 likelihood = mean_flat((x_start - self._predict_xstart_from_eps(x_t, ts, model_output))**2 / 2.0)
                 loss = th.where((ts == 0), likelihood, mse)
+
+            if self.mean_type == ModelMeanType.LEARNABLE_PARAM:
+                weight = self.SNR(ts - 1) - self.SNR(ts)
+                weight = model.param * weight
+                weight = th.where((ts == 0), 1.0, weight)
+                loss = mse
         else:
             weight = th.tensor([1.0] * len(target)).to(device)
 
@@ -250,6 +259,8 @@ class GaussianDiffusion(nn.Module):
             pred_xstart = model_output
         elif self.mean_type == ModelMeanType.EPSILON:
             pred_xstart = self._predict_xstart_from_eps(x, t, eps=model_output)
+        elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
+            pred_xstart = model_output
         else:
             raise NotImplementedError(self.mean_type)
         

@@ -171,7 +171,8 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
-
+if args.mean_type == 'x0_learnable':
+    train_data = train_data_ori
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
         torch.FloatTensor(train_data.A) + torch.FloatTensor(valid_y_data.A)
@@ -187,6 +188,8 @@ if args.mean_type == "x0":
     mean_type = gd.ModelMeanType.START_X
 elif args.mean_type == "eps":
     mean_type = gd.ModelMeanType.EPSILON
+elif args.mean_type == 'x0_learnable':
+    mean_type = gd.ModelMeanType.LEARNABLE_PARAM
 else:
     raise ValueError("Unimplemented mean type %s" % args.mean_type)
 

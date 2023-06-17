@@ -16,6 +16,7 @@ class DNN(nn.Module):
         self.time_type = time_type
         self.time_emb_dim = emb_size
         self.norm = norm
+        self.param = torch.nn.Parameter(torch.rand(1))
 
         self.emb_layer = nn.Linear(self.time_emb_dim, self.time_emb_dim)
 
