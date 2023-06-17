@@ -9,7 +9,7 @@ import torch.nn as nn
 class ModelMeanType(enum.Enum):
     START_X = enum.auto()  # the model predicts x_0
     EPSILON = enum.auto()  # the model predicts epsilon
-
+    LEARNABLE_PARAM = enum.auto()
 
 class GaussianDiffusion(nn.Module):
     def __init__(
@@ -158,7 +158,7 @@ class GaussianDiffusion(nn.Module):
 
     def training_losses(self, model, x_start, reweight=False):
         batch_size, device = x_start.size(0), x_start.device
-        ts, pt = self.sample_timesteps(batch_size, device, "importance")
+        ts, pt = self.sample_timesteps(batch_size, device, 'importance', model)
         noise = th.randn_like(x_start)
         if self.noise_scale != 0.0:
             x_t = self.q_sample(x_start, ts, noise)
@@ -170,6 +170,7 @@ class GaussianDiffusion(nn.Module):
         target = {
             ModelMeanType.START_X: x_start,
             ModelMeanType.EPSILON: noise,
+            ModelMeanType.LEARNABLE_PARAM: x_start,
         }[self.mean_type]
 
         assert model_output.shape == target.shape == x_start.shape
@@ -192,6 +193,11 @@ class GaussianDiffusion(nn.Module):
                     / 2.0
                 )
                 loss = th.where((ts == 0), likelihood, mse)
+
+            elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
+                weight = self.SNR(ts - 1) - self.SNR(ts)
+                weight = th.where((ts == 0), 1.0, weight)
+                loss = mse
         else:
             weight = th.tensor([1.0] * len(target)).to(device)
 
@@ -221,16 +227,14 @@ class GaussianDiffusion(nn.Module):
         terms["loss"] /= pt
         return terms
 
-    def sample_timesteps(
-        self, batch_size, device, method="uniform", uniform_prob=0.001
-    ):
-        if method == "importance":  # importance sampling
+    def sample_timesteps(self, batch_size, device, method='uniform',model=None, uniform_prob=0.001):
+        if method == 'importance':  # importance sampling
             if not (self.Lt_count == self.history_num_per_term).all():
-                return self.sample_timesteps(batch_size, device, method="uniform")
-
-            Lt_sqrt = th.sqrt(th.mean(self.Lt_history**2, axis=-1))
+                return self.sample_timesteps(batch_size, device, method='uniform')
+            new_hist = model.param*self.Lt_history.clone()
+            Lt_sqrt = th.sqrt(th.mean(new_hist ** 2, axis=-1))
             pt_all = Lt_sqrt / th.sum(Lt_sqrt)
-            pt_all *= 1 - uniform_prob
+            pt_all *= 1- uniform_prob
             pt_all += uniform_prob / len(pt_all)
 
             assert pt_all.sum(-1) - 1.0 < 1e-5
@@ -305,6 +309,9 @@ class GaussianDiffusion(nn.Module):
             pred_xstart = model_output
         elif self.mean_type == ModelMeanType.EPSILON:
             pred_xstart = self._predict_xstart_from_eps(x, t, eps=model_output)
+
+        elif self.mean_type ==  ModelMeanType.LEARNABLE_PARAM:
+            pred_xstart = model_output
         else:
             raise NotImplementedError(self.mean_type)
 
