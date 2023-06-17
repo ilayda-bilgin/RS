@@ -164,6 +164,10 @@ parser.add_argument(
 
 parser.add_argument("--seed", type=int, default=1, help="random seed")
 
+parser.add_argument(
+    "--model_type", type=str, default="LT-DiffRec", help="type DRS Model"
+)
+
 args = parser.parse_args()
 
 if args.dataset == "amazon-book_clean":

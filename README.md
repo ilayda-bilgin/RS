@@ -13,8 +13,16 @@ This is the pytorch implementation of our paper at SIGIR 2023:
 ## Usage
 ### Environment
 ```bash
-conda create --name rs --file requirements.txt
+conda create --name rs --file requirements.yml
 ```
+
+### ``WandB`` Logging
+
+We use [WandB](https://wandb.ai/site) to log the training process. To use it, you need to create a new project in WandB and get your API key. Then run the following command to login:
+```bash
+wandb login
+```
+and input your API key.
 
 
 ### Data
