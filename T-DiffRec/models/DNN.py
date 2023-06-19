@@ -45,6 +45,7 @@ class TransformerModel(nn.Module):
         d_hid: int,
         nlayers: int,
         dropout: float = 0.5,
+        max_len_pos_enc: int = 5000,
     ):
         """Transformer model to learn a weighting of the input features.
 
@@ -58,11 +59,13 @@ class TransformerModel(nn.Module):
         """
         super().__init__()
         self.model_type = "Transformer"
-        self.pos_encoder = PositionalEncoding(d_model, dropout)
+        self.pos_encoder = PositionalEncoding(d_model, dropout, max_len=max_len_pos_enc)
         encoder_layers = nn.TransformerEncoderLayer(d_model, nhead, d_hid, dropout)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayers)
         self.d_model = d_model
         self.linear = nn.Linear(d_model, ntoken)
+
+        self.max_len_pos_enc = max_len_pos_enc
 
         self.init_weights()
 
@@ -81,8 +84,27 @@ class TransformerModel(nn.Module):
             output Tensor of shape ``[seq_len, batch_size, ntoken]``
         """
         print(f"Input shape: {src.shape}")
-        src = self.pos_encoder(src)  # expands last dim to d_model
-        output = self.transformer_encoder(src, src_mask)
+        src_transformed = src.unsqueeze(-1)
+        print(f"Input shape after unsqueezing: {src_transformed.shape}")
+
+        # permute from [batch_size, features, n_token] to [features, batch_size, ntoken]
+        src_transformed = src_transformed.permute(1, 0, 2)
+        print(
+            f"Input shape after permuting: {src_transformed.shape}"
+        )  # [34395, 400, 1]
+
+        # keep only the last max_len_pos_enc timesteps of the interactions
+        src_transformed = src_transformed[-self.max_len_pos_enc :, :, :]
+        print(
+            f"Input shape after keeping only last max_len_pos_enc: {src_transformed.shape}"
+        )
+
+        src_transformed = self.pos_encoder(
+            src_transformed
+        )  # expands last dim to d_model
+        output = self.transformer_encoder(
+            src_transformed, src_mask
+        )  # mask is None, because not needed here
         print(f"After transformer encoder: {output.shape}")
         output = self.linear(output)  # reduces the last dim again to ntoken=1.
         return output
@@ -120,7 +142,6 @@ class DNN(nn.Module):
             in_dims_temp = [self.in_dims[0] + self.time_emb_dim] + self.in_dims[1:]
             for d_in, d_out in zip(in_dims_temp[:-1], in_dims_temp[1:]):
                 print(f"d_in: {d_in}, d_out: {d_out}")
-                exit()
 
         else:
             raise ValueError(
@@ -147,7 +168,13 @@ class DNN(nn.Module):
         # NEW: Transformer encoder
         if self.transformer_weighting:
             self.transformer_encoder = TransformerModel(
-                ntoken=1, d_model=12, nhead=3, d_hid=12, nlayers=6, dropout=0.5
+                ntoken=1,
+                d_model=2,
+                nhead=2,
+                d_hid=2,
+                nlayers=2,
+                dropout=0.5,
+                max_len_pos_enc=5000,  # TODO make this dynamic
             )
 
     def init_weights(self):
