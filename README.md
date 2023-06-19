@@ -20,7 +20,7 @@ conda create --name rs --file requirements.yml
 
 We use [WandB](https://wandb.ai) to log the training process. To use it, you need to create a new project in WandB and get your API key. Then run the following command to login:
 ```bash
-wandb login
+python3 -m wandb login
 ```
 and input your API key. 
 
