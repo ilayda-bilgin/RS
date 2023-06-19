@@ -3,15 +3,16 @@ import torch.nn.functional as F
 import torch
 import numpy as np
 import math
+import hdbscan
 from torch.nn.init import xavier_normal_, constant_, xavier_uniform_
 from kmeans_pytorch import kmeans
 
 #to try a different clustering GMM
-#from sklearn.mixture import GaussianMixture
-
+from sklearn.mixture import GaussianMixture
 
 # to try hierarchical clustering 
 from sklearn.cluster import AgglomerativeClustering
+
 
 
 class AutoEncoder(nn.Module):
@@ -74,23 +75,28 @@ class AutoEncoder(nn.Module):
                 hierarchical = AgglomerativeClustering(n_clusters=n_cate, affinity='euclidean', linkage='ward')
                 self.cluster_ids = hierarchical.fit_predict(item_emb)
 
-            # perform clustering with gaussian mixture model 
-            #elif clustering_method == "gmm":
-               # gmm = GaussianMixture(n_components=n_cate, covariance_type='full')
-               # gmm.fit(item_emb)
-               # self.cluster_ids = gmm.predict(item_emb)
-     
+            #apply hdbscan for clustering
+            #elif clustering_method == "hdbscan":
+            #    hdbscan_model = hdbscan.HDBSCAN(min_cluster_size=1000, min_samples=5) #experiment with different cluster and sample sizes 
+            #    self.cluster_ids = hdbscan_model.fit_predict(item_emb)
+
+            #apply gaussian mixture model for clustering 
+            elif clustering_method == "gmm":
+                gmm = GaussianMixture(n_components=n_cate, covariance_type='full')
+                gmm.fit(item_emb)
+                self.cluster_ids = gmm.predict(item_emb)
+
             # cluster_ids(labels): [0, 1, 2, 2, 1, 0, 0, ...]
             category_idx = []
             for i in range(n_cate):
-                idx = np.argwhere(self.cluster_ids.numpy() == i).squeeze().tolist()
+                # idx = np.argwhere(self.cluster_ids.numpy() == i).squeeze().tolist()
+                idx = np.argwhere(self.cluster_ids == i).squeeze().tolist()
                 category_idx.append(torch.tensor(idx, dtype=int))
             self.category_idx = category_idx  # [cate1: [iid1, iid2, ...], cate2: [iid3, iid4, ...], cate3: [iid5, iid6, ...]]
             self.category_map = torch.cat(tuple(category_idx), dim=-1)  # map
             self.category_len = [len(self.category_idx[i]) for i in range(n_cate)]  # item num in each category
             print("category length: ", self.category_len)
             assert sum(self.category_len) == self.n_item
-
 
             ##### Build the Encoder and Decoder #####
             encoder_modules = [[] for _ in range(n_cate)]
