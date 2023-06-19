@@ -22,7 +22,9 @@ We use [WandB](https://wandb.ai) to log the training process. To use it, you nee
 ```bash
 wandb login
 ```
-and input your API key.
+and input your API key. 
+
+- `--run_name`: set flag in order to add a description to the run name, e.g. `--run_name=TEST`
 
 
 ### Data
