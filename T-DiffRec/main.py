@@ -126,6 +126,10 @@ parser.add_argument(
 
 parser.add_argument("--seed", type=int, default=1, help="random seed")
 
+parser.add_argument(
+    "--patience", type=int, default=20, help="patience for early stopping"
+)
+
 args = parser.parse_args()
 
 if args.dataset == "amazon-book_clean":
@@ -199,7 +203,7 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
-if args.mean_type == 'x0_learnable':
+if args.mean_type == "x0_learnable":
     train_data = train_data_ori
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
@@ -216,7 +220,7 @@ if args.mean_type == "x0":
     mean_type = gd.ModelMeanType.START_X
 elif args.mean_type == "eps":
     mean_type = gd.ModelMeanType.EPSILON
-elif args.mean_type == 'x0_learnable':
+elif args.mean_type == "x0_learnable":
     mean_type = gd.ModelMeanType.LEARNABLE_PARAM
 else:
     raise ValueError("Unimplemented mean type %s" % args.mean_type)
@@ -234,9 +238,9 @@ diffusion = gd.GaussianDiffusion(
 ### Build MLP ###
 out_dims = eval(args.dims) + [n_item]
 in_dims = out_dims[::-1]
-model = DNN(in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm,steps=args.steps).to(
-    device
-)
+model = DNN(
+    in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm, steps=args.steps
+).to(device)
 optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
 wandb.watch(model)
@@ -308,7 +312,7 @@ best_recall, best_epoch = -100, 0
 best_test_result = None
 print("Start training...")
 for epoch in range(1, args.epochs + 1):
-    if epoch - best_epoch >= 20:
+    if epoch - best_epoch >= args.patience:
         print("-" * 18)
         print("Exiting from training early")
         break

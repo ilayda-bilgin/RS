@@ -116,6 +116,10 @@ parser.add_argument(
 
 parser.add_argument("--seed", type=int, default=1, help="random seed")
 
+parser.add_argument(
+    "--patience", type=int, default=20, help="patience for early stopping"
+)
+
 args = parser.parse_args()
 
 
@@ -293,7 +297,7 @@ best_recall, best_epoch = -100, 0
 best_test_result = None
 print("Start training...")
 for epoch in range(1, args.epochs + 1):
-    if epoch - best_epoch >= 20:
+    if epoch - best_epoch >= args.patience:
         print("-" * 18)
         print("Exiting from training early")
         break

@@ -168,6 +168,10 @@ parser.add_argument(
     "--model_type", type=str, default="LT-DiffRec", help="type DRS Model"
 )
 
+parser.add_argument(
+    "--patience", type=int, default=20, help="patience for early stopping"
+)
+
 args = parser.parse_args()
 
 if args.dataset == "amazon-book_clean":
@@ -242,8 +246,7 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
-if args.mean_type == 'x0_learnable':
-
+if args.mean_type == "x0_learnable":
     train_data = train_data_ori
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
@@ -274,7 +277,7 @@ if args.mean_type == "x0":
     mean_type = gd.ModelMeanType.START_X
 elif args.mean_type == "eps":
     mean_type = gd.ModelMeanType.EPSILON
-elif args.mean_type == 'x0_learnable':
+elif args.mean_type == "x0_learnable":
     mean_type = gd.ModelMeanType.LEARNABLE_PARAM
 else:
     raise ValueError("Unimplemented mean type %s" % args.mean_type)
@@ -293,9 +296,14 @@ diffusion = gd.GaussianDiffusion(
 latent_size = in_dims[-1]
 mlp_out_dims = eval(args.mlp_dims) + [latent_size]
 mlp_in_dims = mlp_out_dims[::-1]
-model = DNN(mlp_in_dims, mlp_out_dims, args.emb_size, time_type="cat", norm=args.norm,steps=args.steps).to(
-    device
-)
+model = DNN(
+    mlp_in_dims,
+    mlp_out_dims,
+    args.emb_size,
+    time_type="cat",
+    norm=args.norm,
+    steps=args.steps,
+).to(device)
 
 param_num = 0
 AE_num = sum([param.nelement() for param in Autoencoder.parameters()])
@@ -466,7 +474,7 @@ else:
 print("Start training...")
 
 for epoch in range(1, args.epochs + 1):
-    if epoch - best_epoch >= 20:
+    if epoch - best_epoch >= args.patience:
         print("-" * 18)
         print("Exiting from training early")
         break
