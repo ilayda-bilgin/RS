@@ -3,7 +3,6 @@ import torch.nn.functional as F
 import torch
 import numpy as np
 import math
-import hdbscan
 from torch.nn.init import xavier_normal_, constant_, xavier_uniform_
 from kmeans_pytorch import kmeans
 
@@ -74,11 +73,6 @@ class AutoEncoder(nn.Module):
             elif clustering_method == "hierarchical":
                 hierarchical = AgglomerativeClustering(n_clusters=n_cate, affinity='euclidean', linkage='ward')
                 self.cluster_ids = hierarchical.fit_predict(item_emb)
-
-            #apply hdbscan for clustering
-            #elif clustering_method == "hdbscan":
-            #    hdbscan_model = hdbscan.HDBSCAN(min_cluster_size=1000, min_samples=5) #experiment with different cluster and sample sizes 
-            #    self.cluster_ids = hdbscan_model.fit_predict(item_emb)
 
             #apply gaussian mixture model for clustering 
             elif clustering_method == "gmm":
