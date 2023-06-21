@@ -1,5 +1,5 @@
 # Diffusion Recommender Model
-This is the pytorch implementation of our paper at SIGIR 2023:
+This is a reproduction and extension of the paper at SIGIR 2023:
 > [Diffusion Recommender Model](https://arxiv.org/abs/2304.04971)
 > 
 > Wenjie Wang, Yiyan Xu, Fuli Feng, Xinyu Lin, Xiangnan He, Tat-Seng Chua
@@ -29,6 +29,16 @@ and input your API key.
 
 ### Data
 The experimental data are in './datasets' folder, including Amazon-Book, Yelp and MovieLens-1M. Note that the item embedding files of Amazon-book for clean setting and noisy setting are not here due to filesize limits, which are available at [Google drive](https://drive.google.com/file/d/1PuUZsQrkHjqKh100qq0a2jZVgQDUxU2x/view?usp=share_link).
+
+### Modifications
+- modify early stopping **patience**: add flag `--patience` to set the number of epochs to wait before early stopping, default is 20.
+- use learnable **temporal weighting** feature: add flag `--mean_type=x0_learnable` to use learnable temporal weighting feature.
+
+For `L-DiffRec` and `LT-DiffRec`:
+- modify **cluserting algorithm**: add flag `--clustering_method=kmeans' to use default clustering method `kmeans`. Other implementations are `hierarchical`, `gmm`.
+-- modify the amount of clusters used: add flag `--n_cate 2` to set the number of clusters, default is 2.
+
+
 
 ### Training
 #### DiffRec
