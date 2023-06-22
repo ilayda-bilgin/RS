@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --partition=gpu_titanrtx_shared_course
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 #SBATCH --job-name=DiffRec
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
@@ -14,3 +14,15 @@ module load 2021
 module load Anaconda3/2021.05
 
 conda env create -f environment.yml
+
+source activate rs
+
+python3 -c "import torch; print(torch.cuda.is_available())"
+
+gdown --id 1bPnjO-EzIygjuvloLCGpqfBVnkrdG4IH
+unzip checkpoints.zip -d checkpoints
+rm checkpoints.zip
+
+
+
+source deactivate
