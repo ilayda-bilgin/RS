@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=3
 #SBATCH --time=24:00:00
 #SBATCH --mem=125000M
-#SBATCH --output=T_with-T-Enhancement_TEST_%A.out
+#SBATCH --output=T_with-learnable_weight_V2_LUKE_%A.out
 
 module purge
 module load 2021
@@ -22,7 +22,13 @@ source activate rs
 
 
 # Training
-python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=1 --run_name=TEST_1
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=1 --run_name=WEIGHT_TEST --mean_type=x0_learnable --visualize_weights # worked with 10 workser
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --run_name=LUKE --num_workers 0 --mean_type=x0_learnable 
+python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --run_name=LUKE_V2 --num_workers 0 --mean_type=x0_learnable --visualize_weights
+
+# Backup
+python utils/visualize_weights.py --dataset=amazon-book_clean --run_name=LUKE_V2 --model_type=T-DiffRec --seed 1 --workers 10
+
 
 
 conda deactivate
