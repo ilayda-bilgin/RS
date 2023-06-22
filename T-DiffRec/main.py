@@ -26,6 +26,7 @@ from copy import deepcopy
 import random
 
 import wandb
+import sys, os
 
 
 def worker_init_fn(worker_id):
@@ -130,6 +131,12 @@ parser.add_argument(
     "--patience", type=int, default=20, help="patience for early stopping"
 )
 
+parser.add_argument(
+    "--visualize_weights",
+    action="store_true",
+    help="visualize weights, only applicable if mean_type is x0_learnable",
+)
+
 args = parser.parse_args()
 
 if args.dataset == "amazon-book_clean":
@@ -152,6 +159,15 @@ elif args.dataset == "ml-1m_noisy":
 else:
     args.steps = 100
     args.sampling_steps = 0
+
+# import visualization function if needed
+if args.mean_type == "x0_learnable" and args.visualize_weights:
+    current = os.path.dirname(os.path.realpath(__file__))
+    parent = os.path.dirname(current)
+    sys.path.append(parent)
+
+    from utils.visualize_weights import generate_m_phate, create_phate_visualization
+
 
 print("args:", args)
 
@@ -327,6 +343,8 @@ for epoch in range(1, args.epochs + 1):
         batch = batch.to(device)
         batch_count += 1
         optimizer.zero_grad()
+
+        # HERE model=DNN, diffusion=GaussianDiffusion
         losses = diffusion.training_losses(model, batch, args.reweight)
         loss = losses["loss"].mean()
 
@@ -392,6 +410,7 @@ for epoch in range(1, args.epochs + 1):
     )
     print("---" * 18)
 
+
 print("===" * 18)
 print("End. Best Epoch {:03d} ".format(best_epoch))
 evaluate_utils.print_results(None, best_results, best_test_results)
@@ -399,5 +418,29 @@ print("End time: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time(
 
 log_results(best_results, best_epoch, eval(args.topN), mode="best_valid")
 log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
+
+
+# NEW Visualize learnable parameter
+if args.mean_type == "x0_learnable" and args.visualize_weights:
+    # stack the values into a single tensor
+    params_per_batch = torch.stack(model.param_storage, dim=0)
+    print(f"params_per_batch.shape: {params_per_batch.shape}")
+
+    # store as npy
+    params_per_batch = params_per_batch.detach().cpu().numpy()
+    np.save("params_per_batch.npy", params_per_batch)
+
+    # generate weight visualization
+    print(
+        f"params_per_batch shape: {params_per_batch.shape}"
+    )  # n_time_steps, n_points, n_dim
+
+    m_phate_data = generate_m_phate(params_per_batch)
+    print(f"MPHATE shape: {m_phate_data.shape}")
+    create_phate_visualization(
+        params_per_batch, m_phate_data, filename="phate-param.png"
+    )
+    wandb.log({"phate-param": wandb.Image("phate-param.png")})
+    print(f"Logged phate-param.png to wandb")
 
 wandb.finish()
