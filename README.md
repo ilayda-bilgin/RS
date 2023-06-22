@@ -46,7 +46,7 @@ We provide our working conda environment in the `environment.yml` file and add i
 
 
 ### Data
-The experimental data are in './datasets' folder, including Amazon-Book, Yelp and MovieLens-1M. 
+The experimental data are in the 'datasets' folder, and include Amazon-Book, Yelp and MovieLens-1M. 
 
 #### Checkpoints
 The checkpoints released by the authors are in './checkpoints' folder. To download them follow instructions in the Getting Started section.
@@ -55,7 +55,12 @@ The checkpoints released by the authors are in './checkpoints' folder. To downlo
 We use argparse flags to modify the hyperparameters of the models:
 - modify early stopping **patience**: add flag `--patience` to set the number of epochs to wait before early stopping, default is 20.
 - use learnable **temporal weighting** feature: add flag `--mean_type=x0_learnable` to use learnable temporal weighting feature.
-- visualize the weights using m-PHATE: add flags `--visualize_weights` and `--mean_type=x0_learnable`. The generated graphs are saved on WandB.
+- visualize the weights using m-PHATE: add flags `--visualize_weights` and `--mean_type=x0_learnable`. The generated graphs are saved on WandB. Alternatively, it is also possible to use the saved numpy array in the mPHATE folder to generate the graphs locally, using the `visualize_weights.py` script. 
+
+    `--workers` specifies the number of parallel processes to use for the mPHATE algorithm.
+    ```bash
+    python utils/visualize_weights.py --dataset=amazon-book_clean --run_name=learnable_weight_test --model_type=T-DiffRec --seed 1 --workers 10
+    ```
 
 For `L-DiffRec` and `LT-DiffRec`:
 - modify **cluserting algorithm**: add flag `--clustering_method=kmeans' to use default clustering method `kmeans`. Other implementations are `hierarchical`, `gmm`.
