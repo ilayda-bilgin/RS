@@ -185,7 +185,7 @@ elif args.dataset == "ml-1m_clean":
     args.sampling_steps = 0
 elif args.dataset == "ml-1m_noisy":
     args.steps = 100
-    arg.sampling_steps = 0
+    args.sampling_steps = 0
 elif args.dataset == "yelp_clean":
     args.steps = 5
     args.sampling_steps = 0
