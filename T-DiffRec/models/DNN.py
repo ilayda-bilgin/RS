@@ -32,6 +32,7 @@ class DNN(nn.Module):
         self.param = torch.nn.Parameter(torch.rand(steps, emb_size))
 
         # NEW
+        print(f"Embedding size: {self.time_emb_dim}")
         self.param_storage = []
 
         self.emb_layer = nn.Linear(self.time_emb_dim, self.time_emb_dim)

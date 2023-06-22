@@ -428,7 +428,13 @@ if args.mean_type == "x0_learnable" and args.visualize_weights:
 
     # store as npy
     params_per_batch = params_per_batch.detach().cpu().numpy()
-    np.save("params_per_batch.npy", params_per_batch)
+    np.save(
+        f"mPHATE/{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}_params_per_batch.npy",
+        params_per_batch,
+    )
+    print(
+        f"Saved params_per_batch.npy to mPHATE/{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}_params_per_batch.npy"
+    )
 
     # generate weight visualization
     print(
