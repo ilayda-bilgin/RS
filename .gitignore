@@ -10,3 +10,5 @@ DiffRec/models/__pycache__/*
 
 .DS_Store
 wandb/*
+params_per_batch.npy
+phate-param.png
