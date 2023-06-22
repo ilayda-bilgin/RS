@@ -23,7 +23,7 @@ We provide our working conda environment in the `environment.yml` file and add i
     ```
 3. activate the environment:
     ```bash
-    conda activate rs
+    source activate rs
     ```
 4. Download the checkpoints released on [Google drive](https://drive.google.com/file/d/1bPnjO-EzIygjuvloLCGpqfBVnkrdG4IH/view?usp=share_link).
     ```bash
@@ -55,6 +55,7 @@ The checkpoints released by the authors are in './checkpoints' folder. To downlo
 We use argparse flags to modify the hyperparameters of the models:
 - modify early stopping **patience**: add flag `--patience` to set the number of epochs to wait before early stopping, default is 20.
 - use learnable **temporal weighting** feature: add flag `--mean_type=x0_learnable` to use learnable temporal weighting feature.
+- visualize the weights using m-PHATE: add flags `--visualize_weights` and `--mean_type=x0_learnable`.
 
 For `L-DiffRec` and `LT-DiffRec`:
 - modify **cluserting algorithm**: add flag `--clustering_method=kmeans' to use default clustering method `kmeans`. Other implementations are `hierarchical`, `gmm`.
