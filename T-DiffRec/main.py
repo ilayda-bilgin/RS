@@ -425,7 +425,7 @@ log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
 
 
 # NEW Store learnable parameter
-if args.mean_type == "x0_learnable" and args.visualize_weights:
+if args.mean_type == "x0_learnable":
     # stack the values into a single tensor
     params_per_batch = torch.stack(model.param_storage, dim=0)
     print(f"params_per_batch.shape: {params_per_batch.shape}")
