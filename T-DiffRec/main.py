@@ -137,6 +137,10 @@ parser.add_argument(
     help="visualize weights, only applicable if mean_type is x0_learnable",
 )
 
+parser.add_argument(
+    "--workers", type=int, default=10, help="number of workers for m-phate"
+)
+
 args = parser.parse_args()
 
 if args.dataset == "amazon-book_clean":
@@ -442,10 +446,12 @@ if args.mean_type == "x0_learnable" and args.visualize_weights:
         f"params_per_batch shape: {params_per_batch.shape}"
     )  # n_time_steps, n_points, n_dim
 
-    m_phate_data = generate_m_phate(params_per_batch)
+    m_phate_data = generate_m_phate(params_per_batch, num_workers=args.workers)
     print(f"MPHATE shape: {m_phate_data.shape}")
     create_phate_visualization(
-        params_per_batch, m_phate_data, filename="phate-param.png"
+        params_per_batch,
+        m_phate_data,
+        filename="phate-param.png",
     )
     wandb.log({"phate-param": wandb.Image("phate-param.png")})
     print(f"Logged phate-param.png to wandb")
