@@ -27,7 +27,7 @@ source activate rs
 
 
 # Backup
-#python utils/visualize_weights.py --dataset=ml-1m_noisy --run_name=Visualization --model_type=T-DiffRec --seed 1 --workers 10
+python utils/visualize_weights.py --dataset=ml-1m_noisy --run_name=Visualization --model_type=T-DiffRec --seed 1 --workers 10
 
 
 
