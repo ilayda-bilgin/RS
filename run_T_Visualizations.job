@@ -21,11 +21,11 @@ source activate rs
 
 # python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 --run_name=Visualization --mean_type=x0_learnable --visualize_weights # DONE
 # python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=1 --run_name=Visualization --mean_type=x0_learnable --visualize_weights # DONE, vis is seperate
-python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=1 --run_name=Visualization --mean_type=x0_learnable --visualize_weights # TODO
-python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --run_name=Visualization --num_workers 0 --mean_type=x0_learnable --visualize_weights # TODO
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=1 --run_name=Visualization --mean_type=x0_learnable --visualize_weights # DONE, vis is TODO
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --run_name=Visualization --num_workers 0 --mean_type=x0_learnable --visualize_weights # TODO?
 
 # Backup
-# python utils/visualize_weights.py --dataset=yelp_noisy --run_name=Visualization --model_type=T-DiffRec --seed 1 --workers 10
+python utils/visualize_weights.py --dataset=ml-1m_noisy --run_name=Visualization --model_type=T-DiffRec --seed 1 --workers 10
 
 
 
