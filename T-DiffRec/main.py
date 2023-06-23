@@ -420,7 +420,7 @@ log_results(best_results, best_epoch, eval(args.topN), mode="best_valid")
 log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
 
 
-# NEW Visualize learnable parameter
+# NEW Store learnable parameter
 if args.mean_type == "x0_learnable" and args.visualize_weights:
     # stack the values into a single tensor
     params_per_batch = torch.stack(model.param_storage, dim=0)
@@ -436,6 +436,7 @@ if args.mean_type == "x0_learnable" and args.visualize_weights:
         f"Saved params_per_batch.npy to mPHATE/{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}_params_per_batch.npy"
     )
 
+if args.mean_type == "x0_learnable" and args.visualize_weights:
     # generate weight visualization
     print(
         f"params_per_batch shape: {params_per_batch.shape}"
