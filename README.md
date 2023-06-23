@@ -55,7 +55,7 @@ The checkpoints released by the authors are in './checkpoints' folder. To downlo
 We use argparse flags to modify the hyperparameters of the models:
 - modify early stopping **patience**: add flag `--patience` to set the number of epochs to wait before early stopping, default is 20.
 - use learnable **temporal weighting** feature: add flag `--mean_type=x0_learnable` to use learnable temporal weighting feature.
-- visualize the weights using m-PHATE: add flags `--visualize_weights` and `--mean_type=x0_learnable`. The generated graphs are saved on WandB. Alternatively, it is also possible to use the saved numpy array in the mPHATE folder to generate the graphs locally, using the `visualize_weights.py` script. 
+- visualize the weights using m-PHATE directly integrated into `main.py`: add flags `--visualize_weights` and `--mean_type=x0_learnable`. The generated graphs are saved on WandB. Alternatively, it is also possible to use the saved numpy array in the mPHATE folder to generate the graphs locally by passing only the flag `--mean_type=x0_learnable` and then use the `visualize_weights.py` script in a second step. 
 
     `--workers` specifies the number of parallel processes to use for the mPHATE algorithm.
     ```bash
