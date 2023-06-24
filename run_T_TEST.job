@@ -26,8 +26,8 @@ PATIENCE=200
 # python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE
 # python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE
 
-python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon_clean --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE --num_workers 0
-python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon_noisy --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE --num_workers 0
+python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE --num_workers 0
+python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE --num_workers 0
 
 
 conda deactivate
