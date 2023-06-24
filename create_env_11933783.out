@@ -1,0 +1,594 @@
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/site.cfg.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/deuniversalize.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/install-devel.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/repack.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/parent/mkl_repack_and_patchelf.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/blas-1.0-mkl/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/recipe/meta.yaml.template.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/test/test_time_dependencies.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/conda-env-2.6.0-1/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/recipe/meta.yaml.template.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/recipe/recipe_log.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/_libgcc_mutex-0.1-main/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/test/run_test.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/recipe/meta.yaml.template.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/licenses/LICENSE.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/link.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/path.py-12.5.0-0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/yum_requirements.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/recipe_log.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/install-data.bat.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/build_base.bat.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/fix_osx_1011_dep.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/install-data.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/parent/build_base.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/test/run_test.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/licenses/LICENSE/LICENSE.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/matplotlib-3.3.4-py38h06a4308_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/recipe/meta.yaml.template.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/test/run_test.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/test/test_time_dependencies.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/hash_input_files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/get_terminal_size-1.0.0-haa9412d_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/recipe/parent/build_base.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/recipe/parent/recipe_log.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/recipe/parent/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/recipe/parent/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/licenses/LICENSE.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/link.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/importlib_metadata-3.10.0-hd3eb1b0_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/parent/recipe_log.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/parent/build_base.bat.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/parent/build_base.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/parent/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/parent/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/test/run_test.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/licenses/LICENSE.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/link.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/prompt_toolkit-3.0.17-hd3eb1b0_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/test/run_test.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/recipe/meta.yaml.template.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/licenses/LICENSE.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/link.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/dask-2021.4.0-pyhd3eb1b0_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/patches/0004-disable-autorun-for-cmd-test.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/patches/0002-intel_mkl-version.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/patches/0006-popcnt_fix.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/patches/0005-array_coercion_fix.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/patches/0003-intel_init_mkl.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/patches/0001-Obtain-and-prefer-custom-gfortran-from-env-variable.patch.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/recipe_log.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/f2py.bat.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/install_base.bat.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/parent/install_base.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/test/test_time_dependencies.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/test/run_test.py.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/test/run_test.sh.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/licenses/LICENSE.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/numpy-1.20.1-py38h93e21f0_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/recipe/EULA.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/recipe/conda_build_config.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/recipe/meta.yaml.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/recipe/meta.yaml.template.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/licenses/EULA.txt.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/hash_input.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/paths.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/about.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/requires.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/index.json.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/git.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/files.  Please remove this file manually (you may need to reboot to free file handles)
+WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(143): Could not remove or rename /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs/anaconda-2021.05-py38_0/info/repodata_record.json.  Please remove this file manually (you may need to reboot to free file handles)
+Cache location: /home/lcur2420/.conda/pkgs
+Will remove the following tarballs:
+
+/home/lcur2420/.conda/pkgs
+--------------------------
+giflib-5.2.1-h36c2ea0_2.tar.bz2               77 KB
+pytorch-cuda-11.7-h778d358_5.tar.bz2           3 KB
+urllib3-1.26.16-py38h06a4308_0.conda         200 KB
+cuda-cudart-11.7.99-0.tar.bz2                194 KB
+libwebp-1.2.4-h11a3e52_1.conda                86 KB
+_libgcc_mutex-0.1-main.tar.bz2                 2 KB
+gmp-6.2.1-h58526e2_0.tar.bz2                 806 KB
+libtiff-4.5.0-h6a678d5_2.conda               479 KB
+libgcc-ng-11.2.0-h1234567_1.conda            5.3 MB
+python_abi-3.8-2_cp38.tar.bz2                  4 KB
+libcurand-10.3.2.106-0.tar.bz2              51.7 MB
+wheel-0.38.4-pyhd8ed1ab_0.tar.bz2             32 KB
+cuda-runtime-11.7.1-0.tar.bz2                  1 KB
+torchaudio-0.13.1-py38_cu117.tar.bz2         6.5 MB
+charset-normalizer-2.0.4-pyhd8ed1ab_0.tar.bz2      32 KB
+libcublas-11.10.3.66-0.tar.bz2             286.1 MB
+bottleneck-1.3.5-py38h7deecbd_0.conda        115 KB
+zlib-1.2.13-h5eee18b_0.conda                 103 KB
+mkl_fft-1.3.1-py38h8666266_1.tar.bz2         213 KB
+jpeg-9e-h166bdaf_1.tar.bz2                   268 KB
+python-3.8.10-h12debd9_8.tar.bz2            57.7 MB
+pytorch-mutex-1.0-cuda.tar.bz2                 3 KB
+openh264-2.1.1-h780b84a_0.tar.bz2            1.5 MB
+tk-8.6.12-h1ccaba5_0.conda                   3.0 MB
+libnvjpeg-11.8.0.2-0.tar.bz2                 2.2 MB
+libcufile-1.6.1.9-0.tar.bz2                  764 KB
+six-1.16.0-pyh6c4a22f_0.tar.bz2               14 KB
+torchvision-0.14.1-py38_cu117.tar.bz2       29.5 MB
+lame-3.100-h7f98852_1001.tar.bz2             496 KB
+libunistring-0.9.10-h7f98852_0.tar.bz2       1.4 MB
+libcusolver-11.4.0.1-0.tar.bz2              78.7 MB
+colorama-0.4.6-pyhd8ed1ab_0.tar.bz2           25 KB
+mkl-service-2.4.0-py38h95df7f1_0.tar.bz2      61 KB
+cuda-nvrtc-11.7.99-0.tar.bz2                17.3 MB
+libgomp-11.2.0-h1234567_1.conda              474 KB
+packaging-23.0-pyhd8ed1ab_0.conda             40 KB
+ld_impl_linux-64-2.38-h1181459_1.conda       654 KB
+cffi-1.15.1-py38h74dc2b5_0.conda             228 KB
+scipy-1.10.1-py38h14f4228_0.conda           22.4 MB
+pillow-9.4.0-py38h6a678d5_0.conda            723 KB
+libgfortran-ng-11.2.0-h69a702a_16.tar.bz2      23 KB
+nettle-3.7.3-hbbd107a_1.conda                809 KB
+intel-openmp-2021.4.0-h06a4308_3561.conda     4.2 MB
+readline-8.2-h5eee18b_0.conda                357 KB
+appdirs-1.4.4-pyh9f0ad1d_0.tar.bz2            13 KB
+libcufft-10.7.2.124-h4fbf590_0.tar.bz2      93.6 MB
+libdeflate-1.17-h5eee18b_0.conda              69 KB
+lz4-c-1.9.4-h6a678d5_0.conda                 154 KB
+libffi-3.3-h58526e2_2.tar.bz2                 51 KB
+pyopenssl-23.0.0-pyhd8ed1ab_0.conda          124 KB
+libstdcxx-ng-11.2.0-he4da1e4_16.tar.bz2      4.2 MB
+cuda-cupti-11.7.101-0.tar.bz2               22.9 MB
+freetype-2.12.1-h4a9f257_0.conda             626 KB
+bzip2-1.0.8-h7f98852_4.tar.bz2               484 KB
+pysocks-1.7.1-pyha2e5f31_6.tar.bz2            19 KB
+brotlipy-0.7.0-py38h0a891b7_1004.tar.bz2     342 KB
+libiconv-1.16-h516909a_0.tar.bz2             1.4 MB
+mkl_random-1.2.2-py38h1abd341_0.tar.bz2      364 KB
+cuda-libraries-11.7.1-0.tar.bz2                1 KB
+libwebp-base-1.2.4-h5eee18b_1.conda          376 KB
+requests-2.29.0-pyhd8ed1ab_0.conda            55 KB
+ncurses-6.4-h6a678d5_0.conda                 914 KB
+pip-23.0.1-pyhd8ed1ab_0.conda                1.3 MB
+libtasn1-4.19.0-h5eee18b_0.conda              63 KB
+lerc-3.0-h9c3ff4c_0.tar.bz2                  216 KB
+gnutls-3.6.15-he1e5248_0.conda               1.0 MB
+cuda-nvtx-11.7.91-0.tar.bz2                   57 KB
+cryptography-39.0.1-py38h9ce1e76_0.conda     1.4 MB
+pycparser-2.21-pyhd8ed1ab_0.tar.bz2          100 KB
+_openmp_mutex-5.1-1_gnu.conda                 21 KB
+certifi-2023.5.7-pyhd8ed1ab_0.conda          149 KB
+idna-3.4-pyhd8ed1ab_0.tar.bz2                 55 KB
+openssl-1.1.1t-h7f8727e_0.conda              3.7 MB
+xz-5.4.2-h5eee18b_0.conda                    642 KB
+sqlite-3.41.2-h5eee18b_0.conda               1.2 MB
+tqdm-4.65.0-pyhd8ed1ab_1.conda                86 KB
+zstd-1.5.5-hc292b87_0.conda                  647 KB
+ffmpeg-4.3-hf484d3e_0.tar.bz2                9.9 MB
+numpy-base-1.22.3-py38hf524024_0.conda       5.4 MB
+libpng-1.6.39-h5eee18b_0.conda               304 KB
+libcusparse-11.7.4.91-0.tar.bz2            151.1 MB
+libnpp-11.7.4.75-0.tar.bz2                 129.3 MB
+ca-certificates-2023.05.30-h06a4308_0.conda     120 KB
+typing_extensions-4.5.0-pyha770c72_0.conda      31 KB
+setuptools-67.8.0-py38h06a4308_0.conda       1.0 MB
+pooch-1.4.0-pyhd8ed1ab_0.tar.bz2              41 KB
+libidn2-2.3.4-h5eee18b_0.conda               146 KB
+libgfortran5-11.2.0-h5c6108e_16.tar.bz2      1.7 MB
+blas-1.0-mkl.tar.bz2                           1 KB
+pytorch-1.13.1-py3.8_cuda11.7_cudnn8.5.0_0.tar.bz2    1.14 GB
+mkl-2021.4.0-h06a4308_640.conda            142.6 MB
+numpy-1.22.3-py38he7a7128_0.conda             10 KB
+cudatoolkit-11.7.0-hd8887f6_10.tar.bz2     831.6 MB
+
+---------------------------------------------------
+Total:                                      3.08 GB
+
+Removed giflib-5.2.1-h36c2ea0_2.tar.bz2
+Removed pytorch-cuda-11.7-h778d358_5.tar.bz2
+Removed urllib3-1.26.16-py38h06a4308_0.conda
+Removed cuda-cudart-11.7.99-0.tar.bz2
+Removed libwebp-1.2.4-h11a3e52_1.conda
+Removed _libgcc_mutex-0.1-main.tar.bz2
+Removed gmp-6.2.1-h58526e2_0.tar.bz2
+Removed libtiff-4.5.0-h6a678d5_2.conda
+Removed libgcc-ng-11.2.0-h1234567_1.conda
+Removed python_abi-3.8-2_cp38.tar.bz2
+Removed libcurand-10.3.2.106-0.tar.bz2
+Removed wheel-0.38.4-pyhd8ed1ab_0.tar.bz2
+Removed cuda-runtime-11.7.1-0.tar.bz2
+Removed torchaudio-0.13.1-py38_cu117.tar.bz2
+Removed charset-normalizer-2.0.4-pyhd8ed1ab_0.tar.bz2
+Removed libcublas-11.10.3.66-0.tar.bz2
+Removed bottleneck-1.3.5-py38h7deecbd_0.conda
+Removed zlib-1.2.13-h5eee18b_0.conda
+Removed mkl_fft-1.3.1-py38h8666266_1.tar.bz2
+Removed jpeg-9e-h166bdaf_1.tar.bz2
+Removed python-3.8.10-h12debd9_8.tar.bz2
+Removed pytorch-mutex-1.0-cuda.tar.bz2
+Removed openh264-2.1.1-h780b84a_0.tar.bz2
+Removed tk-8.6.12-h1ccaba5_0.conda
+Removed libnvjpeg-11.8.0.2-0.tar.bz2
+Removed libcufile-1.6.1.9-0.tar.bz2
+Removed six-1.16.0-pyh6c4a22f_0.tar.bz2
+Removed torchvision-0.14.1-py38_cu117.tar.bz2
+Removed lame-3.100-h7f98852_1001.tar.bz2
+Removed libunistring-0.9.10-h7f98852_0.tar.bz2
+Removed libcusolver-11.4.0.1-0.tar.bz2
+Removed colorama-0.4.6-pyhd8ed1ab_0.tar.bz2
+Removed mkl-service-2.4.0-py38h95df7f1_0.tar.bz2
+Removed cuda-nvrtc-11.7.99-0.tar.bz2
+Removed libgomp-11.2.0-h1234567_1.conda
+Removed packaging-23.0-pyhd8ed1ab_0.conda
+Removed ld_impl_linux-64-2.38-h1181459_1.conda
+Removed cffi-1.15.1-py38h74dc2b5_0.conda
+Removed scipy-1.10.1-py38h14f4228_0.conda
+Removed pillow-9.4.0-py38h6a678d5_0.conda
+Removed libgfortran-ng-11.2.0-h69a702a_16.tar.bz2
+Removed nettle-3.7.3-hbbd107a_1.conda
+Removed intel-openmp-2021.4.0-h06a4308_3561.conda
+Removed readline-8.2-h5eee18b_0.conda
+Removed appdirs-1.4.4-pyh9f0ad1d_0.tar.bz2
+Removed libcufft-10.7.2.124-h4fbf590_0.tar.bz2
+Removed libdeflate-1.17-h5eee18b_0.conda
+Removed lz4-c-1.9.4-h6a678d5_0.conda
+Removed libffi-3.3-h58526e2_2.tar.bz2
+Removed pyopenssl-23.0.0-pyhd8ed1ab_0.conda
+Removed libstdcxx-ng-11.2.0-he4da1e4_16.tar.bz2
+Removed cuda-cupti-11.7.101-0.tar.bz2
+Removed freetype-2.12.1-h4a9f257_0.conda
+Removed bzip2-1.0.8-h7f98852_4.tar.bz2
+Removed pysocks-1.7.1-pyha2e5f31_6.tar.bz2
+Removed brotlipy-0.7.0-py38h0a891b7_1004.tar.bz2
+Removed libiconv-1.16-h516909a_0.tar.bz2
+Removed mkl_random-1.2.2-py38h1abd341_0.tar.bz2
+Removed cuda-libraries-11.7.1-0.tar.bz2
+Removed libwebp-base-1.2.4-h5eee18b_1.conda
+Removed requests-2.29.0-pyhd8ed1ab_0.conda
+Removed ncurses-6.4-h6a678d5_0.conda
+Removed pip-23.0.1-pyhd8ed1ab_0.conda
+Removed libtasn1-4.19.0-h5eee18b_0.conda
+Removed lerc-3.0-h9c3ff4c_0.tar.bz2
+Removed gnutls-3.6.15-he1e5248_0.conda
+Removed cuda-nvtx-11.7.91-0.tar.bz2
+Removed cryptography-39.0.1-py38h9ce1e76_0.conda
+Removed pycparser-2.21-pyhd8ed1ab_0.tar.bz2
+Removed _openmp_mutex-5.1-1_gnu.conda
+Removed certifi-2023.5.7-pyhd8ed1ab_0.conda
+Removed idna-3.4-pyhd8ed1ab_0.tar.bz2
+Removed openssl-1.1.1t-h7f8727e_0.conda
+Removed xz-5.4.2-h5eee18b_0.conda
+Removed sqlite-3.41.2-h5eee18b_0.conda
+Removed tqdm-4.65.0-pyhd8ed1ab_1.conda
+Removed zstd-1.5.5-hc292b87_0.conda
+Removed ffmpeg-4.3-hf484d3e_0.tar.bz2
+Removed numpy-base-1.22.3-py38hf524024_0.conda
+Removed libpng-1.6.39-h5eee18b_0.conda
+Removed libcusparse-11.7.4.91-0.tar.bz2
+Removed libnpp-11.7.4.75-0.tar.bz2
+Removed ca-certificates-2023.05.30-h06a4308_0.conda
+Removed typing_extensions-4.5.0-pyha770c72_0.conda
+Removed setuptools-67.8.0-py38h06a4308_0.conda
+Removed pooch-1.4.0-pyhd8ed1ab_0.tar.bz2
+Removed libidn2-2.3.4-h5eee18b_0.conda
+Removed libgfortran5-11.2.0-h5c6108e_16.tar.bz2
+Removed blas-1.0-mkl.tar.bz2
+Removed pytorch-1.13.1-py3.8_cuda11.7_cudnn8.5.0_0.tar.bz2
+Removed mkl-2021.4.0-h06a4308_640.conda
+Removed numpy-1.22.3-py38he7a7128_0.conda
+Removed cudatoolkit-11.7.0-hd8887f6_10.tar.bz2
+Cache location: /sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs
+Cache location: /home/lcur2420/.conda/pkgs
+Will remove the following packages:
+/sw/arch/Debian10/EB_production/2021/software/Anaconda3/2021.05/pkgs
+--------------------------------------------------------------------
+
+blas-1.0-mkl                                  15 KB
+conda-env-2.6.0-1                              6 KB
+_libgcc_mutex-0.1-main                         7 KB
+path.py-12.5.0-0                               8 KB
+matplotlib-3.3.4-py38h06a4308_0               92 KB
+get_terminal_size-1.0.0-haa9412d_0             7 KB
+importlib_metadata-3.10.0-hd3eb1b0_0          37 KB
+prompt_toolkit-3.0.17-hd3eb1b0_0              39 KB
+dask-2021.4.0-pyhd3eb1b0_0                    12 KB
+numpy-1.20.1-py38h93e21f0_0                   70 KB
+anaconda-2021.05-py38_0                       81 KB
+
+/home/lcur2420/.conda/pkgs
+--------------------------
+
+giflib-5.2.1-h36c2ea0_2                      312 KB
+pytorch-cuda-11.7-h778d358_5                  10 KB
+urllib3-1.26.16-py38h06a4308_0               775 KB
+cuda-cudart-11.7.99-0                        713 KB
+libwebp-1.2.4-h11a3e52_1                     289 KB
+_libgcc_mutex-0.1-main                         6 KB
+gmp-6.2.1-h58526e2_0                         3.2 MB
+libtiff-4.5.0-h6a678d5_2                     2.3 MB
+libgcc-ng-11.2.0-h1234567_1                 22.0 MB
+python_abi-3.8-2_cp38                         11 KB
+libcurand-10.3.2.106-0                      92.2 MB
+wheel-0.38.4-pyhd8ed1ab_0                    118 KB
+cuda-runtime-11.7.1-0                          4 KB
+torchaudio-0.13.1-py38_cu117                17.5 MB
+charset-normalizer-2.0.4-pyhd8ed1ab_0        129 KB
+libcublas-11.10.3.66-0                     462.4 MB
+bottleneck-1.3.5-py38h7deecbd_0              492 KB
+zlib-1.2.13-h5eee18b_0                       512 KB
+mkl_fft-1.3.1-py38h8666266_1                 706 KB
+jpeg-9e-h166bdaf_1                           995 KB
+python-3.8.10-h12debd9_8                   110.9 MB
+pytorch-mutex-1.0-cuda                         7 KB
+openh264-2.1.1-h780b84a_0                    4.8 MB
+tk-8.6.12-h1ccaba5_0                        10.8 MB
+libnvjpeg-11.8.0.2-0                         5.1 MB
+libcufile-1.6.1.9-0                          2.1 MB
+six-1.16.0-pyh6c4a22f_0                       50 KB
+torchvision-0.14.1-py38_cu117               81.6 MB
+lame-3.100-h7f98852_1001                     1.5 MB
+libunistring-0.9.10-h7f98852_0               5.1 MB
+libcusolver-11.4.0.1-0                     359.5 MB
+colorama-0.4.6-pyhd8ed1ab_0                   96 KB
+mkl-service-2.4.0-py38h95df7f1_0             193 KB
+cuda-nvrtc-11.7.99-0                        50.4 MB
+libgomp-11.2.0-h1234567_1                    1.3 MB
+packaging-23.0-pyhd8ed1ab_0                  152 KB
+ld_impl_linux-64-2.38-h1181459_1             2.8 MB
+cffi-1.15.1-py38h74dc2b5_0                   852 KB
+scipy-1.10.1-py38h14f4228_0                 81.6 MB
+pillow-9.4.0-py38h6a678d5_0                  2.5 MB
+libgfortran-ng-11.2.0-h69a702a_16             96 KB
+nettle-3.7.3-hbbd107a_1                      3.4 MB
+intel-openmp-2021.4.0-h06a4308_3561         29.2 MB
+readline-8.2-h5eee18b_0                      1.9 MB
+appdirs-1.4.4-pyh9f0ad1d_0                    46 KB
+libffi-3.3-h58526e2_2                        194 KB
+libcufft-10.7.2.124-h4fbf590_0             131.3 MB
+libdeflate-1.17-h5eee18b_0                   183 KB
+lz4-c-1.9.4-h6a678d5_0                       513 KB
+pyopenssl-23.0.0-pyhd8ed1ab_0                587 KB
+libstdcxx-ng-11.2.0-he4da1e4_16             11.6 MB
+cuda-cupti-11.7.101-0                       88.9 MB
+freetype-2.12.1-h4a9f257_0                   2.9 MB
+bzip2-1.0.8-h7f98852_4                       1.9 MB
+pysocks-1.7.1-pyha2e5f31_6                    65 KB
+brotlipy-0.7.0-py38h0a891b7_1004             799 KB
+libiconv-1.16-h516909a_0                     2.4 MB
+mkl_random-1.2.2-py38h1abd341_0              1.2 MB
+cuda-libraries-11.7.1-0                        4 KB
+libwebp-base-1.2.4-h5eee18b_1                1.1 MB
+requests-2.29.0-pyhd8ed1ab_0                 222 KB
+ncurses-6.4-h6a678d5_0                       5.6 MB
+pip-23.0.1-pyhd8ed1ab_0                      6.7 MB
+libtasn1-4.19.0-h5eee18b_0                   196 KB
+lerc-3.0-h9c3ff4c_0                          683 KB
+gnutls-3.6.15-he1e5248_0                     3.9 MB
+cuda-nvtx-11.7.91-0                          418 KB
+cryptography-39.0.1-py38h9ce1e76_0           6.7 MB
+pycparser-2.21-pyhd8ed1ab_0                  670 KB
+_openmp_mutex-5.1-1_gnu                      103 KB
+certifi-2023.5.7-pyhd8ed1ab_0                298 KB
+idna-3.4-pyhd8ed1ab_0                        293 KB
+openssl-1.1.1t-h7f8727e_0                   13.4 MB
+xz-5.4.2-h5eee18b_0                          3.3 MB
+sqlite-3.41.2-h5eee18b_0                     3.7 MB
+tqdm-4.65.0-pyhd8ed1ab_1                     366 KB
+zstd-1.5.5-hc292b87_0                        3.0 MB
+ffmpeg-4.3-hf484d3e_0                       24.1 MB
+numpy-base-1.22.3-py38hf524024_0            28.2 MB
+libpng-1.6.39-h5eee18b_0                     1.2 MB
+libcusparse-11.7.4.91-0                    228.6 MB
+libnpp-11.7.4.75-0                         210.7 MB
+ca-certificates-2023.05.30-h06a4308_0        223 KB
+typing_extensions-4.5.0-pyha770c72_0         132 KB
+setuptools-67.8.0-py38h06a4308_0             5.3 MB
+pooch-1.4.0-pyhd8ed1ab_0                     271 KB
+libidn2-2.3.4-h5eee18b_0                     405 KB
+libgfortran5-11.2.0-h5c6108e_16              6.6 MB
+blas-1.0-mkl                                   3 KB
+pytorch-1.13.1-py3.8_cuda11.7_cudnn8.5.0_0   958.6 MB
+mkl-2021.4.0-h06a4308_640                  817.6 MB
+numpy-1.22.3-py38he7a7128_0                   27 KB
+cudatoolkit-11.7.0-hd8887f6_10              1.58 GB
+
+---------------------------------------------------
+Total:                                      5.43 GB
+
+removing blas-1.0-mkl
+removing conda-env-2.6.0-1
+removing _libgcc_mutex-0.1-main
+removing path.py-12.5.0-0
+removing matplotlib-3.3.4-py38h06a4308_0
+removing get_terminal_size-1.0.0-haa9412d_0
+removing importlib_metadata-3.10.0-hd3eb1b0_0
+removing prompt_toolkit-3.0.17-hd3eb1b0_0
+removing dask-2021.4.0-pyhd3eb1b0_0
+removing numpy-1.20.1-py38h93e21f0_0
+removing anaconda-2021.05-py38_0
+removing giflib-5.2.1-h36c2ea0_2
+removing pytorch-cuda-11.7-h778d358_5
+removing urllib3-1.26.16-py38h06a4308_0
+removing cuda-cudart-11.7.99-0
+removing libwebp-1.2.4-h11a3e52_1
+removing _libgcc_mutex-0.1-main
+removing gmp-6.2.1-h58526e2_0
+removing libtiff-4.5.0-h6a678d5_2
+removing libgcc-ng-11.2.0-h1234567_1
+removing python_abi-3.8-2_cp38
+removing libcurand-10.3.2.106-0
+removing wheel-0.38.4-pyhd8ed1ab_0
+removing cuda-runtime-11.7.1-0
+removing torchaudio-0.13.1-py38_cu117
+removing charset-normalizer-2.0.4-pyhd8ed1ab_0
+removing libcublas-11.10.3.66-0
+removing bottleneck-1.3.5-py38h7deecbd_0
+removing zlib-1.2.13-h5eee18b_0
+removing mkl_fft-1.3.1-py38h8666266_1
+removing jpeg-9e-h166bdaf_1
+removing python-3.8.10-h12debd9_8
+removing pytorch-mutex-1.0-cuda
+removing openh264-2.1.1-h780b84a_0
+removing tk-8.6.12-h1ccaba5_0
+removing libnvjpeg-11.8.0.2-0
+removing libcufile-1.6.1.9-0
+removing six-1.16.0-pyh6c4a22f_0
+removing torchvision-0.14.1-py38_cu117
+removing lame-3.100-h7f98852_1001
+removing libunistring-0.9.10-h7f98852_0
+removing libcusolver-11.4.0.1-0
+removing colorama-0.4.6-pyhd8ed1ab_0
+removing mkl-service-2.4.0-py38h95df7f1_0
+removing cuda-nvrtc-11.7.99-0
+removing libgomp-11.2.0-h1234567_1
+removing packaging-23.0-pyhd8ed1ab_0
+removing ld_impl_linux-64-2.38-h1181459_1
+removing cffi-1.15.1-py38h74dc2b5_0
+removing scipy-1.10.1-py38h14f4228_0
+removing pillow-9.4.0-py38h6a678d5_0
+removing libgfortran-ng-11.2.0-h69a702a_16
+removing nettle-3.7.3-hbbd107a_1
+removing intel-openmp-2021.4.0-h06a4308_3561
+removing readline-8.2-h5eee18b_0
+removing appdirs-1.4.4-pyh9f0ad1d_0
+removing libffi-3.3-h58526e2_2
+removing libcufft-10.7.2.124-h4fbf590_0
+removing libdeflate-1.17-h5eee18b_0
+removing lz4-c-1.9.4-h6a678d5_0
+removing pyopenssl-23.0.0-pyhd8ed1ab_0
+removing libstdcxx-ng-11.2.0-he4da1e4_16
+removing cuda-cupti-11.7.101-0
+removing freetype-2.12.1-h4a9f257_0
+removing bzip2-1.0.8-h7f98852_4
+removing pysocks-1.7.1-pyha2e5f31_6
+removing brotlipy-0.7.0-py38h0a891b7_1004
+removing libiconv-1.16-h516909a_0
+removing mkl_random-1.2.2-py38h1abd341_0
+removing cuda-libraries-11.7.1-0
+removing libwebp-base-1.2.4-h5eee18b_1
+removing requests-2.29.0-pyhd8ed1ab_0
+removing ncurses-6.4-h6a678d5_0
+removing pip-23.0.1-pyhd8ed1ab_0
+removing libtasn1-4.19.0-h5eee18b_0
+removing lerc-3.0-h9c3ff4c_0
+removing gnutls-3.6.15-he1e5248_0
+removing cuda-nvtx-11.7.91-0
+removing cryptography-39.0.1-py38h9ce1e76_0
+removing pycparser-2.21-pyhd8ed1ab_0
+removing _openmp_mutex-5.1-1_gnu
+removing certifi-2023.5.7-pyhd8ed1ab_0
+removing idna-3.4-pyhd8ed1ab_0
+removing openssl-1.1.1t-h7f8727e_0
+removing xz-5.4.2-h5eee18b_0
+removing sqlite-3.41.2-h5eee18b_0
+removing tqdm-4.65.0-pyhd8ed1ab_1
+removing zstd-1.5.5-hc292b87_0
+removing ffmpeg-4.3-hf484d3e_0
+removing numpy-base-1.22.3-py38hf524024_0
+removing libpng-1.6.39-h5eee18b_0
+removing libcusparse-11.7.4.91-0
+removing libnpp-11.7.4.75-0
+removing ca-certificates-2023.05.30-h06a4308_0
+removing typing_extensions-4.5.0-pyha770c72_0
+removing setuptools-67.8.0-py38h06a4308_0
+removing pooch-1.4.0-pyhd8ed1ab_0
+removing libidn2-2.3.4-h5eee18b_0
+removing libgfortran5-11.2.0-h5c6108e_16
+removing blas-1.0-mkl
+removing pytorch-1.13.1-py3.8_cuda11.7_cudnn8.5.0_0
+removing mkl-2021.4.0-h06a4308_640
+removing numpy-1.22.3-py38he7a7128_0
+removing cudatoolkit-11.7.0-hd8887f6_10
+
+CondaValueError: prefix already exists: /home/lcur2420/.conda/envs/rs
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'torch'
+/var/spool/slurm/slurmd/job11933783/slurm_script: line 23: gdown: command not found
+unzip:  cannot find or open checkpoints.zip, checkpoints.zip.zip or checkpoints.zip.ZIP.
+rm: cannot remove 'checkpoints.zip': No such file or directory
+DeprecationWarning: 'source deactivate' is deprecated. Use 'conda deactivate'.
