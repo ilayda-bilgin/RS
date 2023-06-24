@@ -5,7 +5,7 @@
 #SBATCH --job-name=T-vis
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=6
-#SBATCH --time=10:00:00
+#SBATCH --time=24:00:00
 #SBATCH --mem=124000M
 #SBATCH --output=T_with-learnable_weight_VISUALIZATION_REST_Part_2_%A.out
 
