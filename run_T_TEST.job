@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #SBATCH --partition=gpu_titanrtx_shared_course
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 #SBATCH --job-name=T
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=125000M
-#SBATCH --output=T_with-learnable_weight_V2_LUKE_%A.out
+#SBATCH --output=T_Patience200_FINAL_Amzon_%A.out
 
 module purge
 module load 2021
@@ -16,19 +16,18 @@ module load Anaconda3/2021.05
 
 source activate rs
 
-# Inference
-# python ./T-DiffRec/inference.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=1 # DONE 
-# python ./T-DiffRec/inference.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 
+NAME='Patience_200'
 
+# small datasets
+SEED=1
+PATIENCE=200
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=yelp_clean --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=yelp_noisy --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE
+# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_noisy --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE
 
-# Training
-# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=1 --run_name=WEIGHT_TEST --mean_type=x0_learnable --visualize_weights # worked with 10 workser
-# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_noisy --cuda --gpu=1 --run_name=LUKE --num_workers 0 --mean_type=x0_learnable 
-python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon-book_clean --cuda --gpu=1 --run_name=LUKE_V2 --num_workers 0 --mean_type=x0_learnable --visualize_weights
-
-# Backup
-python utils/visualize_weights.py --dataset=amazon-book_clean --run_name=LUKE_V2 --model_type=T-DiffRec --seed 1 --workers 10
-
+python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon_clean --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE --num_workers 0
+python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=amazon_noisy --cuda --gpu=0 --run_name=$NAME --seed $SEED --patience $PATIENCE --num_workers 0
 
 
 conda deactivate
