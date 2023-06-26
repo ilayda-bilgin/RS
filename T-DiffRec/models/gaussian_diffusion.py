@@ -9,7 +9,7 @@ import torch.nn as nn
 class ModelMeanType(enum.Enum):
     START_X = enum.auto()  # the model predicts x_0
     EPSILON = enum.auto()  # the model predicts epsilon
-    LEARNABLE_PARAM = enum.auto()  # the model predicts epsilon
+    LEARNABLE_PARAM = enum.auto()
 
 
 class GaussianDiffusion(nn.Module):
@@ -24,6 +24,8 @@ class GaussianDiffusion(nn.Module):
         device,
         history_num_per_term=10,
         beta_fixed=True,
+        attention_weighting=False,
+        item_embeddings=None,
     ):
         self.mean_type = mean_type
         self.noise_schedule = noise_schedule
@@ -38,6 +40,9 @@ class GaussianDiffusion(nn.Module):
             device
         )
         self.Lt_count = th.zeros(steps, dtype=int).to(device)
+
+        self.attention_weighting = attention_weighting
+        self.item_embeddings = item_embeddings
 
         if noise_scale != 0.0:
             self.betas = th.tensor(self.get_betas(), dtype=th.float64).to(self.device)
@@ -159,9 +164,46 @@ class GaussianDiffusion(nn.Module):
                 x_t = out["mean"]
         return x_t
 
-    def training_losses(self, model, x_start, reweight=False):
+    def calculate_mean_embedding(self, interacted_indices, x_start):
+        interacted_indices = interacted_indices.nonzero()
+
+        # get the item embeddings for all items interacted with (x)
+        for user in range(x_start.shape[0]):
+            user_interacted_indices = interacted_indices[
+                interacted_indices[:, 0] == user
+            ]
+            interaction_embeddings = self.item_embeddings[
+                user_interacted_indices[:, 1], :
+            ]
+            print(f"interaction_embeddings: {interaction_embeddings}")
+            user_interacted_embeddings[user] = interaction_embeddings.mean(
+                dim=0, dtype=th.float64
+            )
+
+        user_interacted_embeddings = th.nan_to_num(user_interacted_embeddings)
+
+        return user_interacted_embeddings
+
+    def training_losses(
+        self,
+        model,
+        x_start,
+        reweight=False,
+    ):
+        """self: Diffusion Model
+        Model: DNN
+        x_start:  batch from data loader, bs x n_items ([400, 2810])
+        ts: [400], int
+        pt: [400, float
+        x_t: 400, 2810: float, incl. negative values
+        pt: [400], float
+        model_output: [400, 2810], float, incl. negative values
+        weights: [400], float
+
+        """
+
         batch_size, device = x_start.size(0), x_start.device
-        ts, pt = self.sample_timesteps(batch_size, device, "importance", model)  # HERE
+        ts, pt = self.sample_timesteps(batch_size, device, "importance", model)
         noise = th.randn_like(x_start)
         if self.noise_scale != 0.0:
             x_t = self.q_sample(x_start, ts, noise)
@@ -169,13 +211,15 @@ class GaussianDiffusion(nn.Module):
             x_t = x_start
 
         terms = {}
-        model_output = model(x_t, ts)
+        model_output = model(x_t, ts)  # DNN
         target = {
             ModelMeanType.START_X: x_start,
             ModelMeanType.EPSILON: noise,
             ModelMeanType.LEARNABLE_PARAM: x_start,
         }[self.mean_type]
 
+        print(f"Model output shape: {model_output.shape}")
+        print(f"model output: {model_output}")
         assert model_output.shape == target.shape == x_start.shape
 
         mse = mean_flat((target - model_output) ** 2)
@@ -207,10 +251,32 @@ class GaussianDiffusion(nn.Module):
                 # print(f"Shape of the ts: {ts.shape}")  # one per element in batch
                 # print(f"Shape of pt: {pt.shape}")
 
+        elif self.attention_weighting:
+            """New: attention weighting"""
+            if self.mean_type == ModelMeanType.START_X:
+                user_interacted_embeddings = th.zeros(
+                    (x_start.shape[0], self.item_embeddings.shape[1])
+                )
+
+                # get the embeddings of all items interacted with (x), and calculate the mean embedding per user (batch element)
+                interacted_indices = x_start >= 1
+                user_interacted_embeddings = self.calculate_mean_embedding(
+                    interacted_indices, x_start
+                )
+
+                # calculate attention weights
+                ...
+                weight = th.tensor([1.0] * len(target)).to(device)  # TODO
+
+                loss = mse
+            else:
+                raise NotImplementedError
+
         else:
             weight = th.tensor([1.0] * len(target)).to(device)
 
         terms["loss"] = weight * loss
+        print(f"Shape of the weights: {weight.shape}")
 
         # update Lt_history & Lt_count
         for t, loss in zip(ts, terms["loss"]):

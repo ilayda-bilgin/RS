@@ -141,6 +141,12 @@ parser.add_argument(
     "--workers", type=int, default=10, help="number of workers for m-phate"
 )
 
+parser.add_argument(
+    "--attention_weighting",
+    action="store_true",
+    help="use the attention weighting feature",
+)
+
 args = parser.parse_args()
 
 if args.dataset == "amazon-book_clean":
@@ -232,6 +238,14 @@ if args.tst_w_val:
     test_twv_loader = DataLoader(tv_dataset, batch_size=args.batch_size, shuffle=False)
 mask_tv = train_data_ori + valid_y_data
 
+# load item embeddings
+if args.attention_weighting:
+    emb_path = f"{args.data_path}{args.dataset}/item_emb.npy"
+    item_embeddings = torch.from_numpy(np.load(emb_path, allow_pickle=True))
+else:
+    item_embeddings = None
+
+
 print("data ready.")
 
 
@@ -253,6 +267,8 @@ diffusion = gd.GaussianDiffusion(
     args.noise_max,
     args.steps,
     device,
+    attention_weighting=args.attention_weighting,
+    item_embeddings=item_embeddings,
 ).to(device)
 
 ### Build MLP ###
@@ -344,12 +360,23 @@ for epoch in range(1, args.epochs + 1):
     total_loss = 0.0
 
     for batch_idx, batch in enumerate(train_loader):
+        """1 Batch is float tensor of bs x 2810 (item num)"""
+
         batch = batch.to(device)
+
+        # TODO remove
+        print(f"batch_idx: {batch_idx}")
+        print(f"batch ({batch.shape})\n\n{batch}")
+
         batch_count += 1
         optimizer.zero_grad()
 
         # HERE model=DNN, diffusion=GaussianDiffusion
-        losses = diffusion.training_losses(model, batch, args.reweight)
+        losses = diffusion.training_losses(
+            model,
+            batch,
+            args.reweight,
+        )
         loss = losses["loss"].mean()
 
         wandb.log({"batch_loss_train": loss})
@@ -357,8 +384,6 @@ for epoch in range(1, args.epochs + 1):
         total_loss += loss
         loss.backward()
         optimizer.step()
-
-        exit()
 
     wandb.log({"epoch_loss_norm_train": total_loss / batch_count, "Epoch": epoch})
 
