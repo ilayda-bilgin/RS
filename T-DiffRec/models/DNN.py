@@ -19,6 +19,7 @@ class DNN(nn.Module):
         norm=False,
         steps=5,
         dropout=0.5,
+        attention_weighting=False,
     ):
         super(DNN, self).__init__()
         self.in_dims = in_dims
@@ -34,6 +35,7 @@ class DNN(nn.Module):
         # NEW
         print(f"Embedding size: {self.time_emb_dim}")
         self.param_storage = []
+        self.attention_weighting = attention_weighting
 
         self.emb_layer = nn.Linear(self.time_emb_dim, self.time_emb_dim)
 
@@ -57,6 +59,13 @@ class DNN(nn.Module):
                 for d_in, d_out in zip(out_dims_temp[:-1], out_dims_temp[1:])
             ]
         )
+
+        if self.attention_weighting:
+            d_hidden = 50  # TODO
+            self.attention_w_1 = nn.Linear(1, d_hidden)
+            self.attention_w_2 = nn.Linear(d_hidden, d_hidden)
+            self.attention_w_3 = nn.Linear(d_hidden, d_hidden)
+            self.attention_b_a = nn.Parameter(d_hidden)
 
         self.drop = nn.Dropout(dropout)
         self.init_weights()
@@ -91,6 +100,32 @@ class DNN(nn.Module):
         self.emb_layer.weight.data.normal_(0.0, std)
         self.emb_layer.bias.data.normal_(0.0, 0.001)
 
+    def attention_net(
+        self,
+        user_interacted_embeddings,
+        last_user_interaction_embedding,
+        user_interaction_embedding,
+    ):
+        """
+        Attention network to calculate the attention weights for each item after STAMP paper.
+        """
+
+        weighted_interactions = self.attention_w_1(user_interaction_embedding)
+        weighted_last_interaction = self.attention_w_2(last_user_interaction_embedding)
+        weighted_mean_interaction = self.attention_w_3(user_interacted_embeddings)
+
+        combined_interactions = (
+            weighted_interactions
+            + weighted_last_interaction
+            + weighted_mean_interaction
+            + self.attention_b_a
+        )
+
+        attentions = torch.nn.functional.softmax(combined_interactions, dim=1)
+        attention_weights = self.attention_w0(attentions)
+
+        return attention_weights
+
     def forward(self, x, timesteps):
         time_emb = timestep_embedding(timesteps, self.time_emb_dim).to(x.device)
         emb = self.emb_layer(time_emb)
@@ -107,7 +142,11 @@ class DNN(nn.Module):
             if i != len(self.out_layers) - 1:
                 h = torch.tanh(h)
 
-        return h
+        if self.attention_weighting:
+            a = self.attention_net(inputs)  # TODO
+            return h, a
+        else:
+            return h
 
 
 def timestep_embedding(timesteps, dim, max_period=10000):

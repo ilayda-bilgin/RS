@@ -275,7 +275,13 @@ diffusion = gd.GaussianDiffusion(
 out_dims = eval(args.dims) + [n_item]
 in_dims = out_dims[::-1]
 model = DNN(
-    in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm, steps=args.steps
+    in_dims,
+    out_dims,
+    args.emb_size,
+    time_type="cat",
+    norm=args.norm,
+    steps=args.steps,
+    attention_weighting=args.attention_weighting,
 ).to(device)
 optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
