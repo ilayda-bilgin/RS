@@ -358,6 +358,8 @@ for epoch in range(1, args.epochs + 1):
         loss.backward()
         optimizer.step()
 
+        exit()
+
     wandb.log({"epoch_loss_norm_train": total_loss / batch_count, "Epoch": epoch})
 
     if epoch % 5 == 0:
