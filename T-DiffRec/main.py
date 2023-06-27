@@ -142,9 +142,9 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
-
+# BEGIN NEW ====================
 if args.dataset == "amazon-book_clean":
-    args.steps = 10
+    args.stepsw = 10
     args.sampling_steps = 0
 elif args.dataset == "yelp_clean":
     args.steps = 5
@@ -163,7 +163,7 @@ elif args.dataset == "ml-1m_noisy":
 else:
     args.steps = 100
     args.sampling_steps = 0
-
+# END NEW ====================
 # import visualization function if needed
 if args.mean_type == "x0_learnable" and args.visualize_weights:
     current = os.path.dirname(os.path.realpath(__file__))
@@ -223,8 +223,10 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
+# BEGIN NEW ====================
 if args.mean_type == "x0_learnable":
     train_data = train_data_ori
+# END NEW ====================
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
         torch.FloatTensor(train_data.A) + torch.FloatTensor(valid_y_data.A)
@@ -240,8 +242,10 @@ if args.mean_type == "x0":
     mean_type = gd.ModelMeanType.START_X
 elif args.mean_type == "eps":
     mean_type = gd.ModelMeanType.EPSILON
+    # BEGIN NEW ====================
 elif args.mean_type == "x0_learnable":
     mean_type = gd.ModelMeanType.LEARNABLE_PARAM
+    # END NEW ====================
 else:
     raise ValueError("Unimplemented mean type %s" % args.mean_type)
 

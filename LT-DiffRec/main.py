@@ -29,7 +29,7 @@ from copy import deepcopy
 import random
 import wandb
 
-
+# BEGIN NEW ====================
 def worker_init_fn(worker_id):
     np.random.seed(random_seed + worker_id)
 
@@ -38,8 +38,9 @@ def seed_worker(worker_id):
     worker_seed = torch.initial_seed() % 2**32
     np.random.seed(worker_seed)
 
-
+# END NEW ====================
 parser = argparse.ArgumentParser()
+
 parser.add_argument(
     "--dataset", type=str, default="yelp_clean", help="choose the dataset"
 )
@@ -167,14 +168,18 @@ parser.add_argument("--seed", type=int, default=1, help="random seed")
 parser.add_argument(
     "--model_type", type=str, default="LT-DiffRec", help="type DRS Model"
 )
-
+# BEGIN NEW ====================
 parser.add_argument(
     "--patience", type=int, default=20, help="patience for early stopping"
 )
+# END NEW ====================
 
 args = parser.parse_args()
-
+# BEGIN NEW ====================
 if args.dataset == "amazon-book_clean":
+    args.steps = 5
+    args.sampling_steps = 0
+elif args.dataset == "amazon-book_noisy":
     args.steps = 5
     args.sampling_steps = 0
 elif args.dataset == "yelp_clean":
@@ -198,8 +203,8 @@ else:
 
 
 print("args:", args)
-
-random_seed = 1
+# END NEW ====================
+random_seed = args.seed
 torch.manual_seed(random_seed)  # cpu
 torch.cuda.manual_seed(random_seed)  # gpu
 np.random.seed(random_seed)  # numpy
@@ -246,8 +251,10 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
+# BEGIN NEW ====================
 if args.mean_type == "x0_learnable":
     train_data = train_data_ori
+# END NEW ====================
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
         torch.FloatTensor(train_data.A) + torch.FloatTensor(valid_y_data.A)
@@ -277,8 +284,10 @@ if args.mean_type == "x0":
     mean_type = gd.ModelMeanType.START_X
 elif args.mean_type == "eps":
     mean_type = gd.ModelMeanType.EPSILON
+# BEGIN NEW ====================
 elif args.mean_type == "x0_learnable":
     mean_type = gd.ModelMeanType.LEARNABLE_PARAM
+# BEGIN NEW ====================
 else:
     raise ValueError("Unimplemented mean type %s" % args.mean_type)
 

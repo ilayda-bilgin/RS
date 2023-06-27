@@ -196,11 +196,12 @@ class GaussianDiffusion(nn.Module):
                     / 2.0
                 )
                 loss = th.where((ts == 0), likelihood, mse)
-
+            # BEGIN NEW ====================
             elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
                 weight = self.SNR(ts - 1) - self.SNR(ts)
                 weight = th.where((ts == 0), 1.0, weight)
                 loss = mse
+                # BEGIN NEW ====================
 
                 # # NEW: store weigths
                 # print(f"Shape of the weights: {weight.shape}")
@@ -318,8 +319,10 @@ class GaussianDiffusion(nn.Module):
             pred_xstart = model_output
         elif self.mean_type == ModelMeanType.EPSILON:
             pred_xstart = self._predict_xstart_from_eps(x, t, eps=model_output)
+            # BEGIN NEW ====================
         elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
             pred_xstart = model_output
+        # END NEW ======================
         else:
             raise NotImplementedError(self.mean_type)
 
