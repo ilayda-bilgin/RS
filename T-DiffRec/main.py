@@ -178,6 +178,12 @@ if args.mean_type == "x0_learnable" and args.visualize_weights:
 
     from utils.visualize_weights import generate_m_phate, create_phate_visualization
 
+# NEW
+if args.attention_weighting:
+    args.reweight = False
+    print(
+        "Attention weighting is enabled, therefore standard reweighting was disabled."
+    )
 
 print("args:", args)
 

@@ -62,10 +62,11 @@ class DNN(nn.Module):
 
         if self.attention_weighting:
             d_hidden = 50  # TODO
-            self.attention_w_1 = nn.Linear(1, d_hidden)
-            self.attention_w_2 = nn.Linear(d_hidden, d_hidden)
-            self.attention_w_3 = nn.Linear(d_hidden, d_hidden)
-            self.attention_b_a = nn.Parameter(d_hidden)
+            self.attention_w_0 = nn.Linear(d_hidden, 1, bias=False)
+            self.attention_w_1 = nn.Linear(64, d_hidden, bias=False)
+            self.attention_w_2 = nn.Linear(64, d_hidden, bias=False)
+            self.attention_w_3 = nn.Linear(64, d_hidden, bias=False)
+            # self.attention_b_a = nn.Parameter(d_hidden, 1) # TODO later
 
         self.drop = nn.Dropout(dropout)
         self.init_weights()
@@ -102,27 +103,34 @@ class DNN(nn.Module):
 
     def attention_net(
         self,
-        user_interacted_embeddings,
+        all_user_interaction_embeddings,
         last_user_interaction_embedding,
-        user_interaction_embedding,
+        mean_user_interacted_embeddings,
     ):
         """
         Attention network to calculate the attention weights for each item after STAMP paper.
+        Parameters
+        :param all_user_interaction_embeddings: the embeddings of the items that the user has interacted with, shape: torch.Size([400, 64])
+        :param last_user_interaction_embedding: the embedding of the last item that the user has interacted with, shape: torch.Size([400, 64])
+        :param mean_user_interacted_embeddings: the embedding of the current item that the user is interacting with, shape: torch.Size([400, 1, 64])
+
+        :return: the attention weights for each item, shape: # TODO
         """
 
-        weighted_interactions = self.attention_w_1(user_interaction_embedding)
+        weighted_interactions = self.attention_w_1(all_user_interaction_embeddings)
         weighted_last_interaction = self.attention_w_2(last_user_interaction_embedding)
-        weighted_mean_interaction = self.attention_w_3(user_interacted_embeddings)
+        weighted_mean_interaction = self.attention_w_3(mean_user_interacted_embeddings)
 
         combined_interactions = (
             weighted_interactions
             + weighted_last_interaction
             + weighted_mean_interaction
-            + self.attention_b_a
+            # + self.attention_b_a # TODO add this
         )
 
         attentions = torch.nn.functional.softmax(combined_interactions, dim=1)
-        attention_weights = self.attention_w0(attentions)
+        attention_weights = self.attention_w_0(attentions)
+        print(f"Attention weights shape: {attention_weights.shape}")
 
         return attention_weights
 
@@ -143,8 +151,9 @@ class DNN(nn.Module):
                 h = torch.tanh(h)
 
         if self.attention_weighting:
-            a = self.attention_net(inputs)  # TODO
-            return h, a
+            # a = self.attention_net(inputs)  # TODO
+            # return h, a
+            return h
         else:
             return h
 
