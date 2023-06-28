@@ -166,7 +166,7 @@ class GaussianDiffusion(nn.Module):
         return x_t
 
     def calculate_user_interaction_embedding(self, x_t):
-        interacted_indices = x_t >= 1  # TODO: decide on threshold
+        interacted_indices = x_t > 0  # TODO: decide on threshold
 
         # create mask to only consider the interactions of a user
         interacted_indices = interacted_indices.nonzero()
