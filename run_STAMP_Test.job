@@ -5,7 +5,7 @@
 #SBATCH --job-name=T
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=00:05:00
+#SBATCH --time=04:00:00
 #SBATCH --mem=64000M
 #SBATCH --output=STAMP_Tests_%A.out
 
