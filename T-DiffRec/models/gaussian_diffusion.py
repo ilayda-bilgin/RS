@@ -146,7 +146,7 @@ class GaussianDiffusion(nn.Module):
         if self.noise_scale == 0.0:
             for i in indices:
                 t = torch.tensor([i] * x_t.shape[0]).to(x_start.device)
-                x_t = model(x_t, t)
+                x_t = model(x_t, t)  # HERE
             return x_t
 
         for i in indices:
@@ -165,70 +165,87 @@ class GaussianDiffusion(nn.Module):
                 x_t = out["mean"]
         return x_t
 
-    def calculate_user_interaction_embedding(self, interacted_indices, x_start):
+    def calculate_user_interaction_embedding(self, x_t):
+        interacted_indices = x_t >= 1  # TODO: decide on threshold
+
         # create mask to only consider the interactions of a user
         interacted_indices = interacted_indices.nonzero()
 
-        # count nr of interactions per user
-        user_interactions = torch.bincount(interacted_indices[:, 0])
-        max_number_interactions = torch.max(user_interactions)
-        print(f"max number of interactions per user: {max_number_interactions}")
-
+        user_interactions = torch.bincount(
+            interacted_indices[:, 0]
+        )  # nr of interactions each user has
         # prepare storage
+        len_interactions = x_t.shape[1]
+        max_user_interactions = torch.max(user_interactions)
+        print(f"max nr of interactions per user: {max_user_interactions}")
         # to store item embedding instead of the item a user has interacted with
         all_user_interaction_embeddings = torch.empty(
-            x_start.shape[0],
-            max_number_interactions,
+            x_t.shape[0],
+            len_interactions,
             self.item_embeddings.shape[1],
             device=self.device,
         )
         # to store the last valid interaction embedding of a user
         last_user_interaction_embedding = torch.empty(
-            x_start.shape[0],
+            x_t.shape[0],
             self.item_embeddings.shape[1],
             device=self.device,
         )
 
-        for user in range(x_start.shape[0]):
+        for user in range(x_t.shape[0]):
             # get the interactions with items for a user
             user_interacted_indices = interacted_indices[
                 interacted_indices[:, 0] == user
             ]
             # get the item embeddings corresponding to the interactions
-            interaction_embeddings = self.item_embeddings[
+            user_interaction_embeddings = self.item_embeddings[
                 user_interacted_indices[:, 1], :
             ]
 
-            print(f"User: {user}: nr of interactions: {len(interaction_embeddings)}")
+            # keep only interaction indices as list
+            user_interacted_indices = user_interacted_indices[:, 1].tolist()
 
-            if len(interaction_embeddings) > 0:  # if user has interactions
-                for interaction in range(len(interaction_embeddings)):
-                    # for each interaction of a user, add the interaction embeddings, and store last valid interaction embedding
-                    all_user_interaction_embeddings[
-                        user, interaction
-                    ] = interaction_embeddings[
-                        interaction
-                    ]  # m_t
+            if len(user_interaction_embeddings) > 0:  # if user has interactions
+                interaction_count = 0
+
+                # all possible interactions
+                for interaction in range(len_interactions):
+                    if interaction in user_interacted_indices:
+                        # for each interaction of a user, add the interaction embeddings, and store last valid interaction embedding
+                        all_user_interaction_embeddings[
+                            user, interaction
+                        ] = user_interaction_embeddings[
+                            interaction_count
+                        ]  # m_t
+
+                        interaction_count += 1
 
                 # store last valid interaction embedding
-                last_user_interaction_embedding[user] = interaction_embeddings[-1]
+                last_user_interaction_embedding[user] = user_interaction_embeddings[-1]
 
-        all_user_interaction_embeddings = torch.nan_to_num(
-            all_user_interaction_embeddings
-        )
-        print(f"all_user_embeddings shape: {all_user_interaction_embeddings.shape}")
+        # all_user_interaction_embeddings = torch.nan_to_num(
+        #     all_user_interaction_embeddings
+        # )
 
         # calculate mean of the embeddings but do not include nan values
         mean_user_interacted_embeddings = torch.nanmean(
             all_user_interaction_embeddings, dim=1
         )
-        print(
-            f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
-        )
 
+        # ensure same dimensionalities
+        last_user_interaction_embedding = last_user_interaction_embedding.unsqueeze(
+            dim=1
+        )
+        mean_user_interacted_embeddings = mean_user_interacted_embeddings.unsqueeze(
+            dim=1
+        )
         print(
             f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
         )
+        print(
+            f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
+        )
+        print(f"all_user_embeddings shape: {all_user_interaction_embeddings.shape}")
 
         return (
             all_user_interaction_embeddings,
@@ -262,8 +279,45 @@ class GaussianDiffusion(nn.Module):
         else:
             x_t = x_start
 
+        if self.attention_weighting:
+            """New: attention weighting"""
+            if self.mean_type == ModelMeanType.START_X:
+                # get the embeddings of all items interacted with (x), and calculate the mean embedding per user (batch element)
+
+                (
+                    all_user_interaction_embeddings,
+                    last_user_interaction_embedding,
+                    mean_user_interacted_embeddings,
+                ) = self.calculate_user_interaction_embedding(x_t)
+
+                # calculate attention weights, using implementation in model
+                print(
+                    f"all_user_interaction_embeddings shape: {all_user_interaction_embeddings.shape}"
+                )
+                print(
+                    f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
+                )
+                print(
+                    f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
+                )
+
+                # NEW: forward pass with attention weighting
+                model_output = model(
+                    x_t,
+                    ts,
+                    all_user_interaction_embeddings=all_user_interaction_embeddings,
+                    last_user_interaction_embedding=last_user_interaction_embedding,
+                    mean_user_interacted_embeddings=mean_user_interacted_embeddings,
+                )
+
+            else:
+                raise NotImplementedError
+
+        else:
+            #  OLD: forward pass without attention weighting
+            model_output = model(x_t, ts)  # DNN
+
         terms = {}
-        model_output = model(x_t, ts)  # DNN
         target = {
             ModelMeanType.START_X: x_start,
             ModelMeanType.EPSILON: noise,
@@ -298,44 +352,9 @@ class GaussianDiffusion(nn.Module):
                 weight = torch.where((ts == 0), 1.0, weight)
                 loss = mse
 
-        # NEW
-        elif self.attention_weighting:
-            """New: attention weighting"""
-            if self.mean_type == ModelMeanType.START_X:
-                # get the embeddings of all items interacted with (x), and calculate the mean embedding per user (batch element)
-                interacted_indices = x_start >= 1  # TODO: decide on threshold
-                (
-                    all_user_interaction_embeddings,
-                    last_user_interaction_embedding,
-                    mean_user_interacted_embeddings,
-                ) = self.calculate_user_interaction_embedding(
-                    interacted_indices, x_start
-                )
-
-                # calculate attention weights, using implementation in model
-                print(
-                    f"all_user_interaction_embeddings shape: {all_user_interaction_embeddings.shape}"
-                )
-                print(
-                    f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
-                )
-                print(
-                    f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
-                )
-
-                attention_weights = model.attention_net(
-                    all_user_interaction_embeddings,
-                    last_user_interaction_embedding,
-                    mean_user_interacted_embeddings,
-                )
-                weight = torch.tensor([1.0] * len(target)).to(device)  # TODO
-
-                loss = mse
-            else:
-                raise NotImplementedError
-
         else:
             weight = torch.tensor([1.0] * len(target)).to(device)
+            loss = mse
 
         terms["loss"] = weight * loss
         print(f"Shape of the weights: {weight.shape}")
@@ -365,8 +384,11 @@ class GaussianDiffusion(nn.Module):
         if method == "importance":  # importance sampling
             if not (self.Lt_count == self.history_num_per_term).all():
                 return self.sample_timesteps(batch_size, device, method="uniform")
-            new_hist = model.param * self.Lt_history.clone()  # HERE
-            Lt_sqrt = torch.sqrt(torch.mean(new_hist**2, axis=-1))
+            # new_hist = model.param * self.Lt_history.clone()  # TODO needs to be uncommented again!
+            # Lt_sqrt = torch.sqrt(torch.mean(new_hist**2, axis=-1)) # TODO needs to be uncommented again!
+            Lt_sqrt = torch.sqrt(
+                torch.mean(self.Lt_history**2, axis=-1)
+            )  # original code
             pt_all = Lt_sqrt / torch.sum(Lt_sqrt)
             pt_all *= 1 - uniform_prob
             pt_all += uniform_prob / len(pt_all)
@@ -432,9 +454,14 @@ class GaussianDiffusion(nn.Module):
         Apply the model to get p(x_{t-1} | x_t), as well as a prediction of
         the initial x, x_0.
         """
+
         B, C = x.shape[:2]
         assert t.shape == (B,)
-        model_output = model(x, t)
+
+        model_output = model(
+            x,
+            t,
+        )
 
         model_variance = self.posterior_variance
         model_log_variance = self.posterior_log_variance_clipped

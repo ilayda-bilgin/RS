@@ -7,7 +7,7 @@ import math
 
 class DNN(nn.Module):
     """
-    A deep neural network for the reverse diffusion preocess.
+    A deep neural network for the reverse diffusion process.
     """
 
     def __init__(
@@ -61,12 +61,21 @@ class DNN(nn.Module):
         )
 
         if self.attention_weighting:
-            d_hidden = 50  # TODO
-            self.attention_w_0 = nn.Linear(d_hidden, 1, bias=False)
-            self.attention_w_1 = nn.Linear(64, d_hidden, bias=False)
-            self.attention_w_2 = nn.Linear(64, d_hidden, bias=False)
-            self.attention_w_3 = nn.Linear(64, d_hidden, bias=False)
-            # self.attention_b_a = nn.Parameter(d_hidden, 1) # TODO later
+            d = 50
+            emb_dim = 64  # TODO
+            n_interactions = in_dims[0]
+            assert (
+                n_interactions == 2810
+            ), "Number of interactions must be 2810"  # TODO remove
+            self.attention_w_0 = nn.Linear(emb_dim, 1, bias=False)  # TODO check
+            # self.attention_w_1 = nn.Linear(emb_dim, d, bias=False)
+            # ([400, 2810, 64]), after torch.Size([400, 2810, 50])
+            self.attention_w_1 = nn.Linear(emb_dim, emb_dim, bias=False)
+            self.attention_w_2 = nn.Linear(emb_dim, emb_dim, bias=False)
+            self.attention_w_3 = nn.Linear(emb_dim, emb_dim, bias=False)
+            # self.attention_b_a = nn.Parameter(
+            #    torch.rand(emb_dim, n_items)
+            # )  # TODO check
 
         self.drop = nn.Dropout(dropout)
         self.init_weights()
@@ -110,36 +119,89 @@ class DNN(nn.Module):
         """
         Attention network to calculate the attention weights for each item after STAMP paper.
         Parameters
-        :param all_user_interaction_embeddings: the embeddings of the items that the user has interacted with, shape: torch.Size([400, 64])
-        :param last_user_interaction_embedding: the embedding of the last item that the user has interacted with, shape: torch.Size([400, 64])
+        :param all_user_interaction_embeddings: the embeddings of the items that the user has interacted with, shape: torch.Size([400, 2810, 64])
+        :param last_user_interaction_embedding: the embedding of the last item that the user has interacted with, shape: torch.Size([400, 1, 64])
         :param mean_user_interacted_embeddings: the embedding of the current item that the user is interacting with, shape: torch.Size([400, 1, 64])
 
         :return: the attention weights for each item, shape: # TODO
         """
 
+        """
+        Weighted interactions shape: torch.Size([400, 2810, 64])
+        Weighted last interaction shape: torch.Size([400, 64])
+        Weighted mean interaction shape: torch.Size([400, 64])
+        
+        
+        """
+
+        print(
+            f"all_user_interaction_embeddings: {all_user_interaction_embeddings}, \nlast_user_interaction_embedding: {last_user_interaction_embedding}, \nmean_user_interacted_embeddings: {mean_user_interacted_embeddings}"
+        )
+        print(
+            f"all_user_interaction_embeddings: {all_user_interaction_embeddings.shape}, last_user_interaction_embedding: {last_user_interaction_embedding.shape}, mean_user_interacted_embeddings: {mean_user_interacted_embeddings.shape}"
+        )
+
         weighted_interactions = self.attention_w_1(all_user_interaction_embeddings)
+        print(
+            f"Weighted interactions before: : {all_user_interaction_embeddings.shape}, after {weighted_interactions.shape}"
+        )
         weighted_last_interaction = self.attention_w_2(last_user_interaction_embedding)
+        print(
+            f"weighted_last_interaction before: : {last_user_interaction_embedding.shape}, after {weighted_last_interaction.shape}"
+        )
         weighted_mean_interaction = self.attention_w_3(mean_user_interacted_embeddings)
+        print(
+            f"weighted_mean_interaction before: : {mean_user_interacted_embeddings.shape}, after {weighted_mean_interaction.shape}"
+        )
 
         combined_interactions = (
             weighted_interactions
             + weighted_last_interaction
             + weighted_mean_interaction
-            # + self.attention_b_a # TODO add this
+            # + self.attention_b_a  # TODO
         )
+        print(f"Combined interactions shape: {combined_interactions.shape}")
 
-        attentions = torch.nn.functional.softmax(combined_interactions, dim=1)
+        # softmax over the embedding dimension
+        attentions = torch.nn.functional.softmax(combined_interactions, dim=2)
+
         attention_weights = self.attention_w_0(attentions)
-        print(f"Attention weights shape: {attention_weights.shape}")
+        attention_weights = torch.squeeze(attention_weights, dim=2)
+        print(
+            f"Attention weights shape after linear layer and squeeze: {attention_weights.shape}"
+        )
 
         return attention_weights
 
-    def forward(self, x, timesteps):
+    def forward(
+        self,
+        x,
+        timesteps,
+        all_user_interaction_embeddings=None,
+        last_user_interaction_embedding=None,
+        mean_user_interacted_embeddings=None,
+    ):
         time_emb = timestep_embedding(timesteps, self.time_emb_dim).to(x.device)
         emb = self.emb_layer(time_emb)
+
         if self.norm:
             x = F.normalize(x)
+
         x = self.drop(x)
+
+        # NEW: attention network only when the required inputs are passed to the forward function
+        if (
+            torch.is_tensor(all_user_interaction_embeddings)
+            and torch.is_tensor(last_user_interaction_embedding)
+            and torch.is_tensor(mean_user_interacted_embeddings)
+        ):
+            x = self.attention_net(
+                all_user_interaction_embeddings,
+                last_user_interaction_embedding,
+                mean_user_interacted_embeddings,
+            )
+        # END NEW
+
         h = torch.cat([x, emb], dim=-1)
         for i, layer in enumerate(self.in_layers):
             h = layer(h)
@@ -150,12 +212,7 @@ class DNN(nn.Module):
             if i != len(self.out_layers) - 1:
                 h = torch.tanh(h)
 
-        if self.attention_weighting:
-            # a = self.attention_net(inputs)  # TODO
-            # return h, a
-            return h
-        else:
-            return h
+        return h
 
 
 def timestep_embedding(timesteps, dim, max_period=10000):

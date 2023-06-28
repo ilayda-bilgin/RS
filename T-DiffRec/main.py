@@ -280,6 +280,7 @@ diffusion = gd.GaussianDiffusion(
 ### Build MLP ###
 out_dims = eval(args.dims) + [n_item]
 in_dims = out_dims[::-1]
+print("in_dims:", in_dims)
 model = DNN(
     in_dims,
     out_dims,

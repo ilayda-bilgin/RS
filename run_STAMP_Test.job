@@ -9,20 +9,22 @@
 #SBATCH --mem=64000M
 #SBATCH --output=STAMP_Tests_%A.out
 
-# module purge
-# module load 2021
-# module load Anaconda3/2021.05
+module purge
+module load 2021
+module load Anaconda3/2021.05
 
 
-# source activate rs
+source activate rs
 
-NAME='STAMP_Tests'
+NAME='STAMP_Test'
 
 # disable wandb
-export WANDB_MODE=disabled
-
-# python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=0 --run_name=$NAME
+export WANDB_MODE=online
 
 python -c "import torch; print(torch.cuda.is_available())"
 
-source deactivate
+python ./T-DiffRec/main.py --data_path ./datasets/ --dataset=ml-1m_clean --cuda --gpu=0 --run_name=$NAME --attention_weighting
+
+
+
+conda deactivate
