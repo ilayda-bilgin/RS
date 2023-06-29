@@ -26,5 +26,4 @@ unzip checkpoints.zip -d checkpoints
 rm checkpoints.zip
 
 
-
 source deactivate
