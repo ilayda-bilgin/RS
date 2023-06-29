@@ -55,6 +55,7 @@ def computeTopNAccuracy(GroundTruth, predictedIndices, topN):
 
 
 def print_results(loss, valid_result, test_result):
+    # NEW: minor changes to output formatting  ====================
     """output the evaluation results."""
     if loss is not None:
         print("[Train]: loss: {:.4f}".format(loss))

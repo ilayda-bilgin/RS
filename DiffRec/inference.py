@@ -94,7 +94,6 @@ parser.add_argument(
 
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
 
-
 args = parser.parse_args()
 
 args.data_path = args.data_path + args.dataset + "/"

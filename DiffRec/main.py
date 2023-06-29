@@ -23,8 +23,11 @@ import evaluate_utils
 import data_utils
 from copy import deepcopy
 
+# NEW ====================
 import random
 import wandb
+
+# END NEW ====================
 
 
 def worker_init_fn(worker_id):
@@ -94,12 +97,7 @@ parser.add_argument(
 parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
-# parser.add_argument(
-#     "--sampling_steps",
-#     type=int,
-#     default=0,
-#     help="steps of the forward process during inference",
-# )
+
 parser.add_argument(
     "--reweight",
     type=bool,
@@ -107,6 +105,7 @@ parser.add_argument(
     help="assign different weight to different timestep or not",
 )
 
+# NEW  ====================
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
 parser.add_argument("--model_type", type=str, default="DiffRec", help="type DRS Model")
 
@@ -119,10 +118,11 @@ parser.add_argument("--seed", type=int, default=1, help="random seed")
 parser.add_argument(
     "--patience", type=int, default=20, help="patience for early stopping"
 )
+# END NEW  ====================
 
 args = parser.parse_args()
 
-
+# NEW ====================
 if args.dataset == "amazon-book_clean":
     args.steps = 5
     args.sampling_steps = 0
@@ -144,6 +144,7 @@ elif args.dataset == "yelp_noisy":
 else:
     args.steps = 100
     args.sampling_steps = 0
+# END NEW ====================
 
 print("args:", args)
 
@@ -154,6 +155,7 @@ np.random.seed(random_seed)  # numpy
 random.seed(random_seed)  # random and transforms
 torch.backends.cudnn.deterministic = True  # cudnn
 
+# NEW  ====================
 # init wandb
 wandb.init(
     name=f"{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}",
@@ -163,7 +165,7 @@ wandb.init(
     entity="drs",
     config=args,
 )
-
+# END NEW ====================
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 device = torch.device("cuda:0" if args.cuda else "cpu")
@@ -228,7 +230,9 @@ model = DNN(in_dims, out_dims, args.emb_size, time_type="cat", norm=args.norm).t
 
 optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
+# NEW  ====================
 wandb.watch(model)
+# END NEW ====================
 
 print("models ready.")
 
@@ -239,6 +243,7 @@ param_num = mlp_num + diff_num
 print("Number of all parameters:", param_num)
 
 
+# NEW ====================
 def log_results(results, epoch, topN, mode="valid"):
     """Log results to wandb."""
     precisions, recalls, NDCGs, MRRs = results
@@ -258,6 +263,9 @@ def log_results(results, epoch, topN, mode="valid"):
                 f"{mode} MRR@{k}": MRRs[i],
             }
         )
+
+
+# END NEW ====================
 
 
 def evaluate(data_loader, data_te, mask_his, topN):
@@ -320,13 +328,15 @@ for epoch in range(1, args.epochs + 1):
 
         loss.backward()
         optimizer.step()
-
+    # NEW  ====================
     wandb.log({"epoch_loss_norm_train": total_loss / batch_count, "Epoch": epoch})
+    # END NEW ====================
 
     if epoch % 5 == 0:
         valid_results = evaluate(test_loader, valid_y_data, train_data, eval(args.topN))
+        # NEW ====================
         log_results(valid_results, epoch, eval(args.topN), mode="valid")
-
+        # END NEW ====================
         if args.tst_w_val:
             test_results = evaluate(
                 test_twv_loader, test_y_data, mask_tv, eval(args.topN)
@@ -334,7 +344,9 @@ for epoch in range(1, args.epochs + 1):
         else:
             test_results = evaluate(test_loader, test_y_data, mask_tv, eval(args.topN))
 
+        # NEW ====================
         log_results(test_results, epoch, eval(args.topN), mode="test")
+        # NEW  ====================
         evaluate_utils.print_results(None, valid_results, test_results)
 
         if valid_results[1][1] > best_recall:  # recall@20 as selection
@@ -378,7 +390,9 @@ print("End. Best Epoch {:03d} ".format(best_epoch))
 evaluate_utils.print_results(None, best_results, best_test_results)
 print("End time: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
 
+# NEW ====================
 log_results(best_results, best_epoch, eval(args.topN), mode="best_valid")
 log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
 
 wandb.finish()
+# END NEW ====================

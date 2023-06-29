@@ -29,6 +29,7 @@ from copy import deepcopy
 import random
 import wandb
 
+
 # BEGIN NEW ====================
 def worker_init_fn(worker_id):
     np.random.seed(random_seed + worker_id)
@@ -38,7 +39,9 @@ def seed_worker(worker_id):
     worker_seed = torch.initial_seed() % 2**32
     np.random.seed(worker_seed)
 
+
 # END NEW ====================
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
@@ -157,6 +160,7 @@ parser.add_argument(
     help="assign different weight to different timestep or not",
 )
 
+# BEGIN NEW ====================
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
 
 parser.add_argument(
@@ -168,7 +172,7 @@ parser.add_argument("--seed", type=int, default=1, help="random seed")
 parser.add_argument(
     "--model_type", type=str, default="LT-DiffRec", help="type DRS Model"
 )
-# BEGIN NEW ====================
+
 parser.add_argument(
     "--patience", type=int, default=20, help="patience for early stopping"
 )
@@ -202,8 +206,10 @@ else:
     args.sampling_steps = 10
 
 
-print("args:", args)
 # END NEW ====================
+
+print("args:", args)
+
 random_seed = args.seed
 torch.manual_seed(random_seed)  # cpu
 torch.cuda.manual_seed(random_seed)  # gpu
@@ -211,6 +217,7 @@ np.random.seed(random_seed)  # numpy
 random.seed(random_seed)  # random and transforms
 torch.backends.cudnn.deterministic = True  # cudnn
 
+# NEW ====================
 # init wandb
 wandb.init(
     name=f"{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}",
@@ -220,6 +227,7 @@ wandb.init(
     entity="drs",
     config=args,
 )
+# END NEW ====================
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 device = torch.device("cuda:0" if args.cuda else "cpu")
@@ -251,10 +259,12 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
+
 # BEGIN NEW ====================
 if args.mean_type == "x0_learnable":
     train_data = train_data_ori
 # END NEW ====================
+
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
         torch.FloatTensor(train_data.A) + torch.FloatTensor(valid_y_data.A)
@@ -265,8 +275,7 @@ mask_tv = train_data_ori + valid_y_data
 print("data ready.")
 
 ### Build Autoencoder ###
-# emb_path = args.emb_path + args.dataset + "/item_emb.npy"  # TODO: old line
-emb_path = f"{args.data_path}{args.dataset}/item_emb.npy"  # NEW: fix
+emb_path = f"{args.data_path}{args.dataset}/item_emb.npy"
 
 print(f"emb_path: {emb_path}")
 item_emb = torch.from_numpy(np.load(emb_path, allow_pickle=True))
@@ -277,19 +286,22 @@ Autoencoder = AE(
     item_emb, args.n_cate, in_dims, out_dims, device, args.act_func, args.reparam
 ).to(device)
 
+# NEW ====================
 wandb.watch(Autoencoder)
+# END NEW ====================
 
 ### Build Gaussian Diffusion ###
 if args.mean_type == "x0":
     mean_type = gd.ModelMeanType.START_X
 elif args.mean_type == "eps":
     mean_type = gd.ModelMeanType.EPSILON
+
 # BEGIN NEW ====================
 elif args.mean_type == "x0_learnable":
     mean_type = gd.ModelMeanType.LEARNABLE_PARAM
-# BEGIN NEW ====================
 else:
     raise ValueError("Unimplemented mean type %s" % args.mean_type)
+# END NEW ====================
 
 diffusion = gd.GaussianDiffusion(
     mean_type,
@@ -297,7 +309,7 @@ diffusion = gd.GaussianDiffusion(
     args.noise_scale,
     args.noise_min,
     args.noise_max,
-    args.steps,  # HERE
+    args.steps,
     device,
 ).to(device)
 
@@ -362,9 +374,12 @@ elif args.optimizer2 == "Momentum":
     )
 print("models ready.")
 
+# NEW ====================
 wandb.watch(model)
+# END NEW ====================
 
 
+# NEW ====================
 def log_results(results, epoch, topN, mode="valid"):
     """Log results to wandb."""
     precisions, recalls, NDCGs, MRRs = results
@@ -384,6 +399,9 @@ def log_results(results, epoch, topN, mode="valid"):
                 f"{mode} MRR@{k}": MRRs[i],
             }
         )
+
+
+# END NEW ====================
 
 
 def evaluate(data_loader, data_te, mask_his, topN):
@@ -550,8 +568,9 @@ for epoch in range(1, args.epochs + 1):
     if epoch % 5 == 0:
         valid_results = evaluate(test_loader, valid_y_data, mask_train, eval(args.topN))
 
+        # NEW ====================
         log_results(valid_results, epoch, eval(args.topN), mode="valid")
-
+        # END NEW =================
         if args.tst_w_val:
             test_results = evaluate(
                 test_twv_loader, test_y_data, mask_tv, eval(args.topN)
@@ -559,7 +578,10 @@ for epoch in range(1, args.epochs + 1):
         else:
             test_results = evaluate(test_loader, test_y_data, mask_tv, eval(args.topN))
 
+        # NEW ====================
         log_results(test_results, epoch, eval(args.topN), mode="test")
+        # END NEW =================
+
         evaluate_utils.print_results(None, valid_results, test_results)
 
         if valid_results[1][1] > best_recall:  # recall@20 as selection
@@ -639,7 +661,9 @@ print("End. Best Epoch {:03d} ".format(best_epoch))
 evaluate_utils.print_results(None, best_results, best_test_results)
 print("End time: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
 
+# NEW ====================
 log_results(best_results, best_epoch, eval(args.topN), mode="best_valid")
 log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
 
 wandb.finish()
+# END NEW =================

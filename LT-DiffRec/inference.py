@@ -174,7 +174,7 @@ diffusion = gd.GaussianDiffusion(
 ).to(device)
 
 ### Build Autoencoder & MLP ###
-model_path = "./checkpoints/LT-DiffRec/"  # NEW
+model_path = "./checkpoints/LT-DiffRec/"  # NEW ====================
 if args.dataset == "amazon-book_clean":
     model_name = "amazon-book_clean_0.0005lr1_0.0001lr2_0.0wd1_0.0wd2_bs400_cate2_in[300]_out[]_lam0.03_dims[300]_emb10_x0_steps5_scale0.7_min0.001_max0.005_sample0_reweight1_wmin0.1_wmax1.0_log.pth"
     AE_name = "amazon-book_clean_0.0005lr1_0.0001lr2_0.0wd1_0.0wd2_bs400_cate2_in[300]_out[]_lam0.03_dims[300]_emb10_x0_steps5_scale0.7_min0.001_max0.005_sample0_reweight1_wmin0.1_wmax1.0_log_AE.pth"
