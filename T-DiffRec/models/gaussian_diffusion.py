@@ -146,7 +146,7 @@ class GaussianDiffusion(nn.Module):
         if self.noise_scale == 0.0:
             for i in indices:
                 t = torch.tensor([i] * x_t.shape[0]).to(x_start.device)
-                x_t = model(x_t, t)  # HERE
+                x_t = model(x_t, t)
             return x_t
 
         for i in indices:
@@ -166,7 +166,8 @@ class GaussianDiffusion(nn.Module):
         return x_t
 
     def calculate_user_interaction_embedding(self, x_t):
-        interacted_indices = x_t > 0  # TODO: decide on threshold
+        # create mask to only consider the interactions of a user
+        interacted_indices = x_t > 0
 
         # create mask to only consider the interactions of a user
         interacted_indices = interacted_indices.nonzero()
@@ -239,13 +240,6 @@ class GaussianDiffusion(nn.Module):
         mean_user_interacted_embeddings = mean_user_interacted_embeddings.unsqueeze(
             dim=1
         )
-        print(
-            f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
-        )
-        print(
-            f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
-        )
-        print(f"all_user_embeddings shape: {all_user_interaction_embeddings.shape}")
 
         return (
             all_user_interaction_embeddings,
@@ -259,7 +253,9 @@ class GaussianDiffusion(nn.Module):
         x_start,
         reweight=False,
     ):
-        """self: Diffusion Model
+        """
+        # NEW ================================
+        self: Diffusion Model
         Model: DNN
         x_start:  batch from data loader, bs x n_items ([400, 2810])
         ts: [400], int
@@ -268,7 +264,7 @@ class GaussianDiffusion(nn.Module):
         pt: [400], float
         model_output: [400, 2810], float, incl. negative values
         weights: [400], float
-
+        # END NEW ================================
         """
 
         batch_size, device = x_start.size(0), x_start.device
@@ -279,8 +275,9 @@ class GaussianDiffusion(nn.Module):
         else:
             x_t = x_start
 
+        # NEW ================================
         if self.attention_weighting:
-            """New: attention weighting"""
+            """attention weighting"""
             if self.mean_type == ModelMeanType.START_X:
                 # get the embeddings of all items interacted with (x), and calculate the mean embedding per user (batch element)
 
@@ -290,18 +287,7 @@ class GaussianDiffusion(nn.Module):
                     mean_user_interacted_embeddings,
                 ) = self.calculate_user_interaction_embedding(x_t)
 
-                # calculate attention weights, using implementation in model
-                print(
-                    f"all_user_interaction_embeddings shape: {all_user_interaction_embeddings.shape}"
-                )
-                print(
-                    f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
-                )
-                print(
-                    f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
-                )
-
-                # NEW: forward pass with attention weighting
+                # forward pass with attention weighting
                 model_output = model(
                     x_t,
                     ts,
@@ -309,7 +295,7 @@ class GaussianDiffusion(nn.Module):
                     last_user_interaction_embedding=last_user_interaction_embedding,
                     mean_user_interacted_embeddings=mean_user_interacted_embeddings,
                 )
-
+            # END NEW ================================
             else:
                 raise NotImplementedError
 
@@ -347,15 +333,12 @@ class GaussianDiffusion(nn.Module):
                 )
                 loss = torch.where((ts == 0), likelihood, mse)
 
-
-       
-            # BEGIN NEW ====================
-
+            # NEW ================================
             elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
                 weight = self.SNR(ts - 1) - self.SNR(ts)
                 weight = torch.where((ts == 0), 1.0, weight)
                 loss = mse
-                # BEGIN NEW ====================
+            # END NEW ================================
 
         else:
             weight = torch.tensor([1.0] * len(target)).to(device)
@@ -389,8 +372,13 @@ class GaussianDiffusion(nn.Module):
         if method == "importance":  # importance sampling
             if not (self.Lt_count == self.history_num_per_term).all():
                 return self.sample_timesteps(batch_size, device, method="uniform")
-            # new_hist = model.param * self.Lt_history.clone()  # TODO needs to be uncommented again!
-            # Lt_sqrt = torch.sqrt(torch.mean(new_hist**2, axis=-1)) # TODO needs to be uncommented again!
+
+            # NEW ================================
+            if self.mean_type == ModelMeanType.LEARNABLE_PARAM:
+                new_hist = model.param * self.Lt_history.clone()
+                Lt_sqrt = torch.sqrt(torch.mean(new_hist**2, axis=-1))
+            # END NEW ================================
+
             Lt_sqrt = torch.sqrt(
                 torch.mean(self.Lt_history**2, axis=-1)
             )  # original code
@@ -403,9 +391,10 @@ class GaussianDiffusion(nn.Module):
             t = torch.multinomial(pt_all, num_samples=batch_size, replacement=True)
             pt = pt_all.gather(dim=0, index=t) * len(pt_all)
 
-            # NEW - store the param values per batch
+            # NEW ================================
+            # store the param values per batch
             model.param_storage.append(model.param.detach().clone())
-
+            # END NEW ============================
             return t, pt
 
         elif method == "uniform":  # uniform sampling
@@ -478,7 +467,7 @@ class GaussianDiffusion(nn.Module):
             pred_xstart = model_output
         elif self.mean_type == ModelMeanType.EPSILON:
             pred_xstart = self._predict_xstart_from_eps(x, t, eps=model_output)
-            # BEGIN NEW ====================
+        # BEGIN NEW ====================
         elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
             pred_xstart = model_output
         # END NEW ======================

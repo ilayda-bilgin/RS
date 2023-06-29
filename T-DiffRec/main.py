@@ -25,8 +25,11 @@ from copy import deepcopy
 
 import random
 
+# NEW ====================
 import wandb
 import sys, os
+
+# END NEW ================
 
 
 def worker_init_fn(worker_id):
@@ -103,12 +106,7 @@ parser.add_argument(
 parser.add_argument(
     "--sampling_noise", type=bool, default=False, help="sampling with noise or not"
 )
-# parser.add_argument(
-#     "--sampling_steps",
-#     type=int,
-#     default=0,
-#     help="steps of the forward process during inference",
-# )
+
 parser.add_argument(
     "--reweight",
     type=bool,
@@ -116,7 +114,9 @@ parser.add_argument(
     help="assign different weight to different timestep or not",
 )
 
+# NEW ====================
 parser.add_argument("--num_workers", type=int, default=4, help="num of workers")
+
 parser.add_argument(
     "--model_type", type=str, default="T-DiffRec", help="type DRS Model"
 )
@@ -146,8 +146,10 @@ parser.add_argument(
     action="store_true",
     help="use the attention weighting feature",
 )
+# END NEW ====================
 
 args = parser.parse_args()
+
 # BEGIN NEW ====================
 if args.dataset == "amazon-book_clean":
     args.stepsw = 10
@@ -170,6 +172,8 @@ else:
     args.steps = 100
     args.sampling_steps = 0
 # END NEW ====================
+
+# NEW ====================
 # import visualization function if needed
 if args.mean_type == "x0_learnable" and args.visualize_weights:
     current = os.path.dirname(os.path.realpath(__file__))
@@ -178,12 +182,13 @@ if args.mean_type == "x0_learnable" and args.visualize_weights:
 
     from utils.visualize_weights import generate_m_phate, create_phate_visualization
 
-# NEW
+
 if args.attention_weighting:
     args.reweight = False
     print(
         "Attention weighting is enabled, therefore standard reweighting was disabled."
     )
+# END NEW ====================
 
 print("args:", args)
 
@@ -194,6 +199,7 @@ np.random.seed(random_seed)  # numpy
 random.seed(random_seed)  # random and transforms
 torch.backends.cudnn.deterministic = True  # cudnn
 
+# NEW
 # init wandb
 wandb.init(
     name=f"{args.model_type}_{args.dataset}_{args.seed}_{args.run_name}",
@@ -203,6 +209,7 @@ wandb.init(
     entity="drs",
     config=args,
 )
+# END NEW
 
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
@@ -235,10 +242,12 @@ train_loader = DataLoader(
     worker_init_fn=worker_init_fn,
 )
 test_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
+
 # BEGIN NEW ====================
 if args.mean_type == "x0_learnable":
     train_data = train_data_ori
 # END NEW ====================
+
 if args.tst_w_val:
     tv_dataset = data_utils.DataDiffusion(
         torch.FloatTensor(train_data.A) + torch.FloatTensor(valid_y_data.A)
@@ -246,13 +255,14 @@ if args.tst_w_val:
     test_twv_loader = DataLoader(tv_dataset, batch_size=args.batch_size, shuffle=False)
 mask_tv = train_data_ori + valid_y_data
 
+# NEW ====================
 # load item embeddings
 if args.attention_weighting:
     emb_path = f"{args.data_path}{args.dataset}/item_emb.npy"
     item_embeddings = torch.from_numpy(np.load(emb_path, allow_pickle=True))
 else:
     item_embeddings = None
-
+# END NEW ====================
 
 print("data ready.")
 
@@ -307,6 +317,7 @@ param_num = mlp_num + diff_num
 print("Number of all parameters:", param_num)
 
 
+# NEW ====================
 def log_results(results, epoch, topN, mode="valid"):
     """Log results to wandb."""
     precisions, recalls, NDCGs, MRRs = results
@@ -326,6 +337,9 @@ def log_results(results, epoch, topN, mode="valid"):
                 f"{mode} MRR@{k}": MRRs[i],
             }
         )
+
+
+# END NEW ====================
 
 
 def evaluate(data_loader, data_te, mask_his, topN):
@@ -381,14 +395,9 @@ for epoch in range(1, args.epochs + 1):
 
         batch = batch.to(device)
 
-        # TODO remove
-        print(f"batch_idx: {batch_idx}")
-        print(f"batch ({batch.shape})\n\n{batch}")
-
         batch_count += 1
         optimizer.zero_grad()
 
-        # HERE model=DNN, diffusion=GaussianDiffusion
         losses = diffusion.training_losses(
             model,
             batch,
@@ -468,7 +477,8 @@ log_results(best_results, best_epoch, eval(args.topN), mode="best_valid")
 log_results(best_test_results, best_epoch, eval(args.topN), mode="best_test")
 
 
-# NEW Store learnable parameter
+# NEW ====================
+# Store learnable parameter
 if args.mean_type == "x0_learnable":
     # stack the values into a single tensor
     params_per_batch = torch.stack(model.param_storage, dim=0)
@@ -501,3 +511,4 @@ if args.mean_type == "x0_learnable" and args.visualize_weights:
     print(f"Logged phate-param.png to wandb")
 
 wandb.finish()
+# END NEW ====================
