@@ -1,7 +1,7 @@
 import enum
 import math
 import numpy as np
-import torch as th
+import torch
 import torch.nn.functional as F
 import torch.nn as nn
 
@@ -9,7 +9,7 @@ import torch.nn as nn
 class ModelMeanType(enum.Enum):
     START_X = enum.auto()  # the model predicts x_0
     EPSILON = enum.auto()  # the model predicts epsilon
-    LEARNABLE_PARAM = enum.auto()  # the model predicts epsilon
+    LEARNABLE_PARAM = enum.auto()
 
 
 class GaussianDiffusion(nn.Module):
@@ -24,6 +24,8 @@ class GaussianDiffusion(nn.Module):
         device,
         history_num_per_term=10,
         beta_fixed=True,
+        attention_weighting=False,
+        item_embeddings=None,
     ):
         self.mean_type = mean_type
         self.noise_schedule = noise_schedule
@@ -34,13 +36,18 @@ class GaussianDiffusion(nn.Module):
         self.device = device
 
         self.history_num_per_term = history_num_per_term
-        self.Lt_history = th.zeros(steps, history_num_per_term, dtype=th.float64).to(
-            device
-        )
-        self.Lt_count = th.zeros(steps, dtype=int).to(device)
+        self.Lt_history = torch.zeros(
+            steps, history_num_per_term, dtype=torch.float64
+        ).to(device)
+        self.Lt_count = torch.zeros(steps, dtype=int).to(device)
+
+        self.attention_weighting = attention_weighting
+        self.item_embeddings = item_embeddings.to(self.device)
 
         if noise_scale != 0.0:
-            self.betas = th.tensor(self.get_betas(), dtype=th.float64).to(self.device)
+            self.betas = torch.tensor(self.get_betas(), dtype=torch.float64).to(
+                self.device
+            )
             if beta_fixed:
                 self.betas[
                     0
@@ -55,10 +62,6 @@ class GaussianDiffusion(nn.Module):
             ).all(), "betas out of range"
 
             self.calculate_for_diffusion()
-
-        # NEW: store weigths
-        # self.stored_weights = th.empty_like(steps).to(device)  # todo check
-        # print(f"Shape of stored weights: {self.stored_weights.shape}")
 
         super(GaussianDiffusion, self).__init__()
 
@@ -77,7 +80,8 @@ class GaussianDiffusion(nn.Module):
                 )
         elif self.noise_schedule == "cosine":
             return betas_for_alpha_bar(
-                self.steps, lambda t: math.cos((t + 0.008) / 1.008 * math.pi / 2) ** 2
+                self.steps,
+                lambda t: math.cos((t + 0.008) / 1.008 * math.pi / 2) ** 2,
             )
         elif (
             self.noise_schedule == "binomial"
@@ -90,40 +94,42 @@ class GaussianDiffusion(nn.Module):
 
     def calculate_for_diffusion(self):
         alphas = 1.0 - self.betas
-        self.alphas_cumprod = th.cumprod(alphas, axis=0).to(self.device)
-        self.alphas_cumprod_prev = th.cat(
-            [th.tensor([1.0]).to(self.device), self.alphas_cumprod[:-1]]
+        self.alphas_cumprod = torch.cumprod(alphas, axis=0).to(self.device)
+        self.alphas_cumprod_prev = torch.cat(
+            [torch.tensor([1.0]).to(self.device), self.alphas_cumprod[:-1]]
         ).to(
             self.device
         )  # alpha_{t-1}
-        self.alphas_cumprod_next = th.cat(
-            [self.alphas_cumprod[1:], th.tensor([0.0]).to(self.device)]
+        self.alphas_cumprod_next = torch.cat(
+            [self.alphas_cumprod[1:], torch.tensor([0.0]).to(self.device)]
         ).to(
             self.device
         )  # alpha_{t+1}
         assert self.alphas_cumprod_prev.shape == (self.steps,)
 
-        self.sqrt_alphas_cumprod = th.sqrt(self.alphas_cumprod)
-        self.sqrt_one_minus_alphas_cumprod = th.sqrt(1.0 - self.alphas_cumprod)
-        self.log_one_minus_alphas_cumprod = th.log(1.0 - self.alphas_cumprod)
-        self.sqrt_recip_alphas_cumprod = th.sqrt(1.0 / self.alphas_cumprod)
-        self.sqrt_recipm1_alphas_cumprod = th.sqrt(1.0 / self.alphas_cumprod - 1)
+        self.sqrt_alphas_cumprod = torch.sqrt(self.alphas_cumprod)
+        self.sqrt_one_minus_alphas_cumprod = torch.sqrt(1.0 - self.alphas_cumprod)
+        self.log_one_minus_alphas_cumprod = torch.log(1.0 - self.alphas_cumprod)
+        self.sqrt_recip_alphas_cumprod = torch.sqrt(1.0 / self.alphas_cumprod)
+        self.sqrt_recipm1_alphas_cumprod = torch.sqrt(1.0 / self.alphas_cumprod - 1)
 
         self.posterior_variance = (
             self.betas * (1.0 - self.alphas_cumprod_prev) / (1.0 - self.alphas_cumprod)
         )
 
-        self.posterior_log_variance_clipped = th.log(
-            th.cat(
+        self.posterior_log_variance_clipped = torch.log(
+            torch.cat(
                 [self.posterior_variance[1].unsqueeze(0), self.posterior_variance[1:]]
             )
         )
         self.posterior_mean_coef1 = (
-            self.betas * th.sqrt(self.alphas_cumprod_prev) / (1.0 - self.alphas_cumprod)
+            self.betas
+            * torch.sqrt(self.alphas_cumprod_prev)
+            / (1.0 - self.alphas_cumprod)
         )
         self.posterior_mean_coef2 = (
             (1.0 - self.alphas_cumprod_prev)
-            * th.sqrt(alphas)
+            * torch.sqrt(alphas)
             / (1.0 - self.alphas_cumprod)
         )
 
@@ -132,50 +138,194 @@ class GaussianDiffusion(nn.Module):
         if steps == 0:
             x_t = x_start
         else:
-            t = th.tensor([steps - 1] * x_start.shape[0]).to(x_start.device)
+            t = torch.tensor([steps - 1] * x_start.shape[0]).to(x_start.device)
             x_t = self.q_sample(x_start, t)
 
         indices = list(range(self.steps))[::-1]
 
         if self.noise_scale == 0.0:
             for i in indices:
-                t = th.tensor([i] * x_t.shape[0]).to(x_start.device)
-                x_t = model(x_t, t)
+                t = torch.tensor([i] * x_t.shape[0]).to(x_start.device)
+                x_t = model(x_t, t)  # HERE
             return x_t
 
         for i in indices:
-            t = th.tensor([i] * x_t.shape[0]).to(x_start.device)
+            t = torch.tensor([i] * x_t.shape[0]).to(x_start.device)
             out = self.p_mean_variance(model, x_t, t)
             if sampling_noise:
-                noise = th.randn_like(x_t)
+                noise = torch.randn_like(x_t)
                 nonzero_mask = (
                     (t != 0).float().view(-1, *([1] * (len(x_t.shape) - 1)))
                 )  # no noise when t == 0
                 x_t = (
                     out["mean"]
-                    + nonzero_mask * th.exp(0.5 * out["log_variance"]) * noise
+                    + nonzero_mask * torch.exp(0.5 * out["log_variance"]) * noise
                 )
             else:
                 x_t = out["mean"]
         return x_t
 
-    def training_losses(self, model, x_start, reweight=False):
+    def calculate_user_interaction_embedding(self, x_t):
+        interacted_indices = x_t > 0  # TODO: decide on threshold
+
+        # create mask to only consider the interactions of a user
+        interacted_indices = interacted_indices.nonzero()
+
+        user_interactions = torch.bincount(
+            interacted_indices[:, 0]
+        )  # nr of interactions each user has
+        # prepare storage
+        len_interactions = x_t.shape[1]
+        max_user_interactions = torch.max(user_interactions)
+        print(f"max nr of interactions per user: {max_user_interactions}")
+        # to store item embedding instead of the item a user has interacted with
+        all_user_interaction_embeddings = torch.empty(
+            x_t.shape[0],
+            len_interactions,
+            self.item_embeddings.shape[1],
+            device=self.device,
+        )
+        # to store the last valid interaction embedding of a user
+        last_user_interaction_embedding = torch.empty(
+            x_t.shape[0],
+            self.item_embeddings.shape[1],
+            device=self.device,
+        )
+
+        for user in range(x_t.shape[0]):
+            # get the interactions with items for a user
+            user_interacted_indices = interacted_indices[
+                interacted_indices[:, 0] == user
+            ]
+            # get the item embeddings corresponding to the interactions
+            user_interaction_embeddings = self.item_embeddings[
+                user_interacted_indices[:, 1], :
+            ]
+
+            # keep only interaction indices as list
+            user_interacted_indices = user_interacted_indices[:, 1].tolist()
+
+            if len(user_interaction_embeddings) > 0:  # if user has interactions
+                interaction_count = 0
+
+                # all possible interactions
+                for interaction in range(len_interactions):
+                    if interaction in user_interacted_indices:
+                        # for each interaction of a user, add the interaction embeddings, and store last valid interaction embedding
+                        all_user_interaction_embeddings[
+                            user, interaction
+                        ] = user_interaction_embeddings[
+                            interaction_count
+                        ]  # m_t
+
+                        interaction_count += 1
+
+                # store last valid interaction embedding
+                last_user_interaction_embedding[user] = user_interaction_embeddings[-1]
+
+        # all_user_interaction_embeddings = torch.nan_to_num(
+        #     all_user_interaction_embeddings
+        # )
+
+        # calculate mean of the embeddings but do not include nan values
+        mean_user_interacted_embeddings = torch.nanmean(
+            all_user_interaction_embeddings, dim=1
+        )
+
+        # ensure same dimensionalities
+        last_user_interaction_embedding = last_user_interaction_embedding.unsqueeze(
+            dim=1
+        )
+        mean_user_interacted_embeddings = mean_user_interacted_embeddings.unsqueeze(
+            dim=1
+        )
+        print(
+            f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
+        )
+        print(
+            f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
+        )
+        print(f"all_user_embeddings shape: {all_user_interaction_embeddings.shape}")
+
+        return (
+            all_user_interaction_embeddings,
+            last_user_interaction_embedding,
+            mean_user_interacted_embeddings,
+        )
+
+    def training_losses(
+        self,
+        model,
+        x_start,
+        reweight=False,
+    ):
+        """self: Diffusion Model
+        Model: DNN
+        x_start:  batch from data loader, bs x n_items ([400, 2810])
+        ts: [400], int
+        pt: [400, float
+        x_t: 400, 2810: float, incl. negative values
+        pt: [400], float
+        model_output: [400, 2810], float, incl. negative values
+        weights: [400], float
+
+        """
+
         batch_size, device = x_start.size(0), x_start.device
-        ts, pt = self.sample_timesteps(batch_size, device, "importance", model)  # HERE
-        noise = th.randn_like(x_start)
+        ts, pt = self.sample_timesteps(batch_size, device, "importance", model)
+        noise = torch.randn_like(x_start)
         if self.noise_scale != 0.0:
             x_t = self.q_sample(x_start, ts, noise)
         else:
             x_t = x_start
 
+        if self.attention_weighting:
+            """New: attention weighting"""
+            if self.mean_type == ModelMeanType.START_X:
+                # get the embeddings of all items interacted with (x), and calculate the mean embedding per user (batch element)
+
+                (
+                    all_user_interaction_embeddings,
+                    last_user_interaction_embedding,
+                    mean_user_interacted_embeddings,
+                ) = self.calculate_user_interaction_embedding(x_t)
+
+                # calculate attention weights, using implementation in model
+                print(
+                    f"all_user_interaction_embeddings shape: {all_user_interaction_embeddings.shape}"
+                )
+                print(
+                    f"last_user_interaction_embedding shape: {last_user_interaction_embedding.shape}"
+                )
+                print(
+                    f"mean_user_interacted_embeddings shape: {mean_user_interacted_embeddings.shape}"
+                )
+
+                # NEW: forward pass with attention weighting
+                model_output = model(
+                    x_t,
+                    ts,
+                    all_user_interaction_embeddings=all_user_interaction_embeddings,
+                    last_user_interaction_embedding=last_user_interaction_embedding,
+                    mean_user_interacted_embeddings=mean_user_interacted_embeddings,
+                )
+
+            else:
+                raise NotImplementedError
+
+        else:
+            #  OLD: forward pass without attention weighting
+            model_output = model(x_t, ts)  # DNN
+
         terms = {}
-        model_output = model(x_t, ts)
         target = {
             ModelMeanType.START_X: x_start,
             ModelMeanType.EPSILON: noise,
             ModelMeanType.LEARNABLE_PARAM: x_start,
         }[self.mean_type]
 
+        print(f"Model output shape: {model_output.shape}")
+        print(f"model output: {model_output}")
         assert model_output.shape == target.shape == x_start.shape
 
         mse = mean_flat((target - model_output) ** 2)
@@ -183,35 +333,36 @@ class GaussianDiffusion(nn.Module):
         if reweight == True:
             if self.mean_type == ModelMeanType.START_X:
                 weight = self.SNR(ts - 1) - self.SNR(ts)
-                weight = th.where((ts == 0), 1.0, weight)
+                weight = torch.where((ts == 0), 1.0, weight)
                 loss = mse
             elif self.mean_type == ModelMeanType.EPSILON:
                 weight = (1 - self.alphas_cumprod[ts]) / (
                     (1 - self.alphas_cumprod_prev[ts]) ** 2 * (1 - self.betas[ts])
                 )
-                weight = th.where((ts == 0), 1.0, weight)
+                weight = torch.where((ts == 0), 1.0, weight)
                 likelihood = mean_flat(
                     (x_start - self._predict_xstart_from_eps(x_t, ts, model_output))
                     ** 2
                     / 2.0
                 )
-                loss = th.where((ts == 0), likelihood, mse)
+                loss = torch.where((ts == 0), likelihood, mse)
+
+
+       
             # BEGIN NEW ====================
+
             elif self.mean_type == ModelMeanType.LEARNABLE_PARAM:
                 weight = self.SNR(ts - 1) - self.SNR(ts)
-                weight = th.where((ts == 0), 1.0, weight)
+                weight = torch.where((ts == 0), 1.0, weight)
                 loss = mse
                 # BEGIN NEW ====================
 
-                # # NEW: store weigths
-                # print(f"Shape of the weights: {weight.shape}")
-                # print(f"Shape of the ts: {ts.shape}")  # one per element in batch
-                # print(f"Shape of pt: {pt.shape}")
-
         else:
-            weight = th.tensor([1.0] * len(target)).to(device)
+            weight = torch.tensor([1.0] * len(target)).to(device)
+            loss = mse
 
         terms["loss"] = weight * loss
+        print(f"Shape of the weights: {weight.shape}")
 
         # update Lt_history & Lt_count
         for t, loss in zip(ts, terms["loss"]):
@@ -238,15 +389,18 @@ class GaussianDiffusion(nn.Module):
         if method == "importance":  # importance sampling
             if not (self.Lt_count == self.history_num_per_term).all():
                 return self.sample_timesteps(batch_size, device, method="uniform")
-            new_hist = model.param * self.Lt_history.clone()  # HERE
-            Lt_sqrt = th.sqrt(th.mean(new_hist**2, axis=-1))
-            pt_all = Lt_sqrt / th.sum(Lt_sqrt)
+            # new_hist = model.param * self.Lt_history.clone()  # TODO needs to be uncommented again!
+            # Lt_sqrt = torch.sqrt(torch.mean(new_hist**2, axis=-1)) # TODO needs to be uncommented again!
+            Lt_sqrt = torch.sqrt(
+                torch.mean(self.Lt_history**2, axis=-1)
+            )  # original code
+            pt_all = Lt_sqrt / torch.sum(Lt_sqrt)
             pt_all *= 1 - uniform_prob
             pt_all += uniform_prob / len(pt_all)
 
             assert pt_all.sum(-1) - 1.0 < 1e-5
 
-            t = th.multinomial(pt_all, num_samples=batch_size, replacement=True)
+            t = torch.multinomial(pt_all, num_samples=batch_size, replacement=True)
             pt = pt_all.gather(dim=0, index=t) * len(pt_all)
 
             # NEW - store the param values per batch
@@ -255,8 +409,8 @@ class GaussianDiffusion(nn.Module):
             return t, pt
 
         elif method == "uniform":  # uniform sampling
-            t = th.randint(0, self.steps, (batch_size,), device=device).long()
-            pt = th.ones_like(t).float()
+            t = torch.randint(0, self.steps, (batch_size,), device=device).long()
+            pt = torch.ones_like(t).float()
 
             return t, pt
 
@@ -265,7 +419,7 @@ class GaussianDiffusion(nn.Module):
 
     def q_sample(self, x_start, t, noise=None):
         if noise is None:
-            noise = th.randn_like(x_start)
+            noise = torch.randn_like(x_start)
         assert noise.shape == x_start.shape
         return (
             self._extract_into_tensor(self.sqrt_alphas_cumprod, t, x_start.shape)
@@ -305,9 +459,14 @@ class GaussianDiffusion(nn.Module):
         Apply the model to get p(x_{t-1} | x_t), as well as a prediction of
         the initial x, x_0.
         """
+
         B, C = x.shape[:2]
         assert t.shape == (B,)
-        model_output = model(x, t)
+
+        model_output = model(
+            x,
+            t,
+        )
 
         model_variance = self.posterior_variance
         model_log_variance = self.posterior_log_variance_clipped
@@ -367,7 +526,7 @@ class GaussianDiffusion(nn.Module):
                                 dimension equal to the length of timesteps.
         :return: a tensor of shape [batch_size, 1, ...] where the shape has K dims.
         """
-        # res = th.from_numpy(arr).to(device=timesteps.device)[timesteps].float()
+        # res = torch.from_numpy(arr).to(device=timesteps.device)[timesteps].float()
         arr = arr.to(timesteps.device)
         res = arr[timesteps].float()
         while len(res.shape) < len(broadcast_shape):
@@ -413,15 +572,15 @@ def normal_kl(mean1, logvar1, mean2, logvar2):
     """
     tensor = None
     for obj in (mean1, logvar1, mean2, logvar2):
-        if isinstance(obj, th.Tensor):
+        if isinstance(obj, torch.Tensor):
             tensor = obj
             break
     assert tensor is not None, "at least one argument must be a Tensor"
 
     # Force variances to be Tensors. Broadcasting helps convert scalars to
-    # Tensors, but it does not work for th.exp().
+    # Tensors, but it does not work for torch.exp().
     logvar1, logvar2 = [
-        x if isinstance(x, th.Tensor) else th.tensor(x).to(tensor)
+        x if isinstance(x, torch.Tensor) else torch.tensor(x).to(tensor)
         for x in (logvar1, logvar2)
     ]
 
@@ -429,8 +588,8 @@ def normal_kl(mean1, logvar1, mean2, logvar2):
         -1.0
         + logvar2
         - logvar1
-        + th.exp(logvar1 - logvar2)
-        + ((mean1 - mean2) ** 2) * th.exp(-logvar2)
+        + torch.exp(logvar1 - logvar2)
+        + ((mean1 - mean2) ** 2) * torch.exp(-logvar2)
     )
 
 
