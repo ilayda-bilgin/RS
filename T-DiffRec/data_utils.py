@@ -43,6 +43,7 @@ def data_load(train_path, valid_path, test_path, w_min, w_max):
         for iid in train_dict[uid]:
             train_list.append([uid, iid])
     train_list = np.array(train_list)
+    # BEGIN NEW ====================
     train_data_temp = sp.csr_matrix(
         (train_weight, (train_list[:, 0], train_list[:, 1])),
         dtype="float32",
@@ -66,7 +67,7 @@ def data_load(train_path, valid_path, test_path, w_min, w_max):
         dtype="float32",
         shape=(n_user, n_item),
     )  # test_groundtruth
-
+    # END NEW ====================
     return train_data_temp, train_data_ori, valid_y_data, test_y_data, n_user, n_item
 
 

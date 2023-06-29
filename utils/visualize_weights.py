@@ -3,8 +3,8 @@ import m_phate
 import scprep
 import argparse
 
-
-def generate_m_phate(data, num_workers=10):
+# BEGIN NEW ====================
+def generate_m_phate(data, num_workers=20):
     # embedding
     m_phate_op = m_phate.M_PHATE(n_jobs=num_workers)
     m_phate_data = m_phate_op.fit_transform(data)
@@ -62,3 +62,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# END NEW ====================

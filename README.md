@@ -31,7 +31,14 @@ We provide our working conda environment in the `environment.yml` file and add i
     unzip checkpoints.zip -d checkpoints
     rm checkpoints.zip
     ```
-4. set up [WandB](https://wandb.ai) logging: 
+4. Choose whether to enable wandb logging:
+
+    If you do not want to use WandB logging, set the following environment variable:
+    ```bash
+    export WANDB_MODE=disabled
+    ```
+
+    To use [WandB](https://wandb.ai) logging, set your API key: 
     
     We use  to log the training process. To use it, you need to create a new project in WandB and get your API key. Then run the following command, and provide your API key:
     ```bash
