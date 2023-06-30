@@ -7,13 +7,11 @@ This is a reproduction and extension of the paper at SIGIR 2023:
 Our reproduction is based on the [original code](https://github.com/YiyanXu/DiffRec). We extend the original code to include the following features:
 - **WandB** logging
 - **learnable temporal weighting** feature and visualization
-- #TODO add stamp things
 - more suitable **early stopping** with increased patience
 - additional **clustering** algorithms for `L-DiffRec` and `LT-DiffRec`
 
 More details can be found in the [report](report.pdf), for a quick overview see the [poster](poster.pdf).
 
-#TODO add report pdf
 
 ## Getting Started
 We provide our working conda environment in the `environment.yml` file and add instructions to obtain the trained models.
