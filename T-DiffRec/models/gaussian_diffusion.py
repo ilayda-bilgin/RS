@@ -42,7 +42,11 @@ class GaussianDiffusion(nn.Module):
         self.Lt_count = torch.zeros(steps, dtype=int).to(device)
 
         self.attention_weighting = attention_weighting
-        self.item_embeddings = item_embeddings.to(self.device)
+        try:
+            self.item_embeddings = item_embeddings.to(self.device)
+        except AttributeError:
+            self.item_embeddings = None
+
 
         if noise_scale != 0.0:
             self.betas = torch.tensor(self.get_betas(), dtype=torch.float64).to(
@@ -310,8 +314,8 @@ class GaussianDiffusion(nn.Module):
             ModelMeanType.LEARNABLE_PARAM: x_start,
         }[self.mean_type]
 
-        print(f"Model output shape: {model_output.shape}")
-        print(f"model output: {model_output}")
+        # print(f"Model output shape: {model_output.shape}")
+        # print(f"model output: {model_output}")
         assert model_output.shape == target.shape == x_start.shape
 
         mse = mean_flat((target - model_output) ** 2)
@@ -345,7 +349,7 @@ class GaussianDiffusion(nn.Module):
             loss = mse
 
         terms["loss"] = weight * loss
-        print(f"Shape of the weights: {weight.shape}")
+        # print(f"Shape of the weights: {weight.shape}")
 
         # update Lt_history & Lt_count
         for t, loss in zip(ts, terms["loss"]):
